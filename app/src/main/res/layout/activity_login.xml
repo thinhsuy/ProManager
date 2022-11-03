@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/first_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:flexDirection="column"
+            app:justifyContent="space_around"
+            app:alignItems="center">
+
+            <!--    IMAGE VIEW     -->
+            <ImageView
+                android:layout_width="550px"
+                android:layout_height="450px"
+                android:scaleType="fitXY"
+                android:src="@drawable/logo">
+            </ImageView>
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/second_box"
+            android:background="@drawable/bubble"
+            app:flexDirection="column"
+            app:justifyContent="space_between"
+            android:paddingTop="180px"
+            android:paddingBottom="50px"
+            app:alignItems="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign in"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textSize="80px"
+                android:layout_marginBottom="50px"/>
+
+            <!--  TEXT INPUT  -->
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/InputText"
+                app:flexDirection="column"
+                app:alignItems="center"
+                app:justifyContent="center"
+                android:layout_width="800px"
+                android:layout_height="500px">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_textinputlayout"
+                    app:endIconMode="clear_text"
+                    android:layout_width="800px"
+                    android:layout_height="200px"
+                    android:text="input username"
+                    android:hint="username"
+                    app:boxStrokeColor="#98A8F8">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_textinputlayout"
+                    android:layout_width="800px"
+                    android:layout_height="200px"
+                    app:endIconMode="password_toggle"
+                    android:text="input password"
+                    android:hint="password"
+                    app:boxStrokeColor="#98A8F8">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="textPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/forget_password_textview"
+                    android:layout_width="800px"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forget_password">
+                </TextView>
+            </com.google.android.flexbox.FlexboxLayout>
+
+
+            <!--    LOGIN BUTTON    -->
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="800px"
+                android:layout_height="400px"
+                app:flexDirection="column"
+                app:justifyContent="space_around"
+                app:alignItems="center">
+                <Button
+                    android:id="@+id/sign_in_btn"
+                    android:layout_width="500px"
+                    android:layout_height="150px"
+                    android:textSize="50px"
+                    android:background="@drawable/button"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="25px"
+                    android:text="Sign In">
+                </Button>
+                <Button
+                    android:id="@+id/sign_up_btn"
+                    android:layout_width="500px"
+                    android:layout_height="150px"
+                    android:background="@drawable/button"
+                    android:textSize="50px"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="25px"
+                    android:text="Sign Up">
+                </Button>
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/Footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:justifyContent="center"
+                app:alignItems="flex_end">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="35px"
+                    android:textAlignment="center"
+                    android:text="@string/powered">
+                </TextView>
+            </com.google.android.flexbox.FlexboxLayout>
+        </com.google.android.flexbox.FlexboxLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
