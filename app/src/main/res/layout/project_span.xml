@@ -6,11 +6,11 @@
     android:padding="50px"
     app:flexDirection="column">
     <TextView
+        android:id="@+id/project_header_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="70px"
-        android:text="This is my project">
+        android:textSize="70px">
     </TextView>
 
 </com.google.android.flexbox.FlexboxLayout>

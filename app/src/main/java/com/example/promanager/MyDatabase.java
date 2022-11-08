@@ -28,6 +28,7 @@ public class MyDatabase {
     }
 
     //trả về 1 số thông tin quan trọng của project, trước tiên thử với project name trc rồi về sau fix lại
+    //proId truyền vào mẫu là "20127306"
     public static String getProjectById(String proId){
         String proName = "Object Oriented Programming";
         return proName;

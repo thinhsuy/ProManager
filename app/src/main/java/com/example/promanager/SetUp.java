@@ -27,6 +27,8 @@ public class SetUp {
 
         String[] all_current_project = MyDatabase.getCurrentResponProject(myId);
 
+        content_container.addView(getProjectSpan("20127306"));
+
 //        int items = 6;
 //        for (int i=0; i<items;i++){
 //            int size = (int)MainActivity.getAppContext().getResources().getDimension(R.dimen.avatar_size_small);
@@ -75,9 +77,10 @@ public class SetUp {
         return rootView;
     }
 
-    public static View getProjectSpan(){
+    public static View getProjectSpan(String proId){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.project_span, null, false);
-        return view;
+        View rootView = layoutInflater.inflate(R.layout.project_span, null, false);
+        ((TextView)rootView.findViewById(R.id.project_header_textview)).setText(MyDatabase.getProjectById(proId));
+        return rootView;
     }
 }
