@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //after checking, if not vaild -> do nothing, else -> move to next activity
-                if (!check_infor_textfield()) return;
+//                if (!check_infor_textfield()) return;
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         });
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.e("Username", username);
         Log.e("Password", password);
         //check database here
-        if (username.equals("") || password.equals(""))
+        if (username.equals("") || password.equals("") || !MyDatabase.checkLogin(username, password))
             return false;
         else return true;
     }

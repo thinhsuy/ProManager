@@ -3,15 +3,15 @@
     <!-- Bottom Shadow -->
     <item>
         <shape  android:shape="oval">
-            <solid android:color="@color/black" />
+            <solid android:color="@color/white_gray" />
         </shape>
     </item>
     <!-- White Top color -->
     <item android:bottom="7px" android:left="7px" android:id="@+id/span">
-        <shape  android:shape="rectangle">
+        <shape  android:shape="oval">
             <solid android:color="@color/teal_200" />
             <stroke android:width="4px"
-                android:color="@color/black"/>
+                android:color="@color/white_gray"/>
         </shape>
     </item>
 </layer-list>

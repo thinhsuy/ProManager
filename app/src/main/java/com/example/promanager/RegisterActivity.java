@@ -62,6 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
         //set database here
         if (fullname.equals("") || username.equals("") || password.equals("") || confirm.equals("") || about.equals(""))
             return false;
+        else if (!MyDatabase.setDatabaseRegister(fullname, username, password, confirm, about))
+            return false;
         else return true;
     }
 }
