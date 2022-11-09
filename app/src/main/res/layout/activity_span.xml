@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:flexDirection="column"
+    android:background="@drawable/shadow_border_radius_box"
+    android:paddingLeft="80px"
+    android:paddingRight="80px"
+    android:paddingTop="70px"
+    android:paddingBottom="70px"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="Host by ThinhSuy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textSize="60px"
+        android:textColor="@color/black"
+        android:text="Architecture definition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:alignItems="center">
+        <ImageView
+            android:layout_margin="10px"
+            android:src="@drawable/timer_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:textColor="@color/black"
+            android:text="Deadline in 2 more days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <TextView
+        android:textColor="@color/black"
+        android:text="Responsibility: "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</com.google.android.flexbox.FlexboxLayout>

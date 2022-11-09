@@ -4,6 +4,9 @@ package com.example.promanager;
 // NHỮNG GIÁ TRỊ TRONG TRANG NÀY HIỆN CHỈ LÀ GIẢ KHỞI TẠO! database sẽ có thể trả về những giá trị khác
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MyDatabase {
     //trả về true khi set thông tin ng dùng sign up tới database thành công
     public static boolean setDatabaseRegister(String fullname, String username, String password, String confirm, String about){
@@ -27,11 +30,24 @@ public class MyDatabase {
         return all_project_id;
     }
 
-    //trả về 1 số thông tin quan trọng của project, trước tiên thử với project name trc rồi về sau fix lại
-    //proId truyền vào mẫu là "20127306"
-    public static String getProjectById(String proId){
-        String proName = "Object Oriented Programming";
-        return proName;
+    public static ActivityClass getActivityById(String actId){
+        ActivityClass activity = new ActivityClass();
+        activity.activity_header = "Architecture definition";
+        activity.deadline = "Deadline in 2 more days";
+        return activity;
+    }
+
+    //trả về 1 số thông tin quan trọng của project
+    //proId truyền vào tam là "20127306"
+    public static ProjectClass getProjectById(String proId){
+        ProjectClass project = new ProjectClass();
+        project.project_header = "Projects Manager";
+        //dười này là cách dùng 1 array dynamic, ở java phân biệt rõ dynamic và static array lắm nên chấp nhận ik
+        project.activityIdList = new ArrayList<String>(Arrays.asList("20127333", "20127306"));
+        for (int i=0; i< project.activityIdList.size(); i++){
+            project.addActivityList(getActivityById(project.activityIdList.get(i)));
+        }
+        return project;
     }
 
     //trả về số task mà người dùng còn trong deadline

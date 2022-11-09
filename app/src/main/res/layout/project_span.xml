@@ -12,5 +12,13 @@
         android:textColor="@color/black"
         android:textSize="70px">
     </TextView>
+    
+    <LinearLayout
+        android:id="@+id/activity_container"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
 
 </com.google.android.flexbox.FlexboxLayout>

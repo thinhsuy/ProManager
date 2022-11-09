@@ -50,7 +50,6 @@ public class SetUp {
             @Override
             public void run() {
                 int width_loadbarout = load_bar_out.getMeasuredWidth();
-
                 int current_task = MyDatabase.getCurrentTasks(myId);
                 int finised_task = MyDatabase.getCurrentFinishedTasks(myId);
                 int int_percent = getPercentOfValue(current_task, finised_task);
@@ -79,8 +78,15 @@ public class SetUp {
 
     public static View getProjectSpan(String proId){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rootView = layoutInflater.inflate(R.layout.project_span, null, false);
-        ((TextView)rootView.findViewById(R.id.project_header_textview)).setText(MyDatabase.getProjectById(proId));
-        return rootView;
+        View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
+        ((TextView)projectView.findViewById(R.id.project_header_textview)).setText(MyDatabase.getProjectById(proId).project_header);
+        ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan("20127333"));
+        return projectView;
+    }
+
+    private static View getActivitySpan(String actId){
+        LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View activityView = layoutInflater.inflate(R.layout.activity_span, null, false);
+        return activityView;
     }
 }
