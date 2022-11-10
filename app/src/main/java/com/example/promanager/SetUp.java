@@ -79,14 +79,22 @@ public class SetUp {
     public static View getProjectSpan(String proId){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
-        ((TextView)projectView.findViewById(R.id.project_header_textview)).setText(MyDatabase.getProjectById(proId).project_header);
-        ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan("20127333"));
+
+        ProjectClass project = MyDatabase.getProjectById(proId);
+        ((TextView)projectView.findViewById(R.id.project_header_textview)).setText(project.project_header);
+        for (int i=0; i<project.activityIdList.size(); i++){
+            ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(project.activityIdList.get(i)));
+        }
         return projectView;
     }
 
     private static View getActivitySpan(String actId){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View activityView = layoutInflater.inflate(R.layout.activity_span, null, false);
+        ActivityClass activity = MyDatabase.getActivityById(actId);
+        ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(activity.activity_header);
+        ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(activity.hoster);
+        ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(activity.deadline);
         return activityView;
     }
 }

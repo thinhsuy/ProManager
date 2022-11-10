@@ -4,6 +4,7 @@ package com.example.promanager;
 // NHỮNG GIÁ TRỊ TRONG TRANG NÀY HIỆN CHỈ LÀ GIẢ KHỞI TẠO! database sẽ có thể trả về những giá trị khác
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,10 +31,21 @@ public class MyDatabase {
         return all_project_id;
     }
 
+    //trả về danh sách activityId của 1 project
+    public static ArrayList<String> getActivityIdListByProjectId(String proId){
+        String[] listId = {"20127306", "20127333"};
+
+        //dười này là cách dùng 1 array dynamic, ở java phân biệt rõ dynamic và static array lắm nên chấp nhận ik
+        return new ArrayList<String>(Arrays.asList(listId));
+    }
+
+    //trả về 1 số thông tin quan trọng của activity
     public static ActivityClass getActivityById(String actId){
         ActivityClass activity = new ActivityClass();
         activity.activity_header = "Architecture definition";
         activity.deadline = "Deadline in 2 more days";
+        String hoster = "ThinhSuy";
+        activity.hoster = "Host by " + hoster;
         return activity;
     }
 
@@ -42,11 +54,10 @@ public class MyDatabase {
     public static ProjectClass getProjectById(String proId){
         ProjectClass project = new ProjectClass();
         project.project_header = "Projects Manager";
+
         //dười này là cách dùng 1 array dynamic, ở java phân biệt rõ dynamic và static array lắm nên chấp nhận ik
-        project.activityIdList = new ArrayList<String>(Arrays.asList("20127333", "20127306"));
-        for (int i=0; i< project.activityIdList.size(); i++){
-            project.addActivityList(getActivityById(project.activityIdList.get(i)));
-        }
+        project.activityIdList = getActivityIdListByProjectId(proId);
+
         return project;
     }
 
