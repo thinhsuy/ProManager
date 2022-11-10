@@ -9,7 +9,7 @@
         android:id="@+id/project_header_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="70px">
     </TextView>
     

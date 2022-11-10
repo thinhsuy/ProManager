@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/white_gray"
                 android:textSize="60px"
                 android:text="Your daily plan achivement:"
                 android:layout_marginBottom="25px"/>
@@ -37,13 +37,14 @@
                 app:justifyContent="space_between">
                 <TextView
                     android:id="@+id/numb_of_task_completed"
+                    android:textColor="@color/white_gray"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/percent_of_task_completed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white_gray"
                     android:textSize="45px"
                     android:textStyle="bold"/>
             </com.google.android.flexbox.FlexboxLayout>
@@ -64,12 +65,12 @@
                         android:id="@+id/total_task_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white_gray"
                         android:textSize="70px"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white_gray"
                         android:textSize="50px"
                         android:text="Total tasks"/>
                 </com.google.android.flexbox.FlexboxLayout>
@@ -84,12 +85,12 @@
                         android:id="@+id/total_hour_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white_gray"
                         android:textSize="70px"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white_gray"
                         android:textSize="50px"
                         android:textAlignment="center"
                         android:text="Hours contribution"/>
@@ -103,20 +104,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white_gray"
                     android:textSize="50px"
                     android:text="Overview"/>
                 <TextView
                     android:id="@+id/overview_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white_gray"
                     android:textSize="35px"/>
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Last partner connection:"
-                android:textColor="@color/black"
+                android:textColor="@color/white_gray"
                 android:layout_marginBottom="50px"
                 android:textSize="50px"/>
             <HorizontalScrollView

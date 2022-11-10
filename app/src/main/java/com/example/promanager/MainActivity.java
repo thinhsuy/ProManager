@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
-            String[] titles = {"Activity", "Infor", "Create", "Seek"};
+            String[] titles = {"Activity", "Infor", "Own", "Seek"};
             return titles[position];
         }
     }

@@ -32,7 +32,7 @@
                 android:background="@drawable/bubble_chat"
                 android:paddingLeft="50px"
                 android:paddingRight="50px"
-                android:textColor="@color/black"
+                android:textColor="@color/primary_dark_deep"
                 android:textStyle="bold"
                 android:text="Hello user!">
             </TextView>
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="140px"
             app:tabGravity="center"
-            android:background="@color/primary"
+            android:background="@color/white_gray"
             android:layout_gravity="bottom"/>
     </androidx.viewpager.widget.ViewPager>
 </com.google.android.flexbox.FlexboxLayout>

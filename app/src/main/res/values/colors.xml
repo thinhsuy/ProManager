@@ -7,9 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#C77DFF</color>
-    <color name="primary_light">#99C77DFF</color>
-    <color name="primary_dark">#99240046</color>
+    <color name="primary">#4D240046</color>
+    <color name="primary_light">#66240046</color>
+    <color name="primary_dark">#BF240046</color>
     <color name="primary_dark_deep">#240046</color>
     <color name="white_gray">#DFD3C3</color>
     <color name="shadow_color">#DCD7C9</color>
