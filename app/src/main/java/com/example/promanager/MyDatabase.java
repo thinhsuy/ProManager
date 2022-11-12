@@ -4,11 +4,51 @@ package com.example.promanager;
 // NHỮNG GIÁ TRỊ TRONG TRANG NÀY HIỆN CHỈ LÀ GIẢ KHỞI TẠO! database sẽ có thể trả về những giá trị khác
 
 
+import android.content.Context;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MyDatabase {
+    //cái này chưa cần làm!
+    public static ImageView getAvatarById(Context context, String userId, String size){
+        ImageView image = new ImageView(context);
+        int image_size;
+        if (size=="small") image_size = (int)context.getResources().getDimension(R.dimen.avatar_size_small);
+        else if (size=="tiny") image_size = (int)context.getResources().getDimension(R.dimen.avatar_size_tiny);
+        else image_size = (int)context.getResources().getDimension(R.dimen.avatar_size_medium);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(image_size, image_size);
+        params.setMargins(0,0,25,0);
+        image.setLayoutParams(params);
+        image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+        String link = getLinkAvatarById(userId);
+        new MyInternet.DownloadImageTask(image).execute(link);
+        image.setBackgroundResource(R.drawable.avatar);
+        return image;
+    }
+
+    //cái này chưa cần làm!
+    public static String getLinkAvatarById(String userId){
+        String link = "https://banner2.cleanpng.com/20180625/req/kisspng-computer-icons-avatar-business-computer-software-user-avatar-5b3097fcae25c3.3909949015299112927133.jpg";
+        return link;
+    }
+
+    //trả về số id user hiện respon cho activity
+    public static String[] getResponsibilityUserId(String actId){
+        String[] user_of_respon_id = {"20127306", "20127333", "20127306", "20127333", "20127306"};
+        return user_of_respon_id;
+    }
+
+    //trả về id user khác connection với user
+    public static String[] getConnectedUserId(String myId){
+        String[] user_of_connection_id = {"20127333", "20127306", "20127333", "20127306", "20127333", "20127306", "20127333", "20127306"};
+        return user_of_connection_id;
+    }
+
     //trả về true khi set thông tin ng dùng sign up tới database thành công
     public static boolean setDatabaseRegister(String fullname, String username, String password, String confirm, String about){
         return true;
@@ -25,9 +65,21 @@ public class MyDatabase {
         return userId;
     }
 
-    //trả về toàn bộ tên của project mà người dùng hiện tham gia
+    //trả về toàn bộ id của project mà người dùng hiện phải chủ trì (manager, own)
+    public static String[] getOwnProject(String myId){
+        String[] all_project_id = {"20127306", "20127333"};
+        return all_project_id;
+    }
+
+    //trả về toàn bộ id của project mà người dùng hiện KHÔNG tham gia và KHÔNG phải chủ trì
+    public static String[] getAllProject(String myId){
+        String[] all_project_id = {"20127306", "20127333"};
+        return all_project_id;
+    }
+
+    //trả về toàn bộ id của project mà người dùng hiện tham gia
     public static String[] getCurrentResponProject(String myId){
-        String[] all_project_id = {};
+        String[] all_project_id = {"20127306", "20127333"};
         return all_project_id;
     }
 

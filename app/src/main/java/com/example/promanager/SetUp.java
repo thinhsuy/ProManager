@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -25,15 +26,15 @@ public class SetUp {
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-        String[] all_current_project = MyDatabase.getCurrentResponProject(myId);
-
-        content_container.addView(getProjectSpan("20127306"));
-
-//        int items = 6;
-//        for (int i=0; i<items;i++){
-//            int size = (int)MainActivity.getAppContext().getResources().getDimension(R.dimen.avatar_size_small);
-//            last_connection_container.addView(UserAvatar.generateView("none", size, MainActivity.getAppContext()));
-//        }
+        String[] all_current_project_id = MyDatabase.getCurrentResponProject(myId);
+        for (String proId: all_current_project_id)
+            content_container.addView(getProjectSpan(proId));
+        
+        String[] connectd_user_id = MyDatabase.getConnectedUserId(myId);
+        for (String userId:connectd_user_id) {
+            ImageView avatar = MyDatabase.getAvatarById(MainActivity.getAppContext(), userId, "small");
+            ((LinearLayout)rootView.findViewById(R.id.last_connection_container)).addView(avatar);
+        }
         return rootView;
     }
 
@@ -76,6 +77,38 @@ public class SetUp {
         return rootView;
     }
 
+    public static View getOwnFragment(View rootView, String myId){
+        SearchView searchBar = (SearchView) rootView.findViewById(R.id.search_bar);
+        searchBar.setActivated(true);
+        searchBar.setQueryHint("Search");
+        searchBar.setIconified(false);
+        searchBar.clearFocus();
+
+        LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
+
+        String[] all_current_project_id = MyDatabase.getOwnProject(myId);
+        for (String proId: all_current_project_id) 
+            content_container.addView(getProjectSpan(proId));
+
+        return rootView;
+    }
+
+    public static View getSeekFragment(View rootView, String myId){
+        SearchView searchBar = (SearchView) rootView.findViewById(R.id.search_bar);
+        searchBar.setActivated(true);
+        searchBar.setQueryHint("Search");
+        searchBar.setIconified(false);
+        searchBar.clearFocus();
+
+        LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
+
+        String[] all_current_project_id = MyDatabase.getAllProject(myId);
+        for (String proId: all_current_project_id)
+            content_container.addView(getProjectSpan(proId));
+
+        return rootView;
+    }
+
     public static View getProjectSpan(String proId){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
@@ -95,6 +128,11 @@ public class SetUp {
         ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(activity.activity_header);
         ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(activity.hoster);
         ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(activity.deadline);
+        String[] user_respon_id = MyDatabase.getResponsibilityUserId(actId);
+        for (String userId:user_respon_id) {
+            ImageView avatar = MyDatabase.getAvatarById(MainActivity.getAppContext(), userId, "tiny");
+            ((LinearLayout)activityView.findViewById(R.id.respon_container_layout)).addView(avatar);
+        }
         return activityView;
     }
 }

@@ -22,35 +22,22 @@
                 android:id="@+id/search_bar"
                 android:layout_marginBottom="50px"
                 android:clickable="true"/>
-            <com.google.android.flexbox.FlexboxLayout
-                android:padding="70px"
-                app:flexDirection="column"
-                android:background="@color/primary"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="50px"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="50px"
-                    android:text="Last Connection"/>
-                <HorizontalScrollView
-                    android:scrollbars="none"
-                    android:fillViewport="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:id="@+id/last_connection_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="50px"
-                        android:orientation="horizontal"/>
-                </HorizontalScrollView>
-            </com.google.android.flexbox.FlexboxLayout>
-
         </LinearLayout>
+        
+        <TextView
+            android:textAlignment="center"
+            android:text="My Own Project"
+            android:textSize="50px"
+            android:layout_marginBottom="30px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        
+        <Button
+            android:layout_gravity="center"
+            android:background="@drawable/button"
+            android:text="+ Generate new project"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:id="@+id/content_container_linearlayout"

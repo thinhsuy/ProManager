@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="avatar_size_medium">300px</dimen>
+    <dimen name="avatar_size_medium">250px</dimen>
     <dimen name="avatar_size_small">150px</dimen>
+    <dimen name="avatar_size_tiny">80px</dimen>
 </resources>

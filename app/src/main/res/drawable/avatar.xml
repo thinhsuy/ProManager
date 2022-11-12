@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Bottom Shadow -->
-    <item>
-        <shape  android:shape="oval">
-            <solid android:color="@color/white_gray" />
-        </shape>
-    </item>
-    <!-- White Top color -->
     <item android:bottom="7px" android:left="7px" android:id="@+id/span">
         <shape  android:shape="oval">
             <solid android:color="@color/teal_200" />

@@ -43,7 +43,8 @@ public class MyFragment extends Fragment {
         switch (page){
             case 0: return SetUp.getActivityFragment(inflater.inflate(R.layout.fragment_acitvity, container, false), userId);
             case 1: return SetUp.getInformationFragment(inflater.inflate(R.layout.fragment_infor, container, false), userId);
-            default: return inflater.inflate(R.layout.fragment_infor, container, false);
+            case 2: return SetUp.getOwnFragment(inflater.inflate(R.layout.fragment_own, container, false), userId);
+            default: return SetUp.getSeekFragment(inflater.inflate(R.layout.fragment_seek, container, false), userId);
         }
     }
 }
