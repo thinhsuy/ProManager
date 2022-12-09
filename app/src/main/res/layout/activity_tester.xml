@@ -2,18 +2,149 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="100px"
     android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vpPager"
+    <ScrollView
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.viewpager.widget.PagerTabStrip
-            android:id="@+id/pager_header"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:padding="70px"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp" />
-    </androidx.viewpager.widget.ViewPager>
+            android:background="@drawable/content_container"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="This is content"
+                android:textColor="@color/white"
+                android:textSize="60px"
+                android:layout_margin="10px"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_margin="10px"
+                android:text="Host by somebody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <com.google.android.flexbox.FlexboxLayout
+                app:flexDirection="row"
+                android:layout_margin="10px"
+                app:justifyContent="flex_start"
+                app:alignItems="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_margin="10px"
+                    android:src="@drawable/timer_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_margin="10px"
+                    android:textColor="@color/white"
+                    android:text="Time is out on 14/11/2022"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </com.google.android.flexbox.FlexboxLayout>
+            <TextView
+                android:textColor="@color/white"
+                android:layout_margin="10px"
+                android:textSize="45px"
+                android:text="describe detail:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            
+            <TextView
+                android:text="This activity needs you to continue on moving on your life, try by heart in yourself and improve it, maybe quite hard for you but never give it up. Wanna cry? Just cry! After that please stand up and do everything with 200% power. Until the day that we will meet again, it could be not a good moment for both, but at least, you already tried whole your heart ... if destiny give us a chance or if not, we still be good memories of each other and that moment in future, you would be proud of other. Be strong my girl, my boy!"
+                android:layout_margin="10px"
+                android:textColor="@color/white_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_margin="10px"
+                android:textSize="45px"
+                android:textColor="@color/white"
+                android:text="Current Responsibility: "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:background="@drawable/avatar"
+                    android:layout_marginRight="20px"
+                    android:layout_width="@dimen/avatar_size_tiny"
+                    android:layout_height="@dimen/avatar_size_tiny"/>
+                <ImageView
+                    android:background="@drawable/avatar"
+                    android:layout_marginRight="20px"
+                    android:layout_width="@dimen/avatar_size_tiny"
+                    android:layout_height="@dimen/avatar_size_tiny"/>
+                <ImageView
+                    android:background="@drawable/avatar"
+                    android:layout_marginRight="20px"
+                    android:layout_width="@dimen/avatar_size_tiny"
+                    android:layout_height="@dimen/avatar_size_tiny"/>
+                <ImageView
+                    android:background="@drawable/avatar"
+                    android:layout_marginRight="20px"
+                    android:layout_width="@dimen/avatar_size_tiny"
+                    android:layout_height="@dimen/avatar_size_tiny"/>
+                <ImageView
+                    android:background="@drawable/avatar"
+                    android:layout_marginRight="20px"
+                    android:layout_width="@dimen/avatar_size_tiny"
+                    android:layout_height="@dimen/avatar_size_tiny"/>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_margin="40px"
+                android:layout_height="80px">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@drawable/border_radius_stroke_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+            
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_margin="20px"
+                app:justifyContent="space_between"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                
+                <com.google.android.flexbox.FlexboxLayout
+                    app:flexDirection="column"
+                    app:justifyContent="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="not finished"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text="Rate: 0%"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.flexbox.FlexboxLayout>
+                
+                <Button
+                    android:text="Submit"
+                    android:background="@drawable/button"
+                    android:layout_width="700px"
+                    android:layout_height="130px"/>
+
+            </com.google.android.flexbox.FlexboxLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -45,7 +45,7 @@ public class MyDatabase {
 
     //trả về id user khác connection với user
     public static String[] getConnectedUserId(String myId){
-        String[] user_of_connection_id = {"20127333", "20127306", "20127333", "20127306", "20127333", "20127306", "20127333", "20127306"};
+        String[] user_of_connection_id = {"20127333", "20127306", "20127306", "20127333", "20127306", "20127333", "20127306"};
         return user_of_connection_id;
     }
 
