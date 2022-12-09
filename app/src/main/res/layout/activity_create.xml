@@ -79,32 +79,40 @@
                 android:layout_marginTop="50px"
                 android:layout_marginBottom="20px"
                 android:textSize="40px"/>
-            <com.google.android.flexbox.FlexboxLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="100px"
-                android:background="@drawable/border_radius_stroke_box"
                 app:justifyContent="center"
                 app:alignItems="center"
                 android:layout_marginHorizontal="50px">
-            </com.google.android.flexbox.FlexboxLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_name_tiet"
+                    android:background="@drawable/border_radius_stroke_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Activity Management"
+                android:text="Activity Manager"
                 android:layout_marginHorizontal="50px"
                 android:layout_marginTop="50px"
                 android:layout_marginBottom="20px"
                 android:textSize="40px"/>
-            <com.google.android.flexbox.FlexboxLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="100px"
-                android:background="@drawable/border_radius_stroke_box"
                 app:justifyContent="center"
                 app:alignItems="center"
                 android:layout_marginHorizontal="50px">
-            </com.google.android.flexbox.FlexboxLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_manager_tiet"
+                    android:background="@drawable/border_radius_stroke_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
@@ -114,14 +122,18 @@
                 android:layout_marginTop="50px"
                 android:layout_marginBottom="20px"
                 android:textSize="40px"/>
-            <com.google.android.flexbox.FlexboxLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="100px"
-                android:background="@drawable/border_radius_stroke_box"
                 app:justifyContent="center"
                 app:alignItems="center"
                 android:layout_marginHorizontal="50px">
-            </com.google.android.flexbox.FlexboxLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_deadline_tiet"
+                    android:background="@drawable/border_radius_stroke_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
@@ -131,15 +143,17 @@
                 android:layout_marginTop="50px"
                 android:layout_marginBottom="20px"
                 android:textSize="40px"/>
-            <com.google.android.flexbox.FlexboxLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginBottom="45px"
                 android:layout_width="match_parent"
                 android:layout_height="100px"
-                android:background="@drawable/border_radius_stroke_box"
-                app:justifyContent="center"
-                app:alignItems="center"
-                android:layout_marginHorizontal="50px"
-                android:layout_marginBottom="50px">
-            </com.google.android.flexbox.FlexboxLayout>
+                android:layout_marginHorizontal="50px">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_describe_tiet"
+                    android:background="@drawable/border_radius_stroke_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </com.google.android.flexbox.FlexboxLayout>
 
@@ -150,6 +164,7 @@
             android:layout_height="wrap_content"
             app:justifyContent="flex_end">
             <TextView
+                android:id="@+id/confirm_button"
                 android:layout_width="350px"
                 android:layout_height="wrap_content"
                 android:background="@drawable/submit_button"
