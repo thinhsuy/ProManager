@@ -13,4 +13,8 @@
     <color name="primary_dark_deep">#240046</color>
     <color name="white_gray">#DFD3C3</color>
     <color name="shadow_color">#DCD7C9</color>
+    <color name="gray">#B92C2B2B</color>
+    <color name="light_gray">#737373</color>
+    <color name="light_yellow">#feffbc</color>
+    <color name="light_purple">#F9F1FF</color>
 </resources>
