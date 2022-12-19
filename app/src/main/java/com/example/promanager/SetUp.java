@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class SetUp {
@@ -26,12 +27,12 @@ public class SetUp {
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-        String[] all_current_project_id = MyDatabase.getCurrentResponProject(myId);
+        ArrayList<String> all_current_project_id = MyDatabase.getCurrentResponProject(myId);
         for (String proId: all_current_project_id)
             content_container.addView(getProjectSpan(proId));
         
-        String[] connectd_user_id = MyDatabase.getConnectedUserId(myId);
-        for (String userId:connectd_user_id) {
+        ArrayList<String> connected_user_id = MyDatabase.getConnectedUserId(myId);
+        for (String userId:connected_user_id) {
             ImageView avatar = MyDatabase.getAvatarById(MainActivity.getAppContext(), userId, "small");
             ((LinearLayout)rootView.findViewById(R.id.last_connection_container)).addView(avatar);
         }
@@ -86,7 +87,7 @@ public class SetUp {
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-        String[] all_current_project_id = MyDatabase.getOwnProject(myId);
+        ArrayList<String> all_current_project_id = MyDatabase.getOwnProject(myId);
         for (String proId: all_current_project_id) 
             content_container.addView(getProjectSpan(proId));
 
@@ -128,7 +129,7 @@ public class SetUp {
         ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(activity.activity_header);
         ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(activity.hoster);
         ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(activity.deadline);
-        String[] user_respon_id = MyDatabase.getResponsibilityUserId(actId);
+        ArrayList<String> user_respon_id = MyDatabase.getResponsibilityUserId(actId);
         for (String userId:user_respon_id) {
             ImageView avatar = MyDatabase.getAvatarById(MainActivity.getAppContext(), userId, "tiny");
             ((LinearLayout)activityView.findViewById(R.id.respon_container_layout)).addView(avatar);

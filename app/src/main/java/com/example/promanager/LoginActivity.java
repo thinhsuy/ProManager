@@ -136,8 +136,6 @@ public class LoginActivity extends AppCompatActivity {
         //AchieveActivity TABLE
         db.queryData("INSERT INTO AchieveActivity VALUES ('username1', 'activity3')");
         db.queryData("INSERT INTO AchieveActivity VALUES ('username3', 'activity3')");
-
-
     }
 
     private void set_event_onclick(){

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MyDatabase {
-    Query db;
+    public static Query db;
 
     //cái này chưa cần làm!
     public static ImageView getAvatarById(Context context, String userId, String size){
@@ -79,11 +79,16 @@ public class MyDatabase {
     public static boolean setDatabaseRegister(String fullname, String username, String password, String confirm, String about){
         return true;
         //DB không thể tự xử lí
+        //!! cái này qtrong nên cần giải quyết nhanh
+        //! => cái này giống login, chỉ cần add thêm các thông tin vào như lệnh insert table thôi
     }
 
     //trả về true false khi kiểm tra dữ liệu login của người dùng
     public static boolean checkLogin(String username, String password){
         //DB không thể tự xử lí
+        //!! cái này qtrong nên cần giải quyết nhanh
+        // ! => sao ko thể xử lí nhỉ? m cứ so sánh password và username trùng với nhau thì trả về true thôi
+        //      giống ktra password bth
         return true;
     }
 
@@ -92,6 +97,9 @@ public class MyDatabase {
         String userId = "20127333";
         return userId;
         //DB không thể tự xử lí
+        // !! cái này nó ảnh hưởng hết cả app nên rất qtrong!! cần giải quyết nhanh
+        // ! => cái này lỗi t, sorry t quên nói là sau khi ktra login ở trên thì trả về id của ng login vào
+        //      parameters sẽ có thể thay dổi thêm 2 tham chiếu là username và password
     }
 
     //trả về toàn bộ id của project mà người dùng hiện phải chủ trì (manager, own)
@@ -114,6 +122,10 @@ public class MyDatabase {
         String[] all_project_id = {"20127306", "20127333"};
         return all_project_id;
         // -> KHÔNG tham gia với KHÔNG chủ trì thì vô số, query cái này để làm gì?
+        // ! => caí này trả về toàn bộ project trong newfeeds cho ng dùng tìm kiếm,
+        //      giống như việc trang facebook của m sẽ trả về các bài post ko phải của m phải ko?
+        //      cái này tạo ra 1 môi trường project mà ng dùng chưa tham gia de họ có cơ hội tham gia
+        //      Nhìu là dúng rồi vì càng nhìu càng tốt!!
     }
 
     //trả về toàn bộ id của project mà người dùng hiện tham gia
@@ -214,6 +226,8 @@ public class MyDatabase {
     //? -> Chẳng lẽ cứ tham gia 1 activity là thời gian tham gia của người đó phải cộng thêm khoảng thời
     //     gian từ lúc bắt đầu cho đến khi deadline à, thời gian tgia này nên là tgian nhận cho đến khi làm xong
     //     nên để update sau này, chứ ko cần thiết làm vậy
+    //! => Thời gian chỉ là thời gian project user trong deadline thôi, tức là tổng tg deadline user có dc
+    //      vd: userA có 1 deadline 2 ngày, 1 deadline 3 ngày. Vậy tổng tg là 5 ngày = 120h
     public static int getTotalHour(String myId){
         int total_hour = 300;
 
@@ -231,6 +245,4 @@ public class MyDatabase {
         String overview = "Here is my overview, Here is my overview, Here is my overview, Here is my overview";
         return overview;
     }
-
-
 }
