@@ -5,14 +5,24 @@ package com.example.promanager;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MyDatabase {
+    Query db;
+
     //cái này chưa cần làm!
     public static ImageView getAvatarById(Context context, String userId, String size){
         ImageView image = new ImageView(context);
@@ -38,24 +48,42 @@ public class MyDatabase {
     }
 
     //trả về số id user hiện respon cho activity
-    public static String[] getResponsibilityUserId(String actId){
-        String[] user_of_respon_id = {"20127306", "20127333", "20127306", "20127333", "20127306"};
+    public static ArrayList<String> getResponsibilityUserId(String actId){
+        ArrayList<String> user_of_respon_id = new ArrayList<String>();
+
+        String strGetResponsibilityUserId = "SELECT username FROM UserResponActivity WHERE activityID = '"+actId+"'";
+        Cursor getResponsibilityUserId = db.getData(strGetResponsibilityUserId);
+        while(getResponsibilityUserId.moveToNext()){
+            String username = getResponsibilityUserId.getString(0);
+            user_of_respon_id.add(username);
+        }
         return user_of_respon_id;
     }
 
+
     //trả về id user khác connection với user
-    public static String[] getConnectedUserId(String myId){
-        String[] user_of_connection_id = {"20127333", "20127306", "20127306", "20127333", "20127306", "20127333", "20127306"};
+    public static ArrayList<String> getConnectedUserId(String myId){
+        ArrayList<String> user_of_connection_id = new ArrayList<String>();
+
+        String strGetConnectedUserId = "SELECT usernameA FROM UserConnection WHERE usernameB = '"+myId+"'";
+
+        Cursor connectedUserId = db.getData(strGetConnectedUserId);
+        while(connectedUserId.moveToNext()){
+            String username = connectedUserId.getString(0);
+            user_of_connection_id.add(username);
+        }
         return user_of_connection_id;
     }
 
     //trả về true khi set thông tin ng dùng sign up tới database thành công
     public static boolean setDatabaseRegister(String fullname, String username, String password, String confirm, String about){
         return true;
+        //DB không thể tự xử lí
     }
 
     //trả về true false khi kiểm tra dữ liệu login của người dùng
     public static boolean checkLogin(String username, String password){
+        //DB không thể tự xử lí
         return true;
     }
 
@@ -63,32 +91,61 @@ public class MyDatabase {
     public static String getCurrentUserId(){
         String userId = "20127333";
         return userId;
+        //DB không thể tự xử lí
     }
 
     //trả về toàn bộ id của project mà người dùng hiện phải chủ trì (manager, own)
-    public static String[] getOwnProject(String myId){
-        String[] all_project_id = {"20127306", "20127333"};
-        return all_project_id;
+    public static ArrayList<String> getOwnProject(String myId){
+        ArrayList<String> all_own_projects= new ArrayList<String>();
+
+        String strGetOwnProject = "SELECT projectID FROM Project WHERE projectOwner = '"+myId+"'";
+
+        Cursor OwnProject = db.getData(strGetOwnProject);
+        while(OwnProject.moveToNext()){
+            String projectID = OwnProject.getString(0);
+            all_own_projects.add(projectID);
+        }
+
+        return all_own_projects;
     }
 
     //trả về toàn bộ id của project mà người dùng hiện KHÔNG tham gia và KHÔNG phải chủ trì
     public static String[] getAllProject(String myId){
         String[] all_project_id = {"20127306", "20127333"};
         return all_project_id;
+        // -> KHÔNG tham gia với KHÔNG chủ trì thì vô số, query cái này để làm gì?
     }
 
     //trả về toàn bộ id của project mà người dùng hiện tham gia
-    public static String[] getCurrentResponProject(String myId){
-        String[] all_project_id = {"20127306", "20127333"};
-        return all_project_id;
+    public static ArrayList<String> getCurrentResponProject(String myId){
+
+        ArrayList<String> all_project_ids= new ArrayList<String>();
+
+        String strGetOwnProject = "SELECT projectID FROM UserResponProject WHERE username = '"+myId+"'";
+
+        Cursor CurrentResponProject = db.getData(strGetOwnProject);
+        while(CurrentResponProject.moveToNext()){
+            String projectID = CurrentResponProject.getString(0);
+            all_project_ids.add(projectID);
+        }
+
+        return all_project_ids;
     }
 
     //trả về danh sách activityId của 1 project
     public static ArrayList<String> getActivityIdListByProjectId(String proId){
-        String[] listId = {"20127306", "20127333"};
 
-        //dười này là cách dùng 1 array dynamic, ở java phân biệt rõ dynamic và static array lắm nên chấp nhận ik
-        return new ArrayList<String>(Arrays.asList(listId));
+        ArrayList<String> listId= new ArrayList<String>();
+
+        String strGetOwnProject = "SELECT activityID FROM ActivityInProject WHERE projectID = '"+proId+"'";
+
+        Cursor ActivityIdListByProjectId = db.getData(strGetOwnProject);
+        while(ActivityIdListByProjectId.moveToNext()){
+            String activityItem = ActivityIdListByProjectId.getString(0);
+            listId.add(activityItem);
+        }
+
+        return listId;
     }
 
     //trả về 1 số thông tin quan trọng của activity
@@ -113,28 +170,59 @@ public class MyDatabase {
         return project;
     }
 
-    //trả về số task mà người dùng còn trong deadline
+    //trả về số task mà người dùng còn trong deadline (CurrentTasks)
     public static int getCurrentTasks(String myId){
-        int current_task = 6;
+        int current_task;
+
+        String strCountCurrentTask = "SELECT COUNT(currentTask) FROM UserInfo WHERE username = '"+myId+"'";
+
+        Cursor CurrentTasks = db.getData(strCountCurrentTask);
+        String countCurrentTask = CurrentTasks.getString(0);
+        current_task = Integer.parseInt(countCurrentTask);
+
         return current_task;
     }
 
     //trả về số task mà người dùng còn trong deadline nhưng hoàn thành rồi
     public static int getCurrentFinishedTasks(String myId){
-        int finished_task = 5;
+        int finished_task;
+
+        String strCountCurrentFinishedTasks = "SELECT COUNT(currentFinished) FROM UserInfo WHERE username = '"+myId+"'";
+
+        Cursor CurrentFinishedTasks = db.getData(strCountCurrentFinishedTasks);
+        String countCurrentFinishedTask = CurrentFinishedTasks.getString(0);
+        finished_task = Integer.parseInt(countCurrentFinishedTask);
+
         return finished_task;
     }
 
     //trả về tổng số task mà người dùng hoàn thành từ trc tới giờ
     public static int getTotalTasks(String myId){
         int total_task = 16;
+
+        String strTotalTasks = "SELECT COUNT(totalTasks) FROM UserInfo WHERE username = '"+myId+"'";
+
+        Cursor TotalTasks = db.getData(strTotalTasks);
+        String countTotalTask = TotalTasks.getString(0);
+        total_task = Integer.parseInt(countTotalTask);
+
         return total_task;
     }
 
     //trả về số thời gian người dùng tham gia từ trc tới giờ
     //trong activity sẽ có thời gian sẽ có thời gian deadline, cứ cộng thời gian lại là dc
+    //? -> Chẳng lẽ cứ tham gia 1 activity là thời gian tham gia của người đó phải cộng thêm khoảng thời
+    //     gian từ lúc bắt đầu cho đến khi deadline à, thời gian tgia này nên là tgian nhận cho đến khi làm xong
+    //     nên để update sau này, chứ ko cần thiết làm vậy
     public static int getTotalHour(String myId){
         int total_hour = 300;
+
+        String strTotalHours = "SELECT COUNT(totalHour) FROM UserInfo WHERE username = '"+myId+"'";
+
+        Cursor TotalHours = db.getData(strTotalHours);
+        String countTotalHour = TotalHours.getString(0);
+        total_hour = Integer.parseInt(countTotalHour);
+
         return total_hour;
     }
 
@@ -143,4 +231,6 @@ public class MyDatabase {
         String overview = "Here is my overview, Here is my overview, Here is my overview, Here is my overview";
         return overview;
     }
+
+
 }
