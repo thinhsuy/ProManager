@@ -58,12 +58,12 @@
                 android:layout_width="800px"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fullname_textinputlayout"
+                    android:id="@+id/email_textinputlayout"
                     app:endIconMode="clear_text"
                     android:layout_width="800px"
                     android:layout_height="200px"
-                    android:text="input fullname"
-                    android:hint="your fullname"
+                    android:text="input email"
+                    android:hint="Email"
                     app:boxStrokeColor="#98A8F8">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                     android:layout_width="800px"
                     android:layout_height="200px"
                     android:text="input username"
-                    android:hint="username"
+                    android:hint="Username"
                     app:boxStrokeColor="#98A8F8">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                     android:layout_height="200px"
                     app:endIconMode="password_toggle"
                     android:text="input password"
-                    android:hint="password"
+                    android:hint="Password"
                     app:boxStrokeColor="#98A8F8">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                     android:layout_height="200px"
                     app:endIconMode="password_toggle"
                     android:text="confirm password"
-                    android:hint="confirm password"
+                    android:hint="Confirm password"
                     app:boxStrokeColor="#98A8F8">
                     <com.google.android.material.textfield.TextInputEditText
                         android:inputType="textPassword"
@@ -107,11 +107,22 @@
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phone_textinputlayout"
+                    android:layout_width="800px"
+                    android:layout_height="200px"
+                    android:text="tell us little about you"
+                    android:hint="Phone number"
+                    app:boxStrokeColor="#98A8F8">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/about_textinputlayout"
                     android:layout_width="800px"
                     android:layout_height="200px"
                     android:text="tell us little about you"
-                    android:hint="tell us little about you"
+                    android:hint="Tell us little about you"
                     app:boxStrokeColor="#98A8F8">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

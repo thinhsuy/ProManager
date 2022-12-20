@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         set_event_onclick();
         ((GlobalVar)this.getApplication()).setLocalQuery(new Query(this, "ProManager1.sqlite", null, 1));
         Log.e("Query", "Generated!");
-        ((GlobalVar)this.getApplication()).setMssv(20127333);
 
         // Create table
 //        String createUserInfo = "CREATE TABLE IF NOT EXISTS UserInfo(username VARCHAR(100) PRIMARY KEY," +

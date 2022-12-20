@@ -6,9 +6,6 @@ import android.util.Log;
 //((Global)this.getApplication()).setMyDB(myDB)
 
 public class GlobalVar extends Application {
-    public int mssv;
-    public void setMssv(int ms) {mssv=ms;}
-    public int getMssv() {return mssv;}
     public Query db;
     public void setLocalQuery(Query query) {
         Log.e("GlobalVar", "Set up db");
