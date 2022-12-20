@@ -103,7 +103,7 @@ public class SetUp {
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-        String[] all_current_project_id = MyDatabase.getAllProject(myId);
+        ArrayList<String> all_current_project_id = MyDatabase.getAllProject(myId);
         for (String proId: all_current_project_id)
             content_container.addView(getProjectSpan(proId));
 

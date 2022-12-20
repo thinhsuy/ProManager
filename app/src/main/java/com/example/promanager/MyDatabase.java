@@ -76,20 +76,30 @@ public class MyDatabase {
     }
 
     //trả về true khi set thông tin ng dùng sign up tới database thành công
-    public static boolean setDatabaseRegister(String fullname, String username, String password, String confirm, String about){
-        return true;
-        //DB không thể tự xử lí
-        //!! cái này qtrong nên cần giải quyết nhanh
-        //! => cái này giống login, chỉ cần add thêm các thông tin vào như lệnh insert table thôi
+    public static boolean setDatabaseRegister(String fullname, String username, String password, String email, String phonenumber, String confirm, String about){
+
+        try{
+            db.queryData("INSERT INTO UserInfo " +
+                    "VALUES ('"+username+"', '"+password+"', '"+email+"', '"+phonenumber+"', '"+fullname+"', '"+about+"', NULL, NULL, NULL, NULL)");
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     //trả về true false khi kiểm tra dữ liệu login của người dùng
     public static boolean checkLogin(String username, String password){
-        //DB không thể tự xử lí
-        //!! cái này qtrong nên cần giải quyết nhanh
-        // ! => sao ko thể xử lí nhỉ? m cứ so sánh password và username trùng với nhau thì trả về true thôi
-        //      giống ktra password bth
-        return true;
+
+        String strUser = "SELECT COUNT(totalTasks) FROM UserInfo WHERE username = '"+username+"' AND password = '"+password+"'";
+
+        Cursor TotalTasks = db.getData(strUser);
+        String countUser = TotalTasks.getString(0);
+        if(Integer.parseInt(countUser) == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     //trả về id (username) của người dùng hiện tại
@@ -118,14 +128,24 @@ public class MyDatabase {
     }
 
     //trả về toàn bộ id của project mà người dùng hiện KHÔNG tham gia và KHÔNG phải chủ trì
-    public static String[] getAllProject(String myId){
-        String[] all_project_id = {"20127306", "20127333"};
+    public static ArrayList<String> getAllProject(String myId){
+        ArrayList<String> all_project_id = new ArrayList<String>();
+
+        String strProjectID1 = "SELECT projectID FROM UserResponProject WHERE username != '"+myId+"'";
+        String strProjectID2 = "SELECT projectID FROM Project WHERE projectOwner != '"+myId+"'";
+
+        Cursor CurrentResponProject1 = db.getData(strProjectID1);
+        Cursor CurrentResponProject2 = db.getData(strProjectID2);
+        while(CurrentResponProject1.moveToNext()){
+            String projectID = CurrentResponProject1.getString(0);
+            all_project_id.add(projectID);
+        }
+        while(CurrentResponProject2.moveToNext()){
+            String projectID = CurrentResponProject2.getString(0);
+            all_project_id.add(projectID);
+        }
+
         return all_project_id;
-        // -> KHÔNG tham gia với KHÔNG chủ trì thì vô số, query cái này để làm gì?
-        // ! => caí này trả về toàn bộ project trong newfeeds cho ng dùng tìm kiếm,
-        //      giống như việc trang facebook của m sẽ trả về các bài post ko phải của m phải ko?
-        //      cái này tạo ra 1 môi trường project mà ng dùng chưa tham gia de họ có cơ hội tham gia
-        //      Nhìu là dúng rồi vì càng nhìu càng tốt!!
     }
 
     //trả về toàn bộ id của project mà người dùng hiện tham gia

@@ -16,6 +16,12 @@
         android:theme="@style/Theme.ProManager"
         tools:targetApi="31">
         <activity
+            android:name=".EnterOTP_Firebase"
+            android:exported="false" />
+        <activity
+            android:name=".Verify_Phone_Number_Firebase"
+            android:exported="false" />
+        <activity
             android:name=".CreateActivity"
             android:exported="false" />
         <activity

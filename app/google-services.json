@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "103548880135",
+    "project_id": "promanager-account",
+    "storage_bucket": "promanager-account.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103548880135:android:bcca9d1d76935b3f46f1a2",
+        "android_client_info": {
+          "package_name": "com.example.promanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103548880135-otut02o7svv015ser1rj6qrbikue3cga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.promanager",
+            "certificate_hash": "6a420704743668f6b549dca3cc4afbdaad5505c3"
+          }
+        },
+        {
+          "client_id": "103548880135-i54sqiitosjn646elda0pglojav9anl7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl1DnMn3Y8DT66lpt5WqIKSTh722AQiAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103548880135-i54sqiitosjn646elda0pglojav9anl7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
