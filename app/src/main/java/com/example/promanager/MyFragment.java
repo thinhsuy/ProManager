@@ -16,6 +16,7 @@ public class MyFragment extends Fragment {
     // Store instance variables
     private int page;
     private String userId;
+    public Query db;
 
     // newInstance constructor for creating fragment with arguments
     public static MyFragment newInstance(int page, String userId) {
@@ -31,6 +32,7 @@ public class MyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = ((GlobalVar)getActivity().getApplication()).getLocalQuery();
         page = getArguments().getInt("someInt", 0);
         userId = getArguments().getString("User Id", "none");
     }
@@ -41,10 +43,10 @@ public class MyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         switch (page){
-            case 0: return SetUp.getActivityFragment(inflater.inflate(R.layout.fragment_acitvity, container, false), userId);
-            case 1: return SetUp.getInformationFragment(inflater.inflate(R.layout.fragment_infor, container, false), userId);
-            case 2: return SetUp.getOwnFragment(inflater.inflate(R.layout.fragment_own, container, false), userId);
-            default: return SetUp.getSeekFragment(inflater.inflate(R.layout.fragment_seek, container, false), userId);
+            case 0: return SetUp.getActivityFragment(db, inflater.inflate(R.layout.fragment_acitvity, container, false), userId);
+            case 1: return SetUp.getInformationFragment(db, inflater.inflate(R.layout.fragment_infor, container, false), userId);
+            case 2: return SetUp.getOwnFragment(db, inflater.inflate(R.layout.fragment_own, container, false), userId);
+            default: return SetUp.getSeekFragment(db, inflater.inflate(R.layout.fragment_seek, container, false), userId);
         }
     }
 }

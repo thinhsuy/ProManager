@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forget_password_tv;
     private TextInputLayout username_til;
     private TextInputLayout password_til;
-    Query db;
+    public Query db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         username_til = (TextInputLayout) findViewById(R.id.username_textinputlayout);
         password_til = (TextInputLayout) findViewById(R.id.password_textinputlayout);
         set_event_onclick();
-
-        db = new Query(this, "ProManager1.sqlite", null, 1);
+        ((GlobalVar)this.getApplication()).setLocalQuery(new Query(this, "ProManager1.sqlite", null, 1));
+        Log.e("Query", "Generated!");
+        ((GlobalVar)this.getApplication()).setMssv(20127333);
 
         // Create table
 //        String createUserInfo = "CREATE TABLE IF NOT EXISTS UserInfo(username VARCHAR(100) PRIMARY KEY," +
@@ -154,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //after checking, if not vaild -> do nothing, else -> move to next activity
 //                if (!check_infor_textfield()) return;
+                Log.e("Login button", "access!");
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         });
@@ -181,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.e("Username", username);
         Log.e("Password", password);
         //check database here
-        if (username.equals("") || password.equals("") || !MyDatabase.checkLogin(username, password))
+        if (username.equals("") || password.equals("") || !MyDatabase.checkLogin(db, username, password))
             return false;
         else return true;
     }

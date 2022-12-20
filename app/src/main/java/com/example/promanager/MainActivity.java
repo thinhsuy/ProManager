@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.google.android.material.tabs.TabLayout;
@@ -15,10 +16,11 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    public Query db;
     private static Context context;
     FragmentPagerAdapter adapterViewPager;
     public TabLayout tabLayout;
-    public static String userId = MyDatabase.getCurrentUserId();
+    public String userId;
     public static Context getAppContext() {
         return MainActivity.context;
     }
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MainActivity.context = getApplicationContext();
+        db = ((GlobalVar)this.getApplication()).getLocalQuery();
+        userId = MyDatabase.getCurrentUserId(db);
         tabLayout = (TabLayout) findViewById(R.id.pager_tablayout);
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
@@ -53,11 +57,12 @@ public class MainActivity extends AppCompatActivity {
                 // Code goes here
             }
         });
+        Log.e("User login defined", userId);
     }
 
 
-    public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 4;
+    public class MyPagerAdapter extends FragmentPagerAdapter {
+        private int NUM_ITEMS = 4;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);

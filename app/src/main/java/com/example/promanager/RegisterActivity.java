@@ -31,11 +31,13 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     Button sign_up_btn;
     TextView login_tv;
+    public Query db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        db = ((GlobalVar)this.getApplication()).getLocalQuery();
         mAuth = FirebaseAuth.getInstance(); //Firebase
         progressDialog = new ProgressDialog(this);
         sign_up_btn = (Button) findViewById(R.id.sign_up_btn);
@@ -79,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         //set database here
         if (fullname.equals("") || username.equals("") || password.equals("") || email.equals("") || phonenumber.equals("") || confirm.equals("") || about.equals(""))
             return false;
-        else if (!MyDatabase.setDatabaseRegister(fullname, username, password, email, phonenumber,confirm, about))
+        else if (!MyDatabase.setDatabaseRegister(db, fullname, username, password, email, phonenumber,confirm, about))
             return false;
         else return true;
     }
