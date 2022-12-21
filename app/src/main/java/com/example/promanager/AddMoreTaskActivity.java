@@ -3,6 +3,8 @@ package com.example.promanager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class AddMoreTaskActivity extends AppCompatActivity {
 
@@ -10,5 +12,6 @@ public class AddMoreTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_more_task);
+        
     }
 }

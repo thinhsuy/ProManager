@@ -162,7 +162,17 @@
             android:layout_marginBottom="180px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:justifyContent="flex_end">
+            app:justifyContent="space_between">
+            <TextView
+                android:id="@+id/cancel_button"
+                android:layout_width="350px"
+                android:layout_height="wrap_content"
+                android:background="@drawable/submit_button"
+                android:padding="25px"
+                android:text="Cancel"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textSize="40px"/>
             <TextView
                 android:id="@+id/confirm_button"
                 android:layout_width="350px"
@@ -173,6 +183,7 @@
                 android:textColor="@color/black"
                 android:textAlignment="center"
                 android:textSize="40px"/>
+
         </com.google.android.flexbox.FlexboxLayout>
     </com.google.android.flexbox.FlexboxLayout>
 

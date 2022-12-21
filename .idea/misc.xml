@@ -38,11 +38,20 @@
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManager/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1895" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/drawable/border_form.xml" value="0.2015" />
-        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_add_more_task.xml" value="0.12158054711246201" />
-        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_forget_password.xml" value="0.12158054711246201" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/drawable/information_span.xml" value="0.121" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_add_more_task.xml" value="0.1274062816616008" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_create.xml" value="0.1035015447991761" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_enter_otp.xml" value="0.12158054711246201" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_forget_password.xml" value="0.25" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_login.xml" value="0.12158054711246201" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_main.xml" value="0.12158054711246201" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_notification.xml" value="0.25" />
-        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_register.xml" value="0.2" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_span.xml" value="0.12158054711246201" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_task_infor.xml" value="0.12158054711246201" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_verify_phone_number.xml" value="0.12158054711246201" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/fragment_own.xml" value="0.12158054711246201" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/project_span.xml" value="0.12158054711246201" />
       </map>
     </option>
   </component>
@@ -51,5 +60,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.2" />
+      </ProjectState>
+    </option>
   </component>
 </project>

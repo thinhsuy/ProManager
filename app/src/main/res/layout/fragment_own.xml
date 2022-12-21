@@ -32,10 +32,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         
-        <Button
+        <TextView
+            android:height="170px"
+            android:width="700px"
+            android:id="@+id/generate_new_btn"
             android:layout_gravity="center"
+            android:gravity="center"
             android:background="@drawable/button"
             android:text="+ Generate new project"
+            android:textColor="@color/white"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

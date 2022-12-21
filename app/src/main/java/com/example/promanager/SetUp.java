@@ -1,6 +1,9 @@
 package com.example.promanager;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import androidx.wear.tiles.material.Button;
 
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayout;
@@ -29,7 +34,7 @@ public class SetUp {
 
         ArrayList<String> all_current_project_id = MyDatabase.getCurrentResponProject(db, myId);
         for (String proId: all_current_project_id)
-            content_container.addView(getProjectSpan(db, proId));
+            content_container.addView(getProjectSpan(db, proId, "Manage"));
         
         ArrayList<String> connected_user_id = MyDatabase.getConnectedUserId(db, myId);
         for (String userId:connected_user_id) {
@@ -90,11 +95,21 @@ public class SetUp {
         searchBar.setIconified(false);
         searchBar.clearFocus();
 
+        ((TextView) rootView.findViewById(R.id.generate_new_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Application application = (Application) MainActivity.getAppContext().getApplicationContext();
+                Intent intent = new Intent(application, CreateActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                application.startActivity(intent);
+            }
+        });
+
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
         ArrayList<String> all_current_project_id = MyDatabase.getOwnProject(db, myId);
         for (String proId: all_current_project_id) 
-            content_container.addView(getProjectSpan(db, proId));
+            content_container.addView(getProjectSpan(db, proId, "Own"));
 
         if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
         return rootView;
@@ -111,7 +126,7 @@ public class SetUp {
 
         ArrayList<String> all_current_project_id = MyDatabase.getAllProject(db, myId);
         for (String proId: all_current_project_id)
-            content_container.addView(getProjectSpan(db, proId));
+            content_container.addView(getProjectSpan(db, proId, "Seek"));
         return rootView;
     }
 
@@ -134,7 +149,7 @@ public class SetUp {
         return activityView;
     }
 
-    public static View getProjectSpan(Query db, String proId){
+    public static View getProjectSpan(Query db, String proId, String page){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
 
@@ -142,6 +157,7 @@ public class SetUp {
         ((TextView)projectView.findViewById(R.id.project_header_textview)).setText(project.project_header);
         for (int i=0; i<project.activityIdList.size(); i++){
             ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.activityIdList.get(i)));
+
         }
         return projectView;
     }
@@ -158,6 +174,19 @@ public class SetUp {
             ImageView avatar = MyDatabase.getAvatarById(db, MainActivity.getAppContext(), userId, "tiny");
             ((LinearLayout)activityView.findViewById(R.id.respon_container_layout)).addView(avatar);
         }
+        ((FlexboxLayout)activityView.findViewById(R.id.activity_container)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Application application = (Application) MainActivity.getAppContext().getApplicationContext();
+                Intent intent = new Intent(application, TaskInforActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("activity_id", "20127333");
+                intent.putExtras(bundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                application.startActivity(intent);
+            }
+        });
+
         return activityView;
     }
 }

@@ -42,7 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         sign_up_btn = (Button) findViewById(R.id.sign_up_btn);
         login_tv = (TextView) findViewById(R.id.login_textview);
-        fullname_til = (TextInputLayout)findViewById(R.id.fullname_textinputlayout);
         username_til = (TextInputLayout)findViewById(R.id.username_textinputlayout);
         password_til = (TextInputLayout)findViewById(R.id.password_textinputlayout);
         confirm_til = (TextInputLayout)findViewById(R.id.confirm_textinputlayout);

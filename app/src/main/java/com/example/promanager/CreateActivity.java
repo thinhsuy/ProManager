@@ -2,6 +2,7 @@ package com.example.promanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,13 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addInformation();
+            }
+        });
+
+        ((TextView)findViewById(R.id.cancel_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CreateActivity.this, MainActivity.class));
             }
         });
     }

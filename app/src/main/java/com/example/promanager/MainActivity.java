@@ -7,9 +7,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -57,7 +61,14 @@ public class MainActivity extends AppCompatActivity {
                 // Code goes here
             }
         });
-        Log.e("User login defined", userId);
+
+
+        ((ImageView)findViewById(R.id.notification_icon)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+            }
+        });
     }
 
 

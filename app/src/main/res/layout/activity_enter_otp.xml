@@ -16,12 +16,15 @@
         android:textSize="16sp"
         android:hint="Enter OTP in your phone" />
 
-    <Button
+    <TextView
+        android:gravity="center"
+        android:height="150px"
         android:id="@+id/btn_send_otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:textColor="@color/white"
+        android:background="@drawable/button"
         android:text="Send OTP" />
 
     <TextView

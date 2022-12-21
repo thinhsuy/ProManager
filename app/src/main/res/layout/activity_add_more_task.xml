@@ -27,6 +27,7 @@
             app:justifyContent="flex_start"
             android:layout_marginBottom="25px">
             <TextView
+                android:id="@+id/back_btn"
                 android:layout_width="250px"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"

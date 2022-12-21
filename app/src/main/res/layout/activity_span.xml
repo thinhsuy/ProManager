@@ -8,6 +8,7 @@
     android:paddingLeft="25px"
     android:paddingRight="25px"
     android:layout_width="match_parent"
+    android:id="@+id/activity_container"
     android:layout_height="wrap_content">
 
     <com.google.android.flexbox.FlexboxLayout
