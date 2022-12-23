@@ -2,7 +2,10 @@ package com.example.promanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 public class NotificationActivity extends AppCompatActivity {
 
@@ -10,5 +13,19 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        ((TextView)findViewById(R.id.back_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NotificationActivity.this, MainActivity.class));
+            }
+        });
+
+        ((TextView)findViewById(R.id.checkRequest_textview)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NotificationActivity.this, TaskRequestActivity.class));
+            }
+        });
     }
+
 }

@@ -26,6 +26,7 @@
                 android:layout_height="@dimen/avatar_size_medium"
                 android:background="@drawable/avatar"/>
             <TextView
+                android:id="@+id/user_bubble_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="130px"
                 android:gravity="center_vertical"

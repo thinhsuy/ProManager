@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import org.w3c.dom.Text;
+
 import java.util.Set;
 
 public class MyFragment extends Fragment {
@@ -17,14 +19,16 @@ public class MyFragment extends Fragment {
     private int page;
     private String userId;
     public Query db;
+    public static View BubbleView;
 
     // newInstance constructor for creating fragment with arguments
-    public static MyFragment newInstance(int page, String userId) {
+    public static MyFragment newInstance(int page, String userId, View viewChange) {
         MyFragment fragmentFirst = new MyFragment();
         Bundle args = new Bundle();
         args.putInt("someInt", page);
         args.putString("User Id", userId);
         fragmentFirst.setArguments(args);
+        BubbleView = viewChange;
         return fragmentFirst;
     }
 
@@ -42,11 +46,24 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        TextView bubble = (BubbleView.findViewById(R.id.user_bubble_textview));
         switch (page){
-            case 0: return SetUp.getActivityFragment(db, inflater.inflate(R.layout.fragment_acitvity, container, false), userId);
-            case 1: return SetUp.getInformationFragment(db, inflater.inflate(R.layout.fragment_infor, container, false), userId);
-            case 2: return SetUp.getOwnFragment(db, inflater.inflate(R.layout.fragment_own, container, false), userId);
-            default: return SetUp.getSeekFragment(db, inflater.inflate(R.layout.fragment_seek, container, false), userId);
+            case 0: {
+                bubble.setText("How about your tasks?");
+                return SetUp.getActivityFragment(db, inflater.inflate(R.layout.fragment_acitvity, container, false), userId);
+            } case 1: {
+                bubble.setText("Reviewing yourself now?!");
+                return SetUp.getInformationFragment(db, inflater.inflate(R.layout.fragment_infor, container, false), userId);
+            }
+            case 2: {
+                bubble.setText("Be a nice manager");
+                return SetUp.getOwnFragment(db, inflater.inflate(R.layout.fragment_own, container, false), userId);
+            }
+            case 3: {
+                bubble.setText("So bored, let's work");
+                return SetUp.getSeekFragment(db, inflater.inflate(R.layout.fragment_seek, container, false), userId);
+            }
+            default: {return null;}
         }
     }
 }

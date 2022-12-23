@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/primary"
-    tools:context=".TaskInforActivity">
+    tools:context=".ProjectInforActivity">
 
     <com.google.android.flexbox.FlexboxLayout
         app:flexDirection="column"
@@ -20,6 +20,22 @@
         android:paddingBottom="70px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:justifyContent="flex_start"
+            android:layout_marginBottom="25px">
+            <TextView
+                android:id="@+id/back_btn"
+                android:layout_width="250px"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button"
+                android:padding="35px"
+                android:text="Back"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="40px"/>
+        </com.google.android.flexbox.FlexboxLayout>
         <TextView
             android:id="@+id/hoster_textview"
             android:textSize="60px"
@@ -76,10 +92,39 @@
         <TextView
             android:textColor="@color/gray"
             android:textSize="32px"
-            android:text="This activity needs you to continue on moving on your life, try by heart in yourself and improve it, maybe quite hard for you but never give it up. Wanna cry? Just cry! After that please stand up and do everything with 200% power. Until the day that we will meet again, it could be not a good moment for both, but at least, you already tried whole your heart ... if destiny give us a chance or if not, we still be good memories of each other and that moment in future, you would be proud of other. Be strong my girl, my boy!"
+            android:text="Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes
+Produce reports and organise data.
+Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes
+Produce reports and organise data."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15px"/>
+
+        <TextView
+            android:textColor="@color/primary_dark_deep"
+            android:textSize="30px"
+            android:textStyle="bold"
+            android:text="Activity Related: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"/>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:background="@drawable/button"
+            app:justifyContent="center"
+            app:alignItems="center"
+            android:layout_marginTop="40px">
+            <TextView
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Activity name"
+                android:gravity="center"
+                android:layout_marginRight="50px"
+                android:textSize="40px"/>
+        </com.google.android.flexbox.FlexboxLayout>
 
         <TextView
             android:textColor="@color/primary_dark_deep"
@@ -128,87 +173,5 @@
                 android:background="@drawable/avatar"/>
         </com.google.android.flexbox.FlexboxLayout>
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:background="@drawable/border_radius_stroke_box"
-            app:justifyContent="center"
-            app:alignItems="center"
-            android:layout_marginTop="40px">
-            <TextView
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Select file"
-                android:gravity="right"
-                android:layout_marginRight="50px"
-                android:textSize="40px"/>
-        </com.google.android.flexbox.FlexboxLayout>
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:justifyContent="center"
-            app:alignItems="center"
-            android:layout_gravity="right"
-            android:layout_marginTop="60px">
-            <ImageView
-                android:layout_width="30px"
-                android:layout_height="30px"
-                android:background="@drawable/status_circle"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="not finished"
-                android:textSize="35px"
-                android:textColor="@color/black"
-                android:layout_marginLeft="32px"/>
-        </com.google.android.flexbox.FlexboxLayout>
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:justifyContent="center"
-            app:alignItems="center"
-            android:layout_marginTop="40px">
-            <ImageView
-                android:layout_width="45px"
-                android:layout_height="45px"
-                android:background="@drawable/submit_icon"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rate: 0%"
-                android:textSize="35px"
-                android:textColor="@color/black"
-                android:layout_marginLeft="20px"/>
-        </com.google.android.flexbox.FlexboxLayout>
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_marginTop="40px"
-            android:layout_marginBottom="180px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:justifyContent="space_between">
-            <TextView
-                android:id="@+id/back_btn"
-                android:layout_width="350px"
-                android:layout_height="wrap_content"
-                android:background="@drawable/submit_button"
-                android:padding="25px"
-                android:text="Back"
-                android:textColor="@color/black"
-                android:textAlignment="center"
-                android:textSize="40px"/>
-            <TextView
-                android:layout_width="350px"
-                android:layout_height="wrap_content"
-                android:background="@drawable/submit_button"
-                android:padding="25px"
-                android:text="Submit"
-                android:textColor="@color/black"
-                android:textAlignment="center"
-                android:textSize="40px"/>
-        </com.google.android.flexbox.FlexboxLayout>
     </com.google.android.flexbox.FlexboxLayout>
 </com.google.android.flexbox.FlexboxLayout>

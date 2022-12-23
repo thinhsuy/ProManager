@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -88,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
         // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
-            return MyFragment.newInstance(position, userId);
+            View view = findViewById(R.id.user_bubble_textview).getRootView();
+            return MyFragment.newInstance(position, userId, view);
         }
 
         // Returns the page title for the top indicator

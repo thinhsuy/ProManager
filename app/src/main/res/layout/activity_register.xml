@@ -128,8 +128,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/imageLink_textinputlayout"
+                    android:layout_width="800px"
+                    android:layout_height="200px"
+                    android:text="tell us little about you"
+                    android:hint="Avatar Image Link Here (Could be empty)"
+                    app:boxStrokeColor="#98A8F8">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
                 <TextView
-                    android:id="@+id/login_textview"
+                    android:id="@+id/back_btn"
                     android:layout_width="wrap_content"
                     android:layout_marginBottom="50px"
                     android:textAlignment="center"
@@ -155,6 +166,7 @@
                     android:background="@drawable/button"
                     android:textColor="@color/white"
                     android:layout_marginRight="25px"
+                    android:layout_marginBottom="25px"
                     android:text="Sign Up">
                 </Button>
             </com.google.android.flexbox.FlexboxLayout>
