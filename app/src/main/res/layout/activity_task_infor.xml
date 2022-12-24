@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/hoster_textview"
+            android:id="@+id/header_textview"
             android:textSize="60px"
             android:textColor="@color/primary_dark_deep"
             android:layout_marginTop="30px"
@@ -29,17 +29,15 @@
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Architecture Definition"
             />
 
         <TextView
-            android:id="@+id/activity_header_textview"
+            android:id="@+id/hoster_textview"
             android:textAlignment="center"
             android:textColor="@color/gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24px"
-            android:text="Host by User"/>
+            android:layout_marginTop="24px"/>
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
@@ -52,9 +50,9 @@
                 android:layout_width="50px"
                 android:layout_height="50px"/>
             <TextView
+                android:id="@+id/deadline_textview"
                 android:textColor="@color/black"
                 android:textSize="30px"
-                android:text="Deadline in 14/11/2022"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16px"/>
@@ -74,9 +72,9 @@
             android:layout_marginTop="40px"/>
 
         <TextView
+            android:id="@+id/description_textview"
             android:textColor="@color/gray"
             android:textSize="32px"
-            android:text="This activity needs you to continue on moving on your life, try by heart in yourself and improve it, maybe quite hard for you but never give it up. Wanna cry? Just cry! After that please stand up and do everything with 200% power. Until the day that we will meet again, it could be not a good moment for both, but at least, you already tried whole your heart ... if destiny give us a chance or if not, we still be good memories of each other and that moment in future, you would be proud of other. Be strong my girl, my boy!"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15px"/>
@@ -136,6 +134,7 @@
             app:alignItems="center"
             android:layout_marginTop="40px">
             <TextView
+                android:id="@+id/submit_box_textview"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,9 +156,9 @@
                 android:layout_height="30px"
                 android:background="@drawable/status_circle"/>
             <TextView
+                android:id="@+id/status_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="not finished"
                 android:textSize="35px"
                 android:textColor="@color/black"
                 android:layout_marginLeft="32px"/>
@@ -176,9 +175,9 @@
                 android:layout_height="45px"
                 android:background="@drawable/submit_icon"/>
             <TextView
+                android:id="@+id/rate_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rate: 0%"
                 android:textSize="35px"
                 android:textColor="@color/black"
                 android:layout_marginLeft="20px"/>
@@ -201,6 +200,7 @@
                 android:textAlignment="center"
                 android:textSize="40px"/>
             <TextView
+                android:id="@+id/submit_btn_textview"
                 android:layout_width="350px"
                 android:layout_height="wrap_content"
                 android:background="@drawable/submit_button"

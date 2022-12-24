@@ -37,7 +37,7 @@
                 android:textSize="40px"/>
         </com.google.android.flexbox.FlexboxLayout>
         <TextView
-            android:id="@+id/hoster_textview"
+            android:id="@+id/name_textview"
             android:textSize="60px"
             android:textColor="@color/primary_dark_deep"
             android:layout_marginTop="30px"
@@ -45,11 +45,10 @@
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Architecture Definition"
             />
 
         <TextView
-            android:id="@+id/activity_header_textview"
+            android:id="@+id/hoster_textview"
             android:textAlignment="center"
             android:textColor="@color/gray"
             android:layout_width="match_parent"
@@ -68,9 +67,9 @@
                 android:layout_width="50px"
                 android:layout_height="50px"/>
             <TextView
+                android:id="@+id/deadline_textview"
                 android:textColor="@color/black"
                 android:textSize="30px"
-                android:text="Deadline in 14/11/2022"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16px"/>
@@ -90,12 +89,9 @@
             android:layout_marginTop="40px"/>
 
         <TextView
+            android:id="@+id/description_textview"
             android:textColor="@color/gray"
             android:textSize="32px"
-            android:text="Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes
-Produce reports and organise data.
-Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes
-Produce reports and organise data."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15px"/>
@@ -108,22 +104,14 @@ Produce reports and organise data."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40px"/>
-
         <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/activity_tag_container"
             android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:background="@drawable/button"
+            android:layout_height="wrap_content"
+            app:flexDirection="column"
             app:justifyContent="center"
-            app:alignItems="center"
-            android:layout_marginTop="40px">
-            <TextView
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Activity name"
-                android:gravity="center"
-                android:layout_marginRight="50px"
-                android:textSize="40px"/>
+            app:alignItems="center">
+
         </com.google.android.flexbox.FlexboxLayout>
 
         <TextView

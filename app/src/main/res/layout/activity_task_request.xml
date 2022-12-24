@@ -27,6 +27,7 @@
             app:justifyContent="flex_start"
             android:layout_marginBottom="15px">
             <TextView
+                android:id="@+id/back_btn"
                 android:layout_width="250px"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
@@ -40,87 +41,27 @@
             android:id="@+id/hoster_textview"
             android:textSize="60px"
             android:textColor="@color/primary_dark_deep"
-            android:layout_marginTop="20px"
+            android:layout_margin="20px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:text="Tasks Request"
-            />
+            android:text="Tasks Request" />
 
-        <com.google.android.flexbox.FlexboxLayout
+        <ScrollView
+            android:scrollbars="none"
+            android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_form"
-            app:justifyContent="center"
-            app:alignItems="center"
-            app:flexDirection="column"
-            android:layout_marginTop="30px">
-            <TextView
-                android:textColor="@color/white"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/content_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Project Name:"
-                android:layout_marginHorizontal="50px"
-                android:layout_marginTop="60px"
-                android:layout_marginBottom="20px"
-                android:textSize="40px"/>
-            <TextView
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PROMANAGER"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:layout_marginHorizontal="50px"
-                android:layout_marginTop="30px"
-                android:textSize="60px"/>
-            <TextView
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Brief descriptions about the project"
-                android:textAlignment="center"
-                android:layout_marginHorizontal="50px"
-                android:layout_marginTop="50px"
-                android:layout_marginBottom="20px"
-                android:textSize="40px"/>
+                android:gravity="center"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
 
-            <com.google.android.flexbox.FlexboxLayout
-                android:layout_marginTop="50px"
-                android:layout_marginLeft="50px"
-                android:layout_marginRight="50px"
-                android:verticalScrollbarPosition="left"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:justifyContent="space_evenly">
-                <TextView
-                    android:layout_width="350px"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_radius_stroke_box"
-                    android:padding="20px"
-                    android:text="Accept"
-                    android:textColor="@color/white"
-                    android:textAlignment="center"
-                    android:textSize="40px"/>
 
-                <TextView
-                    android:layout_width="350px"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_radius_stroke_box"
-                    android:padding="20px"
-                    android:text="Delete"
-                    android:textColor="@color/white"
-                    android:textAlignment="center"
-                    android:textSize="40px"/>
-            </com.google.android.flexbox.FlexboxLayout>
-
-            <View
-                android:layout_marginTop="80px"
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:background="@color/white"/>
-
-                </com.google.android.flexbox.FlexboxLayout>
-            </com.google.android.flexbox.FlexboxLayout>
+    </com.google.android.flexbox.FlexboxLayout>
 </com.google.android.flexbox.FlexboxLayout>

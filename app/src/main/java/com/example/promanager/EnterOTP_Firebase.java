@@ -30,7 +30,7 @@ public class EnterOTP_Firebase extends AppCompatActivity {
     private static final String TAG = EnterOTP_Firebase.class.getName();
 
     private EditText editOTP;
-    private Button btnSendOTP;
+    private TextView btnSendOTP;
     private TextView sendOTPAgain;
 
     private FirebaseAuth mAuth;
@@ -76,7 +76,7 @@ public class EnterOTP_Firebase extends AppCompatActivity {
 
     private void initUI(){
         editOTP = findViewById(R.id.edit_otp);
-        btnSendOTP = findViewById(R.id.btn_send_otp);
+        btnSendOTP = (TextView) findViewById(R.id.btn_send_otp);
         sendOTPAgain = findViewById(R.id.textView_SendOTP_again);
     }
 

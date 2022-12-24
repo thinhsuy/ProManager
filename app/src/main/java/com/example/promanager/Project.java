@@ -1,5 +1,7 @@
 package com.example.promanager;
 
+import java.util.ArrayList;
+
 public class Project {
     private String projectID;
     private String projectName;
@@ -7,6 +9,12 @@ public class Project {
     private String projectDeadline;
     private String projectDescribe;
     private String projectPrivacy;
+
+    public ArrayList<String> activityIdList;
+    public ArrayList<String> getActivityIdList(){return this.activityIdList;}
+    public void setActivityIdList(ArrayList<String> listId) {this.activityIdList = listId;}
+    public void addActivityList(String actId){this.activityIdList.add(actId);}
+    public void removeActivityList(String actId) {this.activityIdList.remove(actId);}
 
     public Project(String projectID, String projectName, String projectOwner, String projectDeadline, String projectDescribe, String projectPrivacy) {
         this.projectID = projectID;

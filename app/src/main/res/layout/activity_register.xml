@@ -158,7 +158,8 @@
                 app:justifyContent="space_around"
                 android:layout_marginBottom="50px"
                 app:alignItems="center">
-                <Button
+                <TextView
+                    android:gravity="center"
                     android:id="@+id/sign_up_btn"
                     android:layout_width="500px"
                     android:layout_height="150px"
@@ -168,7 +169,7 @@
                     android:layout_marginRight="25px"
                     android:layout_marginBottom="25px"
                     android:text="Sign Up">
-                </Button>
+                </TextView>
             </com.google.android.flexbox.FlexboxLayout>
 
             <com.google.android.flexbox.FlexboxLayout

@@ -37,13 +37,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void set_event_onclick() {
-        ((Button)findViewById(R.id.back_btn)).setOnClickListener(new View.OnClickListener() {
+        ((TextView)findViewById(R.id.back_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
-        ((Button)findViewById(R.id.sign_up_btn)).setOnClickListener(new View.OnClickListener() {
+        ((TextView)findViewById(R.id.sign_up_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!check_infor_textinput()) {
@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(RegisterActivity.this, "Sign Up Successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                startActivity(new Intent(RegisterActivity.this, EnterOTP_Firebase.class));
             }
         });
     }

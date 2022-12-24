@@ -167,28 +167,38 @@ public class MyDatabase {
             String activityItem = ActivityIdListByProjectId.getString(0);
             listId.add(activityItem);
         }
+
         return listId;
     }
 
     //trả về 1 số thông tin quan trọng của activity
-    public static ActivityClass getActivityById(Query db, String actId){
-        ActivityClass activity = new ActivityClass();
-        activity.activity_header = "Architecture definition";
-        activity.deadline = "Deadline in 2 more days";
+    public static Activity getActivityById(Query db, String actId){
+        Activity activity = new Activity();
+        activity.setActivityID(actId);
+        activity.setActivityName("Architecture definition");
+        activity.setActivityDeadline("Deadline in 2 more days");
         String hoster = "ThinhSuy";
-        activity.hoster = "Host by " + hoster;
+        activity.setActivityHost("Host by " + hoster);
+        activity.setActivityDescribe("This activity needs you to continue on moving on your life, try by heart in yourself and improve it, maybe quite hard for you but never give it up. Wanna cry? Just cry! After that please stand up and do everything with 200% power. Until the day that we will meet again, it could be not a good moment for both, but at least, you already tried whole your heart ... if destiny give us a chance or if not, we still be good memories of each other and that moment in future, you would be proud of other. Be strong my girl, my boy!");
+        activity.setActivityStatus("Not Finished");
+        activity.setActivityFile("Empty");
+        activity.setActivityAgreement("Rate: 0%");
         return activity;
     }
 
     //trả về 1 số thông tin quan trọng của project
     //proId truyền vào tam là "20127306"
-    public static ProjectClass getProjectById(Query db, String proId){
-        ProjectClass project = new ProjectClass();
-        project.project_header = "Projects Manager";
-
-        //dười này là cách dùng 1 array dynamic, ở java phân biệt rõ dynamic và static array lắm nên chấp nhận ik
-        project.activityIdList = getActivityIdListByProjectId(db, proId);
-
+    public static Project getProjectById(Query db, String proId){
+        Project project = new Project();
+        project.setProjectID(proId);
+        project.setProjectName("Architecture Definition");
+        project.setProjectOwner("ThinhSuy");
+        project.setProjectDeadline("Deadline in 14/11/2022");
+        project.setProjectDescribe("Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes\n" +
+                "Produce reports and organise data.\n" +
+                "Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes\n" +
+                "Produce reports and organise data.");
+        project.setActivityIdList(getActivityIdListByProjectId(db, proId));
         return project;
     }
 
@@ -254,6 +264,14 @@ public class MyDatabase {
     public static String getUserOverview(Query db, String myId){
         String overview = "Here is my overview, Here is my overview, Here is my overview, Here is my overview";
         return overview;
+    }
+
+    //trả về danh sách request activity của user hiện tại (cái này t nghĩ là phải tạo 1 bảng mới là Request trong db)
+    public static ArrayList<String> getActivityRequestListId(Query db, String myId){
+        ArrayList<String> activity_request_id = new ArrayList<String>();
+        activity_request_id.add("act20127333");
+        activity_request_id.add("act20127306");
+        return activity_request_id;
     }
 
 

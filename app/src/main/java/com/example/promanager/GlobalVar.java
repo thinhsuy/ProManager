@@ -7,12 +7,6 @@ import android.util.Log;
 
 public class GlobalVar extends Application {
     public Query db;
-    public void setLocalQuery(Query query) {
-        Log.e("GlobalVar", "Set up db");
-        this.db=query;
-        Log.e("GlobalVar", db.toString());
-    }
-    public Query getLocalQuery() {
-        Log.e("GlobalVar", this.db.toString());
-        return this.db;}
+    public void setLocalQuery(Query query) {this.db=query;}
+    public Query getLocalQuery() {return this.db;}
 }

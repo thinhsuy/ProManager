@@ -153,11 +153,11 @@ public class SetUp {
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
 
-        ProjectClass project = MyDatabase.getProjectById(db, proId);
+        Project project = MyDatabase.getProjectById(db, proId);
         TextView header = (TextView)projectView.findViewById(R.id.project_header_textview);
-        header.setText(project.project_header);
-        for (int i=0; i<project.activityIdList.size(); i++){
-            ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.activityIdList.get(i)));
+        header.setText(project.getProjectName());
+        for (int i=0; i<project.getActivityIdList().size(); i++){
+            ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.getActivityIdList().get(i)));
         }
         header.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,10 +177,10 @@ public class SetUp {
     private static View getActivitySpan(Query db, String actId){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View activityView = layoutInflater.inflate(R.layout.activity_span, null, false);
-        ActivityClass activity = MyDatabase.getActivityById(db, actId);
-        ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(activity.activity_header);
-        ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(activity.hoster);
-        ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(activity.deadline);
+        Activity activity = MyDatabase.getActivityById(db, actId);
+        ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(activity.getActivityName());
+        ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(activity.getActivityHost());
+        ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(activity.getActivityDeadline());
         ArrayList<String> user_respon_id = MyDatabase.getResponsibilityUserId(db, actId);
         for (String userId:user_respon_id) {
             ImageView avatar = MyDatabase.getAvatarById(db, MainActivity.getAppContext(), userId, "tiny");
@@ -193,12 +193,34 @@ public class SetUp {
                 Intent intent = new Intent(application, TaskInforActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("activity_id", "20127333");
+                bundle.putString("source", "main");
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 application.startActivity(intent);
             }
         });
-
         return activityView;
+    }
+
+    public static View getNotificaitonSpan(String content, Context context){
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View notification_view = layoutInflater.inflate(R.layout.notification_span, null, false);
+        ((TextView) notification_view.findViewById(R.id.notification_content)).setText(content);
+        return notification_view;
+    }
+
+    public static View getRequestTaskSpan(Activity act, Context context){
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View request_view = layoutInflater.inflate(R.layout.task_request_span, null, false);
+        ((TextView)request_view.findViewById(R.id.name_textview)).setText(act.getActivityName());
+        ((TextView)request_view.findViewById(R.id.description_textview)).setText(act.getActivityDescribe());
+        return request_view;
+    }
+
+    public static View getActivityTag(Activity act, Context context){
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View tag_view = layoutInflater.inflate(R.layout.activity_tag, null, false);
+        ((TextView)tag_view.findViewById(R.id.name_textview)).setText(act.getActivityName());
+        return tag_view;
     }
 }
