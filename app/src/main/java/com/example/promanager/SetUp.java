@@ -42,9 +42,7 @@ public class SetUp {
             ((LinearLayout)rootView.findViewById(R.id.last_connection_container)).addView(avatar);
         }
 
-        if (all_current_project_id.size()==0){
-            content_container.addView(getEmptyProjectSpan());
-        }
+        if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
         return rootView;
     }
 
@@ -127,6 +125,8 @@ public class SetUp {
         ArrayList<String> all_current_project_id = MyDatabase.getAllProject(db, myId);
         for (String proId: all_current_project_id)
             content_container.addView(getProjectSpan(db, proId, "Seek"));
+
+        if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
         return rootView;
     }
 

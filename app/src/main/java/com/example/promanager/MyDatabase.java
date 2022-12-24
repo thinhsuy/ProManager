@@ -39,9 +39,11 @@ public class MyDatabase {
         return image;
     }
 
-    //cái này chưa cần làm!
+    //trả về image link của ng dùng
     public static String getLinkAvatarById(Query db, String userId){
-        String link = "https://banner2.cleanpng.com/20180625/req/kisspng-computer-icons-avatar-business-computer-software-user-avatar-5b3097fcae25c3.3909949015299112927133.jpg";
+        String link = "Empty";
+
+        if (link=="Empty") return "https://i.pinimg.com/564x/01/fc/6f/01fc6f6f0a921bf1529b4989b8973d9f.jpg";
         return link;
     }
 
