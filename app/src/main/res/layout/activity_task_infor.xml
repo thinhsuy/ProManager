@@ -126,23 +126,19 @@
                 android:background="@drawable/avatar"/>
         </com.google.android.flexbox.FlexboxLayout>
 
-        <com.google.android.flexbox.FlexboxLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_textinputlayout"
+            app:endIconMode="clear_text"
             android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:background="@drawable/border_radius_stroke_box"
-            app:justifyContent="center"
-            app:alignItems="center"
-            android:layout_marginTop="40px">
-            <TextView
-                android:id="@+id/submit_box_textview"
-                android:textColor="@color/black"
+            android:layout_height="130px"
+            android:layout_marginTop="25px"
+            android:hint="Select Folder">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/folder_text"
+                android:background="@drawable/border_radius_stroke_box"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Select file"
-                android:gravity="right"
-                android:layout_marginRight="50px"
-                android:textSize="40px"/>
-        </com.google.android.flexbox.FlexboxLayout>
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="wrap_content"
