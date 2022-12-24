@@ -123,8 +123,10 @@ public class SetUp {
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
         ArrayList<String> all_current_project_id = MyDatabase.getAllProject(db, myId);
-        for (String proId: all_current_project_id)
+        for (String proId: all_current_project_id){
             content_container.addView(getProjectSpan(db, proId, "Seek"));
+            Log.e("Project", proId);
+        }
 
         if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
         return rootView;

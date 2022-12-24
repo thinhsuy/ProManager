@@ -31,11 +31,12 @@ public class MyDatabase {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(image_size, image_size);
         params.setMargins(0,0,25,0);
         image.setLayoutParams(params);
-        image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
         String link = getLinkAvatarById(db, userId);
         new MyInternet.DownloadImageTask(image).execute(link);
+
         image.setBackgroundResource(R.drawable.avatar);
+        image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return image;
     }
 
