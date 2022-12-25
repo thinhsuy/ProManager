@@ -23,7 +23,7 @@
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:justifyContent="flex_start"
+            app:justifyContent="space_between"
             android:layout_marginBottom="25px">
             <TextView
                 android:id="@+id/back_btn"
@@ -32,6 +32,16 @@
                 android:background="@drawable/button"
                 android:padding="35px"
                 android:text="Back"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="40px"/>
+            <TextView
+                android:id="@+id/add_more_task_btn"
+                android:layout_width="400px"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button"
+                android:padding="35px"
+                android:text="Add More Task"
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:textSize="40px"/>

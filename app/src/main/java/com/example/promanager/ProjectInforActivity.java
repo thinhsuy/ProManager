@@ -10,15 +10,20 @@ import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class ProjectInforActivity extends AppCompatActivity {
     public static Query db;
+    public String proId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_infor);
         db = ((GlobalVar)this.getApplication()).getLocalQuery();
+        Bundle bundle = getIntent().getExtras();
+        proId = bundle.getString("project_id");
 
         ((TextView)findViewById(R.id.back_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,8 +32,18 @@ public class ProjectInforActivity extends AppCompatActivity {
             }
         });
 
-        Bundle bundle = getIntent().getExtras();
-        loadInformation(bundle.getString("project_id"));
+        ((TextView)findViewById(R.id.add_more_task_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProjectInforActivity.this, AddMoreTaskActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("project_id", proId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        loadInformation(proId);
     }
 
     public void loadInformation(String proId){

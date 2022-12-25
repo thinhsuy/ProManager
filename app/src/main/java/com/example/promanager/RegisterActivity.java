@@ -57,27 +57,27 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean check_infor_textinput(){
-        String email = ((TextView)findViewById(R.id.email_textinputlayout)).getText().toString();
-        String username = ((TextView)findViewById(R.id.username_textinputlayout)).getText().toString();
-        String password = ((TextView)findViewById(R.id.password_textinputlayout)).getText().toString();
-        String confirm = ((TextView)findViewById(R.id.confirm_textinputlayout)).getText().toString();
-        String phone = ((TextView)findViewById(R.id.phone_textinputlayout)).getText().toString();
-        String about = ((TextView)findViewById(R.id.about_textinputlayout)).getText().toString();
-        String image = ((TextView)findViewById(R.id.imageLink_textinputlayout)).getText().toString();
+        String email = ((TextInputLayout)findViewById(R.id.email_textinputlayout)).getEditText().toString();
+        String username = ((TextInputLayout)findViewById(R.id.username_textinputlayout)).getEditText().toString();
+        String password = ((TextInputLayout)findViewById(R.id.password_textinputlayout)).getEditText().toString();
+        String confirm = ((TextInputLayout)findViewById(R.id.confirm_textinputlayout)).getEditText().toString();
+        String phone = ((TextInputLayout)findViewById(R.id.phone_textinputlayout)).getEditText().toString();
+        String about = ((TextInputLayout)findViewById(R.id.about_textinputlayout)).getEditText().toString();
+        String image = ((TextInputLayout)findViewById(R.id.imageLink_textinputlayout)).getEditText().toString();
 
         return set_database(username, password, email, phone, confirm, about, image);
     }
 
     private boolean set_database(String username, String password, String email, String phone, String confirm, String about, String image){
         //set database here
-        if (username.equals("") || password.equals("") || email.equals("") || phone.equals("") || confirm.equals("") || about.equals("")){
-            Toast.makeText(RegisterActivity.this, "Please fill all information!", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!MyDatabase.setDatabaseRegister(db, username, password, email, phone,confirm, about, image)){
-            Toast.makeText(RegisterActivity.this, "Create data failed!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        onClickSignUp(email, password);
+//        if (username.equals("") || password.equals("") || email.equals("") || phone.equals("") || confirm.equals("") || about.equals("")){
+//            Toast.makeText(RegisterActivity.this, "Please fill all information!", Toast.LENGTH_SHORT).show();
+//            return false;
+//        } else if (!MyDatabase.setDatabaseRegister(db, username, password, email, phone,confirm, about, image)){
+//            Toast.makeText(RegisterActivity.this, "Create data failed!", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//        onClickSignUp(email, password);
         return true;
     }
 

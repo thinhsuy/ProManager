@@ -283,6 +283,9 @@ public class MyDatabase {
     public static void setAgreementActivity(String actId, String value){}
     public static void setFileFolderActivity(String actId, String value){}
 
+    //tạo thêm 1 task mới và gán cho project
+    public static void addNewTaskToProject(Activity act, String proId){}
+
 
     public static void Creation(Query db){
         String createUserInfo = "CREATE TABLE IF NOT EXISTS UserInfo(username VARCHAR(100) PRIMARY KEY," +

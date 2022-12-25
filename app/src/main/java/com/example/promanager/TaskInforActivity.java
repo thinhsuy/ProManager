@@ -42,7 +42,7 @@ public class TaskInforActivity extends AppCompatActivity {
     }
 
     private void backToPreviousPage(){
-        if (bundle.getString("source")=="main")
+        if (bundle.getString("source").toString().equals("main"))
             startActivity(new Intent(TaskInforActivity.this, MainActivity.class));
         else {
             Intent intent = new Intent(TaskInforActivity.this, ProjectInforActivity.class);
