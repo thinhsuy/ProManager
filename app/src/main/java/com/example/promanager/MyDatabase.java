@@ -7,20 +7,26 @@ package com.example.promanager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import java.lang.reflect.Array;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class MyDatabase {
+    static private List<userInfo> mListUser = new ArrayList<>();
     //cái này chưa cần làm!
     public static ImageView getAvatarById(Query db, Context context, String userId, String size){
         ImageView image = new ImageView(context);
@@ -77,31 +83,48 @@ public class MyDatabase {
     }
 
     //trả về true khi set thông tin ng dùng sign up tới database thành công
-    public static boolean setDatabaseRegister(Query db, String username, String password, String email, String phonenumber, String confirm, String about, String image){
-        //!!!!! m viết lại hàm này giúp, t vừa thay structure của table này nên có thể lệnh dưới ko chạy dc nữa
-        // t bỏ di thuộc tính fullname và thêm vào 1 thuộc tính là image link (m thêm trc 2 cái email và phone r!)
-//        try{
-//            db.queryData("INSERT INTO UserInfo " +
-//                    "VALUES ('"+username+"', '"+password+"', '"+email+"', '"+phonenumber+"', '"+about+"', NULL, NULL, NULL, NULL)");
-//            return true;
-//        }catch (Exception e){
-//            return false;
-//        }
+    public static boolean setDatabaseRegister(Context A, String username, String password, String phonenumber, String email, String about, String image){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("userInfo");
+
+        userInfo user = new userInfo(username, password, phonenumber, email, about, image);
+
+        String pathObject = String.valueOf(user.getUsername());
+        myRef.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(A, "Add complete!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return true;
     }
 
     //trả về true false khi kiểm tra dữ liệu login của người dùng
-    public static boolean checkLogin(Query db, String username, String password){
-        String strUser = "SELECT COUNT(totalTasks) FROM UserInfo WHERE username = '"+username+"' AND pass = '"+password+"'";
+    public static boolean checkLogin(Context A, String username, String password){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("userInfo");
+        try {
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.child(username).exists()){
+                        userInfo user = snapshot.child(username).getValue(userInfo.class);
+                        if(user.getUsername().equals(username) && user.getPass().equals(password)){
+                            Toast.makeText(A, user.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
 
-        Cursor TotalTasks = db.getData(strUser);
-        String countUser = TotalTasks.getString(0);
-        if(Integer.parseInt(countUser) == 1){
-            return true;
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
         }
-        else{
-            return false;
+        catch (Exception e){
+
         }
+        return false;
     }
 
     //trả về id (username) của người dùng hiện tại

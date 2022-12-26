@@ -1,6 +1,8 @@
 package com.example.promanager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Project {
     private String projectID;
@@ -74,5 +76,28 @@ public class Project {
 
     public void setProjectPrivacy(String projectPrivacy) {
         this.projectPrivacy = projectPrivacy;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectID='" + projectID + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectOwner='" + projectOwner + '\'' +
+                ", projectDeadline='" + projectDeadline + '\'' +
+                ", projectDescribe='" + projectDescribe + '\'' +
+                ", projectPrivacy='" + projectPrivacy + '\'' +
+                '}';
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("projectID", this.projectID);
+        result.put("projectName", this.projectName);
+        result.put("projectOwner", this.projectOwner);
+        result.put("projectDeadline", this.projectDeadline);
+        result.put("projectDescribe", this.projectDescribe);
+        result.put("projectPrivacy", this.projectPrivacy);
+        return result;
     }
 }

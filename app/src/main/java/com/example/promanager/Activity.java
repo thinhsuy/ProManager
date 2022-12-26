@@ -1,5 +1,8 @@
 package com.example.promanager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Activity {
     private String activityID;
     private String activityName;
@@ -86,5 +89,32 @@ public class Activity {
         this.activityFile = activityFile;
         this.activityStatus = activityStatus;
         this.activityAgreement = activityAgreement;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "activityID='" + activityID + '\'' +
+                ", activityName='" + activityName + '\'' +
+                ", activityDescribe='" + activityDescribe + '\'' +
+                ", activityDeadline='" + activityDeadline + '\'' +
+                ", activityHost='" + activityHost + '\'' +
+                ", activityFile='" + activityFile + '\'' +
+                ", activityStatus='" + activityStatus + '\'' +
+                ", activityAgreement='" + activityAgreement + '\'' +
+                '}';
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("activityID", this.activityID);
+        result.put("activityName", this.activityName);
+        result.put("activityDescribe", this.activityDescribe);
+        result.put("activityDeadline", this.activityDeadline);
+        result.put("activityHost", this.activityHost);
+        result.put("activityFile", this.activityFile);
+        result.put("activityStatus", this.activityStatus);
+        result.put("activityAgreement", this.activityAgreement);
+        return result;
     }
 }
