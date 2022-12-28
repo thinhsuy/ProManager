@@ -14,4 +14,13 @@ far. This application was made to resolve the above problem.
 System Requirements:
 Android 10.0Q or later.
 
-
+Product Features:
++ Time management
++ Post new project
++ Approaching various projects
++ View user overview
++ Time notifications
++ Save user’ achivement
++ Sign in
++ Sign up
++ Chat
