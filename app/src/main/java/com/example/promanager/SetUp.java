@@ -7,22 +7,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import androidx.wear.tiles.material.Button;
-
-import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayout;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class SetUp {
     public static View getActivityFragment(Query db, View rootView, String myId){
@@ -157,7 +150,7 @@ public class SetUp {
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
 
-        Project project = MyDatabase.getProjectById(db, proId);
+        Project_Database project = MyDatabase.getProjectById(db, proId);
         TextView header = (TextView)projectView.findViewById(R.id.project_header_textview);
         header.setText(project.getProjectName());
         for (int i=0; i<project.getActivityIdList().size(); i++){
@@ -181,7 +174,7 @@ public class SetUp {
     private static View getActivitySpan(Query db, String actId){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View activityView = layoutInflater.inflate(R.layout.activity_span, null, false);
-        Activity activity = MyDatabase.getActivityById(db, actId);
+        Activity_Database activity = MyDatabase.getActivityById(db, actId);
         ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(activity.getActivityName());
         ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(activity.getActivityHost());
         ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(activity.getActivityDeadline());
@@ -213,7 +206,7 @@ public class SetUp {
         return notification_view;
     }
 
-    public static View getRequestTaskSpan(Activity act, Context context){
+    public static View getRequestTaskSpan(Activity_Database act, Context context){
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View request_view = layoutInflater.inflate(R.layout.task_request_span, null, false);
         ((TextView)request_view.findViewById(R.id.name_textview)).setText(act.getActivityName());
@@ -221,7 +214,7 @@ public class SetUp {
         return request_view;
     }
 
-    public static View getActivityTag(Activity act, Context context){
+    public static View getActivityTag(Activity_Database act, Context context){
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View tag_view = layoutInflater.inflate(R.layout.activity_tag, null, false);
         ((TextView)tag_view.findViewById(R.id.name_textview)).setText(act.getActivityName());

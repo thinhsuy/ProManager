@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Project {
+public class Project_Database {
     private String projectID;
     private String projectName;
     private String projectOwner;
@@ -18,7 +18,7 @@ public class Project {
     public void addActivityList(String actId){this.activityIdList.add(actId);}
     public void removeActivityList(String actId) {this.activityIdList.remove(actId);}
 
-    public Project(String projectID, String projectName, String projectOwner, String projectDeadline, String projectDescribe, String projectPrivacy) {
+    public Project_Database(String projectID, String projectName, String projectOwner, String projectDeadline, String projectDescribe, String projectPrivacy) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.projectOwner = projectOwner;
@@ -27,7 +27,7 @@ public class Project {
         this.projectPrivacy = projectPrivacy;
     }
 
-    public Project() {
+    public Project_Database() {
     }
 
     public String getProjectID() {

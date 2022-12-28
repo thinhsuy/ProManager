@@ -3,7 +3,7 @@ package com.example.promanager;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Activity {
+public class Activity_Database {
     private String activityID;
     private String activityName;
     private String activityDescribe;
@@ -77,10 +77,10 @@ public class Activity {
         this.activityAgreement = activityAgreement;
     }
 
-    public Activity(){
+    public Activity_Database(){
     }
 
-    public Activity(String activityID, String activityName, String activityDescribe, String activityDeadline, String activityHost, String activityFile, String activityStatus, String activityAgreement) {
+    public Activity_Database(String activityID, String activityName, String activityDescribe, String activityDeadline, String activityHost, String activityFile, String activityStatus, String activityAgreement) {
         this.activityID = activityID;
         this.activityName = activityName;
         this.activityDescribe = activityDescribe;

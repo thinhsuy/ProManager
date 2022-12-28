@@ -5,7 +5,6 @@ package com.example.promanager;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyDatabase {
-    static private List<userInfo> mListUser = new ArrayList<>();
+    static private List<userInfo_Database> mListUser = new ArrayList<>();
     //cái này chưa cần làm!
     public static ImageView getAvatarById(Query db, Context context, String userId, String size){
         ImageView image = new ImageView(context);
@@ -87,7 +85,7 @@ public class MyDatabase {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("userInfo");
 
-        userInfo user = new userInfo(username, password, phonenumber, email, about, image);
+        userInfo_Database user = new userInfo_Database(username, password, phonenumber, email, about, image);
 
         String pathObject = String.valueOf(user.getUsername());
         myRef.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
@@ -109,7 +107,7 @@ public class MyDatabase {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.child(username).exists()){
-                        userInfo user = snapshot.child(username).getValue(userInfo.class);
+                        userInfo_Database user = snapshot.child(username).getValue(userInfo_Database.class);
                         if(user.getUsername().equals(username) && user.getPass().equals(password)){
                             Toast.makeText(A, user.toString(), Toast.LENGTH_SHORT).show();
                         }
@@ -198,8 +196,8 @@ public class MyDatabase {
     }
 
     //trả về 1 số thông tin quan trọng của activity
-    public static Activity getActivityById(Query db, String actId){
-        Activity activity = new Activity();
+    public static Activity_Database getActivityById(Query db, String actId){
+        Activity_Database activity = new Activity_Database();
         activity.setActivityID(actId);
         activity.setActivityName("Architecture definition");
         activity.setActivityDeadline("Deadline in 2 more days");
@@ -214,8 +212,8 @@ public class MyDatabase {
 
     //trả về 1 số thông tin quan trọng của project
     //proId truyền vào tam là "20127306"
-    public static Project getProjectById(Query db, String proId){
-        Project project = new Project();
+    public static Project_Database getProjectById(Query db, String proId){
+        Project_Database project = new Project_Database();
         project.setProjectID(proId);
         project.setProjectName("Architecture Definition");
         project.setProjectOwner("ThinhSuy");
@@ -307,7 +305,7 @@ public class MyDatabase {
     public static void setFileFolderActivity(String actId, String value){}
 
     //tạo thêm 1 task mới và gán cho project
-    public static void addNewTaskToProject(Activity act, String proId){}
+    public static void addNewTaskToProject(Activity_Database act, String proId){}
 
 
     public static void Creation(Query db){

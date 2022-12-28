@@ -4,15 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 public class ProjectInforActivity extends AppCompatActivity {
     public static Query db;
@@ -47,7 +42,7 @@ public class ProjectInforActivity extends AppCompatActivity {
     }
 
     public void loadInformation(String proId){
-        Project project = MyDatabase.getProjectById(db, proId);
+        Project_Database project = MyDatabase.getProjectById(db, proId);
         ((TextView)findViewById(R.id.name_textview)).setText(project.getProjectName());
         ((TextView)findViewById(R.id.hoster_textview)).setText(project.getProjectOwner());
         ((TextView)findViewById(R.id.deadline_textview)).setText(project.getProjectDeadline());

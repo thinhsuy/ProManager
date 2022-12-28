@@ -3,7 +3,7 @@ package com.example.promanager;
 import java.util.HashMap;
 import java.util.Map;
 
-public class userInfo {
+public class userInfo_Database {
     private String username;
     private String pass;
     private String overview;
@@ -15,7 +15,7 @@ public class userInfo {
     private int currentTasks;
     private int currentFinisheds;
 
-    public userInfo(String username, String password, String phonenumber, String email, String overview, String avatarLink) {
+    public userInfo_Database(String username, String password, String phonenumber, String email, String overview, String avatarLink) {
         this.username = username;
         this.email = email;
         this.pass = password;
@@ -24,7 +24,7 @@ public class userInfo {
         this.avatarLink = avatarLink;
     }
 
-    public userInfo() {
+    public userInfo_Database() {
     }
 
     public String getAvatarLink() {

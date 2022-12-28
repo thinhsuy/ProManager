@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -56,6 +54,19 @@ public class LoginActivity extends AppCompatActivity {
         try {MyDatabase.Creation(db);}
         catch (Exception ex) {Log.e("SQLException", ex.toString());}
 
+//        Project_Database project = new Project_Database(username, password, phone, email, about, image);
+//
+//        String pathObject = String.valueOf(user.getUsername());
+//        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef1 = database1.getReference("userInfo");
+//        myRef1.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                Toast.makeText(LoginActivity.this, "Add Project complete!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(LoginActivity.this, Verify_Phone_Number_Firebase.class));
+//            }
+//        });
+
     }
 
     private void testFirebase() {
@@ -72,7 +83,8 @@ public class LoginActivity extends AppCompatActivity {
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                userInfo user = snapshot.getValue(userInfo.class);
+
+                userInfo_Database user = snapshot.getValue(userInfo_Database.class);
                 if(user.getUsername().equals(username) && user.getPass().equals(password)){
                     isCheck[0] = true;
                     Toast.makeText(LoginActivity.this, isCheck[0].toString(), Toast.LENGTH_SHORT).show();
@@ -131,14 +143,21 @@ public class LoginActivity extends AppCompatActivity {
     private void ValidateToLogin(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("userInfo");
+        if(username_til.getEditText().getText().toString().trim() == null || password_til.getEditText().getText().toString().trim() == null)
+        {
+            return;
+        }
+
         username = username_til.getEditText().getText().toString().trim();
         password = password_til.getEditText().getText().toString().trim();
+
         try {
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Toast.makeText(LoginActivity.this, Long.toString(snapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
                     if(snapshot.child(username).exists()){
-                        userInfo user = snapshot.child(username).getValue(userInfo.class);
+                        userInfo_Database user = snapshot.child(username).getValue(userInfo_Database.class);
                         if(user.getUsername().equals(username) && user.getPass().equals(password)){
                             Toast.makeText(LoginActivity.this, user.toString(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));

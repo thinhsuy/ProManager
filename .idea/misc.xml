@@ -3,9 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_add_more_task.xml" value="0.25" />
         <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_enter_otp.xml" value="0.3625" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_forget_password.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_notification.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_project_infor.xml" value="0.25" />
         <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_span.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_tag.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_task_request.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_tester.xml" value="0.25" />
         <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/activity_verify_phone_number.xml" value="0.3625" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/fragment_acitvity.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/fragment_infor.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/fragment_own.xml" value="0.14444444444444443" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/fragment_seek.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/project_span.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/status_bottom_sheet.xml" value="0.25" />
+        <entry key="..\:/Android Stuido Java Code/ProManager_Android_App_Final/app/src/main/res/layout/task_request_span.xml" value="0.25" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManager/app/src/main/res/drawable-anydpi/notification_icon.xml" value="0.1895" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManager/app/src/main/res/drawable/avatar.xml" value="0.2" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManager/app/src/main/res/drawable/border_form.xml" value="0.196" />

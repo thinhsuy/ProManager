@@ -2,11 +2,9 @@ package com.example.promanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.TaskInfo;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -56,7 +54,7 @@ public class TaskInforActivity extends AppCompatActivity {
 
     public void loadInformation(String actId){
         if (actId==null) return;
-        Activity act = MyDatabase.getActivityById(db, actId);
+        Activity_Database act = MyDatabase.getActivityById(db, actId);
         ((TextView)findViewById(R.id.header_textview)).setText(act.getActivityName());
         ((TextView)findViewById(R.id.hoster_textview)).setText(act.getActivityHost());
         ((TextView)findViewById(R.id.deadline_textview)).setText(act.getActivityDeadline());

@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class TaskRequestActivity extends AppCompatActivity {
     public static Query db;
@@ -31,7 +30,7 @@ public class TaskRequestActivity extends AppCompatActivity {
         LinearLayout container = ((LinearLayout)findViewById(R.id.content_container));
         ArrayList<String> activity_request_list_id = MyDatabase.getActivityRequestListId(db, "20127333");
         for (String actId:activity_request_list_id) {
-            Activity act = MyDatabase.getActivityById(db, actId);
+            Activity_Database act = MyDatabase.getActivityById(db, actId);
             container.addView(SetUp.getRequestTaskSpan(act, this.getApplicationContext()));
         }
     }

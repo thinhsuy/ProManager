@@ -5,14 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.w3c.dom.Text;
 
 public class AddMoreTaskActivity extends AppCompatActivity {
     public Query db;
@@ -27,10 +22,10 @@ public class AddMoreTaskActivity extends AppCompatActivity {
     }
 
     private void loadInformation(String proId){
-        Project project = MyDatabase.getProjectById(db, proId);
+        Project_Database project = MyDatabase.getProjectById(db, proId);
         ((TextView)findViewById(R.id.name_textview)).setText(project.getProjectName());
         ((TextView)findViewById(R.id.total_acts_textview)).setText("Total current activities: " + String.valueOf(project.getActivityIdList().size()));
-        Activity act = new Activity();
+        Activity_Database act = new Activity_Database();
         act.setActivityName(((TextInputEditText)findViewById(R.id.activity_name_textInput)).getText().toString());
         act.setActivityHost(((TextInputEditText)findViewById(R.id.manager_textInput)).getText().toString());
         act.setActivityDeadline(((TextInputEditText)findViewById(R.id.deadline_textInput)).getText().toString());
