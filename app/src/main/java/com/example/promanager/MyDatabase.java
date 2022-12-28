@@ -14,11 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+//import com.google.firebase.database.DataSnapshot;
+//import com.google.firebase.database.DatabaseError;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,52 +81,52 @@ public class MyDatabase {
     }
 
     //trả về true khi set thông tin ng dùng sign up tới database thành công
-    public static boolean setDatabaseRegister(Context A, String username, String password, String phonenumber, String email, String about, String image){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("userInfo");
-
-        userInfo_Database user = new userInfo_Database(username, password, phonenumber, email, about, image);
-
-        String pathObject = String.valueOf(user.getUsername());
-        myRef.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(A, "Add complete!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        return true;
-    }
-
-    //trả về true false khi kiểm tra dữ liệu login của người dùng
-    public static boolean checkLogin(Context A, String username, String password){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("userInfo");
-        try {
-            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.child(username).exists()){
-                        userInfo_Database user = snapshot.child(username).getValue(userInfo_Database.class);
-                        if(user.getUsername().equals(username) && user.getPass().equals(password)){
-                            Toast.makeText(A, user.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-        }
-        catch (Exception e){
-
-        }
-        return false;
-    }
+//    public static boolean setDatabaseRegister(Context A, String username, String password, String phonenumber, String email, String about, String image){
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("userInfo");
+//
+//        userInfo_Database user = new userInfo_Database(username, password, phonenumber, email, about, image);
+//
+//        String pathObject = String.valueOf(user.getUsername());
+//        myRef.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                Toast.makeText(A, "Add complete!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        return true;
+//    }
+//
+//    //trả về true false khi kiểm tra dữ liệu login của người dùng
+//    public static boolean checkLogin(Context A, String username, String password){
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("userInfo");
+//        try {
+//            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    if(snapshot.child(username).exists()){
+//                        userInfo_Database user = snapshot.child(username).getValue(userInfo_Database.class);
+//                        if(user.getUsername().equals(username) && user.getPass().equals(password)){
+//                            Toast.makeText(A, user.toString(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                }
+//            });
+//        }
+//        catch (Exception e){
+//
+//        }
+//        return false;
+//    }
 
     //trả về id (username) của người dùng hiện tại
-    public static String getCurrentUserId(Query db){
+    public static String getCurrentUserId(Query db, String username, String password){
         String userId = "20127333";
         return userId;
         //DB không thể tự xử lí
@@ -298,6 +298,15 @@ public class MyDatabase {
         return activity_request_id;
     }
 
+    //trả về các notification của user
+    public static ArrayList<String> getUserNotifications(Query db, String userId){
+        ArrayList<String> notifications = new ArrayList<String>();
+        notifications.add("Architecture Definition hạn là 14 tháng 12 năm 2022 lúc 20:00");
+        notifications.add("Architecture Definition hạn là 14 tháng 12 năm 2022 lúc 20:00");
+        notifications.add("Architecture Definition hạn là 14 tháng 12 năm 2022 lúc 20:00");
+        return notifications;
+    }
+
 
     //updata data to database, including status, agreement and filefolder of activity
     public static void setStatusActivity(String actId, String value){}
@@ -307,6 +316,11 @@ public class MyDatabase {
     //tạo thêm 1 task mới và gán cho project
     public static void addNewTaskToProject(Activity_Database act, String proId){}
 
+    //tạo 1 project mới, hàm này m trả về id project vừa tạo nha!
+    public static String createNewProject(Query db, Project_Database project){
+        String new_project_id = "pro20127333";
+        return new_project_id;
+    }
 
     public static void Creation(Query db){
         String createUserInfo = "CREATE TABLE IF NOT EXISTS UserInfo(username VARCHAR(100) PRIMARY KEY," +

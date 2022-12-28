@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MainActivity.context = getApplicationContext();
         db = ((GlobalVar)this.getApplication()).getLocalQuery();
-        userId = MyDatabase.getCurrentUserId(db);
+        userId = ((GlobalVar)this.getApplication()).getUserId();
+        tryToSetUserId();
         tabLayout = (TabLayout) findViewById(R.id.pager_tablayout);
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
@@ -72,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void tryToSetUserId(){
+        try {
+            Bundle bundle = getIntent().getExtras();
+            String userId = MyDatabase.getCurrentUserId(db, bundle.getString("username"), bundle.getString("password"));
+            ((GlobalVar)this.getApplication()).setUserId(userId);
+        } catch (Exception ex){return;}
+    }
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
         private int NUM_ITEMS = 4;

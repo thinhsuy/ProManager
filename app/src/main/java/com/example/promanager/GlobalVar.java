@@ -9,4 +9,8 @@ public class GlobalVar extends Application {
     public Query db;
     public void setLocalQuery(Query query) {this.db=query;}
     public Query getLocalQuery() {return this.db;}
+
+    public String userId;
+    public void setUserId(String id){this.userId=id;}
+    public String getUserId(){return this.userId;}
 }

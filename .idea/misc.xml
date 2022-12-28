@@ -59,7 +59,7 @@
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/drawable/notification_span.xml" value="0.192" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/drawable/status_circle.xml" value="0.192" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_add_more_task.xml" value="0.1274062816616008" />
-        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_create.xml" value="0.1035015447991761" />
+        <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_create.xml" value="0.25" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_enter_otp.xml" value="0.12158054711246201" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_forget_password.xml" value="0.26197916666666665" />
         <entry key="..\:/Sequence/Compilers/AndroidStudio_(Application)/Projects/ProManagerGit/app/src/main/res/layout/activity_login.xml" value="0.264" />
@@ -91,12 +91,5 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.2" />
-      </ProjectState>
-    </option>
   </component>
 </project>

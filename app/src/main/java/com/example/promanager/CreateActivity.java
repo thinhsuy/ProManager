@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -13,37 +14,45 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.w3c.dom.Text;
 
 public class CreateActivity extends AppCompatActivity {
-    TextInputEditText activity_name, activity_manager, activity_deadline, activity_describe;
+    public Query db;
+    public String project_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
-        activity_name = (TextInputEditText) findViewById(R.id.activity_name_tiet);
-        activity_manager = (TextInputEditText) findViewById(R.id.activity_manager_tiet);
-        activity_deadline = (TextInputEditText) findViewById(R.id.activity_deadline_tiet);
-        activity_describe = (TextInputEditText) findViewById(R.id.activity_describe_tiet);
+        db = ((GlobalVar)this.getApplication()).getLocalQuery();
+        setOnclickListener();
+    }
 
-        TextView confirm_btn = (TextView) findViewById(R.id.confirm_button);
-        confirm_btn.setOnClickListener(new View.OnClickListener() {
+    private void setOnclickListener(){
+        ((TextView)findViewById(R.id.back_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addInformation();
+
             }
         });
 
-        ((TextView)findViewById(R.id.cancel_button)).setOnClickListener(new View.OnClickListener() {
+        ((TextView)findViewById(R.id.confirm_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CreateActivity.this, MainActivity.class));
+                setCreationProject();
+                Intent intent = new Intent(CreateActivity.this, AddMoreTaskActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("project_id", project_id);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
 
-    private void addInformation(){
-        activity_name.getText();
-        activity_manager.getText();
-        activity_deadline.getText();
-        activity_describe.getText();
+    private void setCreationProject(){
+        Project_Database project = new Project_Database();
+        project.setProjectName(((TextInputEditText)findViewById(R.id.project_name_textInput)).getText().toString());
+        project.setProjectDeadline(((TextInputEditText)findViewById(R.id.project_deadline_textInput)).getText().toString());
+        project.setProjectDescribe(((TextInputEditText)findViewById(R.id.project_describe_textInput)).getText().toString());
+        project_id = MyDatabase.createNewProject(db, project);
     }
+
+
 }

@@ -11,12 +11,18 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class NotificationActivity extends AppCompatActivity {
+    public Query db;
+    public String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        db = ((GlobalVar)this.getApplication()).getLocalQuery();
+        userId = ((GlobalVar)this.getApplication()).getUserId();
         getNotificationSpans();
         ((TextView)findViewById(R.id.back_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,8 +41,9 @@ public class NotificationActivity extends AppCompatActivity {
 
     public void getNotificationSpans(){
         LinearLayout container = (LinearLayout) findViewById(R.id.content_container);
-        for (int i=0;i<3;i++){
-            View view = SetUp.getNotificaitonSpan("Architecture Definition hạn là 14 tháng 12 năm 2022 lúc 20:00", this.getApplicationContext());
+        ArrayList<String> listNotifications = MyDatabase.getUserNotifications(db, userId);
+        for (String notification: listNotifications) {
+            View view = SetUp.getNotificaitonSpan(notification, this.getApplicationContext());
             container.addView(view);
         }
     }
