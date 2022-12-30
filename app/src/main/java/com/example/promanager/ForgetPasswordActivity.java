@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class ForgetPasswordActivity extends AppCompatActivity {
 
     @Override
@@ -27,6 +29,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //send email for resetting password?
                 Toast.makeText(ForgetPasswordActivity.this, "New password just sent to your mail!", Toast.LENGTH_SHORT).show();
+                MyDatabase.sendEmailResetPassword(((TextInputEditText)findViewById(R.id.email_textInput)).getText().toString());
                 startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
             }
         });

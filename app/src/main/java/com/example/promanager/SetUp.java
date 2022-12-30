@@ -12,8 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -118,10 +121,8 @@ public class SetUp {
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
         ArrayList<String> all_current_project_id = MyDatabase.getAllProject(db, myId);
-        for (String proId: all_current_project_id){
+        for (String proId: all_current_project_id)
             content_container.addView(getProjectSpan(db, proId, "Seek"));
-            Log.e("Project", proId);
-        }
 
         if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
         return rootView;
@@ -162,7 +163,7 @@ public class SetUp {
                 Application application = (Application) MainActivity.getAppContext().getApplicationContext();
                 Intent intent = new Intent(application, ProjectInforActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("project_id", "20127333");
+                bundle.putString("project_id", proId);
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 application.startActivity(intent);
@@ -189,7 +190,7 @@ public class SetUp {
                 Application application = (Application) MainActivity.getAppContext().getApplicationContext();
                 Intent intent = new Intent(application, TaskInforActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("activity_id", "20127333");
+                bundle.putString("activity_id", actId);
                 bundle.putString("source", "main");
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -206,11 +207,26 @@ public class SetUp {
         return notification_view;
     }
 
-    public static View getRequestTaskSpan(Activity_Database act, Context context){
+    public static View getRequestTaskSpan(Query db, Activity_Database act, String userId, Context context){
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View request_view = layoutInflater.inflate(R.layout.task_request_span, null, false);
         ((TextView)request_view.findViewById(R.id.name_textview)).setText(act.getActivityName());
-        ((TextView)request_view.findViewById(R.id.description_textview)).setText(act.getActivityDescribe());
+        ((TextView)request_view.findViewById(R.id.accept_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TaskRequestActivity.getAppContext(), "Accept this request", Toast.LENGTH_SHORT).show();
+                MyDatabase.acceptRequest(db, userId, act.getActivityID());
+            }
+        });
+
+        ((TextView)request_view.findViewById(R.id.delete_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TaskRequestActivity.getAppContext(), "Remove this request", Toast.LENGTH_SHORT).show();
+                MyDatabase.removeRequest(db, userId, act.getActivityID());
+            }
+        });
+
         return request_view;
     }
 

@@ -18,11 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+//import com.google.firebase.database.DataSnapshot;
+//import com.google.firebase.database.DatabaseError;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "EmailPassword_Firebase";
@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(RegisterActivity.this, "Sign Up Successfully!", Toast.LENGTH_SHORT).show();
-                    onClickSignUp();
+                    //onClickSignUp();
                 }
             }
         });
@@ -98,41 +98,41 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void onClickSignUp(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("userInfo");
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(username).exists()){
-                    new AlertDialog.Builder(RegisterActivity.this)
-                            .setTitle("Register failed!")
-                            .setMessage("Username đã tồn tại")
-                            .setPositiveButton("OK", null)
-                            .show();
-                }
-                else{
-                    userInfo_Database user = new userInfo_Database(username, password, phone, email, about, image);
-
-                    String pathObject = String.valueOf(user.getUsername());
-                    FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef1 = database1.getReference("userInfo");
-                    myRef1.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                            Toast.makeText(RegisterActivity.this, "Add complete!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, Verify_Phone_Number_Firebase.class));
-                        }
-                    });
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
+//    private void onClickSignUp(){
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("userInfo");
+//
+//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(snapshot.child(username).exists()){
+//                    new AlertDialog.Builder(RegisterActivity.this)
+//                            .setTitle("Register failed!")
+//                            .setMessage("Username đã tồn tại")
+//                            .setPositiveButton("OK", null)
+//                            .show();
+//                }
+//                else{
+//                    userInfo_Database user = new userInfo_Database(username, password, phone, email, about, image);
+//
+//                    String pathObject = String.valueOf(user.getUsername());
+//                    FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+//                    DatabaseReference myRef1 = database1.getReference("userInfo");
+//                    myRef1.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
+//                        @Override
+//                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                            Toast.makeText(RegisterActivity.this, "Add complete!", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(RegisterActivity.this, Verify_Phone_Number_Firebase.class));
+//                        }
+//                    });
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     //Hàm này để khi bấm đăng kí sẽ gửi thông tin lên firebase
     private void onClickSignUp1(String strEmail, String strPassword) {

@@ -29,7 +29,7 @@ public class CreateActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.back_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(CreateActivity.this, MainActivity.class));
             }
         });
 

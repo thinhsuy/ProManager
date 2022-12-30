@@ -322,6 +322,16 @@ public class MyDatabase {
         return new_project_id;
     }
 
+
+    //send email reset password cho ng dung
+    public static void sendEmailResetPassword(String email){}
+
+
+    //remove va accept request boi ng dung
+    public static void acceptRequest(Query db, String actId, String userId){}
+    public static void removeRequest(Query db, String actId, String userId){}
+
+
     public static void Creation(Query db){
         String createUserInfo = "CREATE TABLE IF NOT EXISTS UserInfo(username VARCHAR(100) PRIMARY KEY," +
                 "pass VARCHAR(100)," +

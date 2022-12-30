@@ -22,10 +22,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public Query db;
-    private static Context context;
     FragmentPagerAdapter adapterViewPager;
     public TabLayout tabLayout;
     public String userId;
+    private static Context context;
     public static Context getAppContext() {
         return MainActivity.context;
     }

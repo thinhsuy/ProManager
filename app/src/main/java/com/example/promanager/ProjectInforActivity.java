@@ -48,10 +48,6 @@ public class ProjectInforActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.deadline_textview)).setText(project.getProjectDeadline());
         ((TextView)findViewById(R.id.description_textview)).setText(project.getProjectDescribe());
 
-        // test data
-        project.addActivityList("act20127333");
-        project.addActivityList("act20127306");
-
         for (String actId: project.getActivityIdList()) {
             View activity_tag = SetUp.getActivityTag(MyDatabase.getActivityById(db, actId), this.getApplicationContext());
             activity_tag.setOnClickListener(new View.OnClickListener() {

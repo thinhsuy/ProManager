@@ -219,8 +219,8 @@ public class LoginActivity extends AppCompatActivity {
                 //ValidateToLogin();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("username", ((TextInputEditText)findViewById(R.id.username_textinputlayout)).getText().toString());
-                bundle.putString("username", ((TextInputEditText)findViewById(R.id.password_textinputlayout)).getText().toString());
+                bundle.putString("username", ((TextInputEditText)findViewById(R.id.username_textInput)).getText().toString());
+                bundle.putString("username", ((TextInputEditText)findViewById(R.id.password_textInput)).getText().toString());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -249,11 +249,9 @@ public class LoginActivity extends AppCompatActivity {
         Log.e("Username", username);
         Log.e("Password", password);
 
-
-
         //check database here
-        if (username.equals("") || password.equals(""))
-        {
+        if (username.equals("") || password.equals("")) {
+            Toast.makeText(LoginActivity.this, "Please fill all field", Toast.LENGTH_SHORT).show();
             return false;
         }
         else {
@@ -262,6 +260,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //Cai ham nay nen dem qua ben ForgetPasswordActivity.java
     private void onClickForgotPassword(){
         progressDialog.show();
         FirebaseAuth auth = FirebaseAuth.getInstance();
