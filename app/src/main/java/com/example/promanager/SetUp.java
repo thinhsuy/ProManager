@@ -151,24 +151,31 @@ public class SetUp {
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
 
-        Project_Database project = MyDatabase.getProjectById(db, proId);
-        TextView header = (TextView)projectView.findViewById(R.id.project_header_textview);
-        header.setText(project.getProjectName());
-        for (int i=0; i<project.getActivityIdList().size(); i++){
-            ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.getActivityIdList().get(i)));
-        }
-        header.setOnClickListener(new View.OnClickListener() {
+        Project_Database project;
+        MyDatabase.getProjectById(proId, new MyDatabase.getCurrentProjectCallback() {
             @Override
-            public void onClick(View view) {
-                Application application = (Application) MainActivity.getAppContext().getApplicationContext();
-                Intent intent = new Intent(application, ProjectInforActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("project_id", proId);
-                intent.putExtras(bundle);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                application.startActivity(intent);
+            public void onCurrentProjectReceived(Project_Database project) {
+                //chưa xử lí xong
+                TextView header = (TextView)projectView.findViewById(R.id.project_header_textview);
+                header.setText(project.getProjectName());
+                for (int i=0; i<project.getActivityIdList().size(); i++){
+                    ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.getActivityIdList().get(i)));
+                }
+                header.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Application application = (Application) MainActivity.getAppContext().getApplicationContext();
+                        Intent intent = new Intent(application, ProjectInforActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("project_id", proId);
+                        intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        application.startActivity(intent);
+                    }
+                });
             }
         });
+
         return projectView;
     }
 

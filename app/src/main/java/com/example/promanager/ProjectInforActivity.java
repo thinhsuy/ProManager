@@ -42,7 +42,8 @@ public class ProjectInforActivity extends AppCompatActivity {
     }
 
     public void loadInformation(String proId){
-        Project_Database project = MyDatabase.getProjectById(db, proId);
+//        Project_Database project = MyDatabase.getProjectById(db, proId);
+        Project_Database project = new Project_Database(); //Thêm mà chưa xóa
         ((TextView)findViewById(R.id.name_textview)).setText(project.getProjectName());
         ((TextView)findViewById(R.id.hoster_textview)).setText(project.getProjectOwner());
         ((TextView)findViewById(R.id.deadline_textview)).setText(project.getProjectDeadline());

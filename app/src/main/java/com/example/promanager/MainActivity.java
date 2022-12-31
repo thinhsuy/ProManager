@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private void tryToSetUserId(){
         try {
             Bundle bundle = getIntent().getExtras();
-            String userId = MyDatabase.getCurrentUserId(db, bundle.getString("username"), bundle.getString("password"));
+            String userId = MyDatabase.getCurrentUserId(bundle.getString("username"), bundle.getString("password"));
             ((GlobalVar)this.getApplication()).setUserId(userId);
         } catch (Exception ex){return;}
     }

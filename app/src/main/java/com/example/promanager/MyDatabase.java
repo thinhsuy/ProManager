@@ -4,8 +4,10 @@ package com.example.promanager;
 // NHỮNG GIÁ TRỊ TRONG TRANG NÀY HIỆN CHỈ LÀ GIẢ KHỞI TẠO! database sẽ có thể trả về những giá trị khác
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -19,6 +21,13 @@ import androidx.annotation.Nullable;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 //import com.google.firebase.database.ValueEventListener;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,8 +135,8 @@ public class MyDatabase {
 //    }
 
     //trả về id (username) của người dùng hiện tại
-    public static String getCurrentUserId(Query db, String username, String password){
-        String userId = "20127333";
+    public static String getCurrentUserId(String username, String password){
+        String userId = username;
         return userId;
         //DB không thể tự xử lí
         // !! cái này nó ảnh hưởng hết cả app nên rất qtrong!! cần giải quyết nhanh
@@ -212,18 +221,42 @@ public class MyDatabase {
 
     //trả về 1 số thông tin quan trọng của project
     //proId truyền vào tam là "20127306"
-    public static Project_Database getProjectById(Query db, String proId){
-        Project_Database project = new Project_Database();
-        project.setProjectID(proId);
-        project.setProjectName("Architecture Definition");
-        project.setProjectOwner("ThinhSuy");
-        project.setProjectDeadline("Deadline in 14/11/2022");
-        project.setProjectDescribe("Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes\n" +
-                "Produce reports and organise data.\n" +
-                "Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes\n" +
-                "Produce reports and organise data.");
-        project.setActivityIdList(getActivityIdListByProjectId(db, proId));
-        return project;
+    public interface getCurrentProjectCallback {
+        void onCurrentProjectReceived(Project_Database project);
+    }
+
+    public static void getProjectById(String proId, getCurrentProjectCallback callback){
+//        project.setProjectID(proId);
+//        project.setProjectName("Architecture Definition");
+//        project.setProjectOwner("ThinhSuy");
+//        project.setProjectDeadline("Deadline in 14/11/2022");
+//        project.setProjectDescribe("Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes\n" +
+//                "Produce reports and organise data.\n" +
+//                "Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes\n" +
+//                "Produce reports and organise data.");
+//        project.setActivityIdList(getActivityIdListByProjectId(db, proId));
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Project");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Project_Database project = dataSnapshot.getValue(Project_Database.class);
+                    if(project.getProjectID().equals(proId)){
+                        Log.d("Check ID", project.getProjectID());
+                        Project_Database project_Current = project;
+                        callback.onCurrentProjectReceived(project_Current);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     //trả về số task mà người dùng còn trong deadline (CurrentTasks)
@@ -314,13 +347,71 @@ public class MyDatabase {
     public static void setFileFolderActivity(String actId, String value){}
 
     //tạo thêm 1 task mới và gán cho project
-    public static void addNewTaskToProject(Activity_Database act, String proId){}
+    public interface ActivityIdCallback {
+        void onActivityIdReceived(String activityID);
+    }
+
+    public static void addNewTaskToProject(Context A, Activity_Database act, String proId){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Project").child(proId).child("activityIds");
+
+//        String pathObject = String.valueOf(act.getActivityID());
+        ArrayList<String> values = new ArrayList<>();
+        values.add(act.getActivityID());
+
+        myRef.setValue(values, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(A, "Add activity to Project complete!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void createActivity(ActivityIdCallback callback){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Activity");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String new_activity_id = "activity" + Long.toString(snapshot.getChildrenCount()+1);
+//                Toast.makeText(LoginActivity.this, Long.toString(snapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
+                callback.onActivityIdReceived(new_activity_id);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     //tạo 1 project mới, hàm này m trả về id project vừa tạo nha!
-    public static String createNewProject(Query db, Project_Database project){
-        String new_project_id = "pro20127333";
-        return new_project_id;
+    public interface ProjectIdCallback {
+        void onProjectIdReceived(String projectId);
     }
+
+    public static void createNewProject(Project_Database project, ProjectIdCallback callback){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Project");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String new_project_id = "project" + Long.toString(snapshot.getChildrenCount()+1);
+//                Toast.makeText(LoginActivity.this, Long.toString(snapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
+                callback.onProjectIdReceived(new_project_id);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
 
     //send email reset password cho ng dung

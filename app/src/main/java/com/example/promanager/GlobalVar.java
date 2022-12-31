@@ -13,4 +13,14 @@ public class GlobalVar extends Application {
     public String userId;
     public void setUserId(String id){this.userId=id;}
     public String getUserId(){return this.userId;}
+
+    public String callback;
+
+    public String getCallback() {
+        return callback;
+    }
+
+    public void setCallback(String callback) {
+        this.callback = callback;
+    }
 }

@@ -13,21 +13,29 @@ public class Project_Database {
     private String projectPrivacy;
 
     public ArrayList<String> activityIdList;
-    public ArrayList<String> getActivityIdList(){return this.activityIdList;}
-    public void setActivityIdList(ArrayList<String> listId) {this.activityIdList = listId;}
-    public void addActivityList(String actId){this.activityIdList.add(actId);}
-    public void removeActivityList(String actId) {this.activityIdList.remove(actId);}
 
-    public Project_Database(String projectID, String projectName, String projectOwner, String projectDeadline, String projectDescribe, String projectPrivacy) {
-        this.projectID = projectID;
+    public Project_Database(String projectName, String projectDeadline, String projectDescribe) {
         this.projectName = projectName;
-        this.projectOwner = projectOwner;
         this.projectDeadline = projectDeadline;
         this.projectDescribe = projectDescribe;
-        this.projectPrivacy = projectPrivacy;
     }
 
     public Project_Database() {
+    }
+
+    public ArrayList<String> getActivityIdList() {
+        return activityIdList;
+    }
+
+    public void setActivityIdList(ArrayList<String> activityIdList) {
+        this.activityIdList = activityIdList;
+    }
+
+    public void addActivityList(String actId){
+        this.activityIdList.add(actId);
+    }
+    public void removeActivityList(String actId) {
+        this.activityIdList.remove(actId);
     }
 
     public String getProjectID() {
@@ -98,6 +106,7 @@ public class Project_Database {
         result.put("projectDeadline", this.projectDeadline);
         result.put("projectDescribe", this.projectDescribe);
         result.put("projectPrivacy", this.projectPrivacy);
+        result.put("activityIdList", this.activityIdList);
         return result;
     }
 }
