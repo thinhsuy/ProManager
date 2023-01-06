@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -79,14 +80,11 @@ public class TaskRequestActivity extends AppCompatActivity {
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                for (int i=0; i<manager[0].size(); i++){
+                for (int i=0; i<manager[0].size(); i++){\
                     container.addView(SetUp.getRequestTaskSpan(userId, manager[0].get(i), project_name[0].get(i), describe[0].get(i), TaskRequestActivity.getAppContext()));
                 }
             }
         }, 500);
-//        for (String actId:activity_request_list_id) {
-//            Activity_Database act = MyDatabase.getActivityById(db, actId);
-//            container.addView(SetUp.getRequestTaskSpan(db, act, userId, this.getApplicationContext()));
-//        }
+
     }
 }
