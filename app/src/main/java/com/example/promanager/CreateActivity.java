@@ -64,7 +64,6 @@ public class CreateActivity extends AppCompatActivity {
             public void onProjectIdReceived(String projectId) {
 //                Toast.makeText(CreateActivity.this, "ProjectID: " + projectId, Toast.LENGTH_SHORT).show();
                 project_id = projectId;
-                Log.e("CHECK ID line70", project_id);
                 project.setProjectID(project_id);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -77,7 +76,6 @@ public class CreateActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                         Toast.makeText(CreateActivity.this, "Create Project complete!", Toast.LENGTH_SHORT).show();
-                        Log.e("CHECK ID line82", project_id);
                         Intent intent = new Intent(CreateActivity.this, AddMoreTaskActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("project_id", project_id);

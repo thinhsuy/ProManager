@@ -59,7 +59,12 @@ public class MyFragment extends Fragment {
         switch (page){
             case 0: return SetUp.getActivityFragment(db, inflater.inflate(R.layout.fragment_acitvity, container, false), userId);
             case 1: return SetUp.getInformationFragment(db, inflater.inflate(R.layout.fragment_infor, container, false), userId);
-            case 2: return SetUp.getOwnFragment(db, inflater.inflate(R.layout.fragment_own, container, false), userId);
+            case 2:
+                try {
+                    return SetUp.getOwnFragment(db, inflater.inflate(R.layout.fragment_own, container, false), userId);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             case 3: return SetUp.getSeekFragment(db, inflater.inflate(R.layout.fragment_seek, container, false), userId);
             default: {return null;}
         }

@@ -18,8 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class AddMoreTaskActivity extends AppCompatActivity {
     public Query db;
+
+    ArrayList<String> activityList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +60,8 @@ public class AddMoreTaskActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 Toast.makeText(AddMoreTaskActivity.this, "Create Activity complete!", Toast.LENGTH_SHORT).show();
-                                MyDatabase.addNewTaskToProject(AddMoreTaskActivity.this, act, bundle.getString("project_id"));
-                                backToPreviousPage(bundle.getString("project_id"));
+                                MyDatabase.addNewTaskToProject(AddMoreTaskActivity.this, ProjectInforActivity.class, act, bundle.getString("project_id"));
+//                                backToPreviousPage(bundle.getString("project_id"));
                             }
                         });
 //                        Toast.makeText(AddMoreTaskActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
@@ -101,6 +105,7 @@ public class AddMoreTaskActivity extends AppCompatActivity {
     }
 
     private void backToPreviousPage(String proId){
+        Log.e("backToPreviousPage", "DONE");
         Intent intent = new Intent(AddMoreTaskActivity.this, ProjectInforActivity.class);
         Bundle bundleBack = new Bundle();
         bundleBack.putString("project_id", proId);

@@ -6,7 +6,9 @@ package com.example.promanager;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class MyDatabase {
     static private List<userInfo_Database> mListUser = new ArrayList<>();
@@ -62,7 +65,7 @@ public class MyDatabase {
     }
 
     //trả về số id user hiện respon cho activity
-    public static ArrayList<String> getResponsibilityUserId(Query db, String actId){
+    public static ArrayList<String>  getResponsibilityUserId(Query db, String actId){
         ArrayList<String> user_of_respon_id = new ArrayList<String>();
 
         String strGetResponsibilityUserId = "SELECT username FROM UserResponActivity WHERE activityID = '"+actId+"'";
@@ -89,51 +92,6 @@ public class MyDatabase {
         return user_of_connection_id;
     }
 
-    //trả về true khi set thông tin ng dùng sign up tới database thành công
-//    public static boolean setDatabaseRegister(Context A, String username, String password, String phonenumber, String email, String about, String image){
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("userInfo");
-//
-//        userInfo_Database user = new userInfo_Database(username, password, phonenumber, email, about, image);
-//
-//        String pathObject = String.valueOf(user.getUsername());
-//        myRef.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//                Toast.makeText(A, "Add complete!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        return true;
-//    }
-//
-//    //trả về true false khi kiểm tra dữ liệu login của người dùng
-//    public static boolean checkLogin(Context A, String username, String password){
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("userInfo");
-//        try {
-//            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if(snapshot.child(username).exists()){
-//                        userInfo_Database user = snapshot.child(username).getValue(userInfo_Database.class);
-//                        if(user.getUsername().equals(username) && user.getPass().equals(password)){
-//                            Toast.makeText(A, user.toString(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                }
-//            });
-//        }
-//        catch (Exception e){
-//
-//        }
-//        return false;
-//    }
-
     //trả về id (username) của người dùng hiện tại
     public static String getCurrentUserId(String username, String password){
         String userId = username;
@@ -144,39 +102,72 @@ public class MyDatabase {
         //      parameters sẽ có thể thay dổi thêm 2 tham chiếu là username và password
     }
 
+    //-----------------------------------------------------
+    public interface getAllOwnProjectsCallback {
+        void onAllOwnProjectsReceived(ArrayList<Project_Database> all_projects);
+    }
+
     //trả về toàn bộ id của project mà người dùng hiện phải chủ trì (manager, own)
-    public static ArrayList<String> getOwnProject(Query db, String myId){
-        ArrayList<String> all_own_projects= new ArrayList<String>();
+    public static void getOwnProject(String myId, getAllOwnProjectsCallback callback){
+        ArrayList<Project_Database> all_own_projects = new ArrayList<>();
 
-        String strGetOwnProject = "SELECT projectID FROM Project WHERE projectOwner = '"+myId+"'";
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Project");
 
-        Cursor OwnProject = db.getData(strGetOwnProject);
-        while(OwnProject.moveToNext()){
-            String projectID = OwnProject.getString(0);
-            all_own_projects.add(projectID);
-        }
-        return all_own_projects;
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Project_Database project = dataSnapshot.getValue(Project_Database.class);
+                    if(project.getProjectOwner().equals(myId)){
+                        all_own_projects.add(project);
+                    }
+                }
+                callback.onAllOwnProjectsReceived(all_own_projects);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    //-------------------------------------------------------
+
+
+    //-------------------------------------------------------
+
+    public interface getAllProjectsCallback {
+        void onAllProjectsReceived(ArrayList<Project_Database> all_projects);
     }
 
-    //trả về toàn bộ id của project mà người dùng hiện KHÔNG tham gia và KHÔNG phải chủ trì
-    public static ArrayList<String> getAllProject(Query db, String myId){
-        ArrayList<String> all_project_id = new ArrayList<String>();
+    //trả về toàn bộ id của project mà người dùng hiện KHÔNG tham gia và KHÔNG phải chủ trì (Tạm thời lấy hết)
+    public static void getAllProject(String myId, getAllProjectsCallback callback){
+        ArrayList<Project_Database> all_projects = new ArrayList<>();
 
-        String strProjectID1 = "SELECT projectID FROM UserResponProject WHERE username != '"+myId+"'";
-        String strProjectID2 = "SELECT projectID FROM Project WHERE projectOwner != '"+myId+"'";
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Project");
 
-        Cursor CurrentResponProject1 = db.getData(strProjectID1);
-        Cursor CurrentResponProject2 = db.getData(strProjectID2);
-        while(CurrentResponProject1.moveToNext()){
-            String projectID = CurrentResponProject1.getString(0);
-            all_project_id.add(projectID);
-        }
-        while(CurrentResponProject2.moveToNext()){
-            String projectID = CurrentResponProject2.getString(0);
-            all_project_id.add(projectID);
-        }
-        return all_project_id;
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Project_Database project = dataSnapshot.getValue(Project_Database.class);
+                    all_projects.add(project);
+                }
+                callback.onAllProjectsReceived(all_projects);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
+
+    //-------------------------------------------------------
 
     //trả về toàn bộ id của project mà người dùng hiện tham gia
     public static ArrayList<String> getCurrentResponProject(Query db, String myId){
@@ -226,15 +217,6 @@ public class MyDatabase {
     }
 
     public static void getProjectById(String proId, getCurrentProjectCallback callback){
-//        project.setProjectID(proId);
-//        project.setProjectName("Architecture Definition");
-//        project.setProjectOwner("ThinhSuy");
-//        project.setProjectDeadline("Deadline in 14/11/2022");
-//        project.setProjectDescribe("Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes\n" +
-//                "Produce reports and organise data.\n" +
-//                "Report directly to the General Manager of the branch. Receive calls, take messages, and record correspondence. Handle inquiries and requests. Arrange meetings and take minutes\n" +
-//                "Produce reports and organise data.");
-//        project.setActivityIdList(getActivityIdListByProjectId(db, proId));
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Project");
 
@@ -351,18 +333,25 @@ public class MyDatabase {
         void onActivityIdReceived(String activityID);
     }
 
-    public static void addNewTaskToProject(Context A, Activity_Database act, String proId){
+    public static void addNewTaskToProject(Context A, Class<ProjectInforActivity> B, Activity_Database act, String proId){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Project").child(proId).child("activityIds");
 
 //        String pathObject = String.valueOf(act.getActivityID());
-        ArrayList<String> values = new ArrayList<>();
-        values.add(act.getActivityID());
+//        ArrayList<String> values = new ArrayList<>();
+//        values.add(act.getActivityID());
+        String pathObject = String.valueOf(act.getActivityID());
 
-        myRef.setValue(values, new DatabaseReference.CompletionListener() {
+        myRef.child(pathObject).setValue(act, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 Toast.makeText(A, "Add activity to Project complete!", Toast.LENGTH_SHORT).show();
+                Log.e("backToPreviousPage", "DONE");
+                Intent intent = new Intent(A, B);
+                Bundle bundleBack = new Bundle();
+                bundleBack.putString("project_id", proId);
+                intent.putExtras(bundleBack);
+                A.startActivity(intent);
             }
         });
     }

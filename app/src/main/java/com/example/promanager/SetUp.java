@@ -1,9 +1,11 @@
 package com.example.promanager;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +16,22 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.flexbox.FlexboxLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 public class SetUp {
+
     public static View getActivityFragment(Query db, View rootView, String myId){
         SearchView searchBar = (SearchView) rootView.findViewById(R.id.search_bar);
         searchBar.setActivated(true);
@@ -31,8 +42,8 @@ public class SetUp {
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
         ArrayList<String> all_current_project_id = MyDatabase.getCurrentResponProject(db, myId);
-        for (String proId: all_current_project_id)
-            content_container.addView(getProjectSpan(db, proId, "Manage"));
+//        for (String proId: all_current_project_id)
+//            content_container.addView(getProjectSpan(db, proId, "Manage"));
         
         ArrayList<String> connected_user_id = MyDatabase.getConnectedUserId(db, myId);
         for (String userId:connected_user_id) {
@@ -84,7 +95,7 @@ public class SetUp {
         return rootView;
     }
 
-    public static View getOwnFragment(Query db, View rootView, String myId){
+    public static View getOwnFragment(Query db, View rootView, String myId) throws InterruptedException {
         SearchView searchBar = (SearchView) rootView.findViewById(R.id.search_bar);
         searchBar.setActivated(true);
         searchBar.setQueryHint("Search");
@@ -103,11 +114,37 @@ public class SetUp {
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-        ArrayList<String> all_current_project_id = MyDatabase.getOwnProject(db, myId);
-        for (String proId: all_current_project_id) 
-            content_container.addView(getProjectSpan(db, proId, "Own"));
+        final ArrayList<Project_Database>[] all_own_project = new ArrayList[1];
+        all_own_project[0] = new ArrayList<Project_Database>();
 
-        if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
+        MyDatabase.getOwnProject(myId, new MyDatabase.getAllOwnProjectsCallback() {
+            @Override
+            public void onAllOwnProjectsReceived(ArrayList<Project_Database> all_projects) {
+                all_own_project[0] = all_projects;
+                for (Project_Database cur_Project : all_projects)
+                    content_container.addView(getProjectSpan(db, cur_Project, "Own"));
+            }
+        });
+        //Tạo 1 dialog xoay 1 ktgian cố định để test tgian chạy xong callback
+        //
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after 1.5s = 1500ms
+                Log.e("Size all_own_project[0] out", String.valueOf(all_own_project[0].size()));
+                if (all_own_project[0].size()==0) {
+                    Log.e("Check if", "DONE");
+                    content_container.addView(getEmptyProjectSpan());
+                }
+            }
+        }, 500);
+
+//        Log.e("Size all_own_project[0] out", String.valueOf(all_own_project[0].size()));
+//        if (all_own_project[0].size()==0) {
+//            Log.e("Check if", "DONE");
+//            content_container.addView(getEmptyProjectSpan());
+//        }
         return rootView;
     }
 
@@ -120,11 +157,32 @@ public class SetUp {
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-        ArrayList<String> all_current_project_id = MyDatabase.getAllProject(db, myId);
-        for (String proId: all_current_project_id)
-            content_container.addView(getProjectSpan(db, proId, "Seek"));
+        final ArrayList<Project_Database>[] all_own_project = new ArrayList[1];
+        all_own_project[0] = new ArrayList<Project_Database>();
 
-        if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
+        MyDatabase.getAllProject(myId, new MyDatabase.getAllProjectsCallback() {
+            @Override
+            public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
+                all_own_project[0] = all_projects;
+                Log.e("Size all_own_project[0] in", String.valueOf(all_own_project[0].size()));
+                for (Project_Database cur_Project : all_projects)
+                    content_container.addView(getProjectSpan(db, cur_Project, "Seek"));
+            }
+        });
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after 1.5s = 1500ms
+                Log.e("Size all_own_project[0] out", String.valueOf(all_own_project[0].size()));
+                if (all_own_project[0].size()==0) {
+                    Log.e("Check if", "DONE");
+                    content_container.addView(getEmptyProjectSpan());
+                }
+            }
+        }, 500);
+
         return rootView;
     }
 
@@ -147,27 +205,46 @@ public class SetUp {
         return activityView;
     }
 
-    public static View getProjectSpan(Query db, String proId, String page){
+    public static View getProjectSpan(Query db, Project_Database project, String page){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
 
-        Project_Database project;
-        MyDatabase.getProjectById(proId, new MyDatabase.getCurrentProjectCallback() {
+//        Project_Database project;
+        MyDatabase.getProjectById(project.getProjectID(), new MyDatabase.getCurrentProjectCallback() {
             @Override
             public void onCurrentProjectReceived(Project_Database project) {
                 //chưa xử lí xong
                 TextView header = (TextView)projectView.findViewById(R.id.project_header_textview);
                 header.setText(project.getProjectName());
-                for (int i=0; i<project.getActivityIdList().size(); i++){
-                    ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.getActivityIdList().get(i)));
-                }
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Project").child(project.getProjectID()).child("activityIds");
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            Activity_Database act = dataSnapshot.getValue(Activity_Database.class);
+                            ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, act));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+//                for (int i=0; i<project.getActivityIdList().size(); i++){
+//                    ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.getActivityIdList().get(i)));
+//                }
+                Log.e("Check time out in", "DONE");
                 header.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Application application = (Application) MainActivity.getAppContext().getApplicationContext();
                         Intent intent = new Intent(application, ProjectInforActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString("project_id", proId);
+                        bundle.putString("project_id", project.getProjectID());
                         intent.putExtras(bundle);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         application.startActivity(intent);
@@ -176,28 +253,36 @@ public class SetUp {
             }
         });
 
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after 5s = 5000ms
+                Log.e("Check time out out", "DONE");
+            }
+        }, 500);
         return projectView;
     }
 
-    private static View getActivitySpan(Query db, String actId){
+    private static View getActivitySpan(Query db, Activity_Database act){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View activityView = layoutInflater.inflate(R.layout.activity_span, null, false);
-        Activity_Database activity = MyDatabase.getActivityById(db, actId);
-        ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(activity.getActivityName());
-        ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(activity.getActivityHost());
-        ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(activity.getActivityDeadline());
-        ArrayList<String> user_respon_id = MyDatabase.getResponsibilityUserId(db, actId);
-        for (String userId:user_respon_id) {
-            ImageView avatar = MyDatabase.getAvatarById(db, MainActivity.getAppContext(), userId, "tiny");
-            ((LinearLayout)activityView.findViewById(R.id.respon_container_layout)).addView(avatar);
-        }
+//        Activity_Database activity = MyDatabase.getActivityById(db, actId);
+        ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(act.getActivityName());
+        ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(act.getActivityHost());
+        ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(act.getActivityDeadline());
+//        ArrayList<String> user_respon_id = MyDatabase.getResponsibilityUserId(db, actId);
+//        for (String userId:user_respon_id) {
+//            ImageView avatar = MyDatabase.getAvatarById(db, MainActivity.getAppContext(), userId, "tiny");
+//            ((LinearLayout)activityView.findViewById(R.id.respon_container_layout)).addView(avatar);
+//        }
         ((FlexboxLayout)activityView.findViewById(R.id.activity_container)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Application application = (Application) MainActivity.getAppContext().getApplicationContext();
                 Intent intent = new Intent(application, TaskInforActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("activity_id", actId);
+                bundle.putString("activity_id", act.getActivityID());
                 bundle.putString("source", "main");
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

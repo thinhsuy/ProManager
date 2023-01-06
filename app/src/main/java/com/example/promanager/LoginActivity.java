@@ -97,78 +97,6 @@ public class LoginActivity extends AppCompatActivity {
 //        });
 
     }
-
-//    private void testFirebase() {
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("userInfo");
-//
-//        String username = "username1";
-//        String password = "123456";
-//
-//        final Boolean[] isCheck = {false};
-//
-////        Toast.makeText(LoginActivity.this, i, Toast.LENGTH_SHORT).show();
-//
-//        myRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//                userInfo_Database user = snapshot.getValue(userInfo_Database.class);
-//                if(user.getUsername().equals(username) && user.getPass().equals(password)){
-//                    isCheck[0] = true;
-//                    Toast.makeText(LoginActivity.this, isCheck[0].toString(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                else{
-//                    Toast.makeText(LoginActivity.this, user.getUsername(), Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(LoginActivity.this, isCheck[0].toString(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//
-//
-//        });
-//
-//        Toast.makeText(LoginActivity.this, isCheck[0].toString() + "end", Toast.LENGTH_SHORT).show();
-//
-////        myRef.addValueEventListener(new ValueEventListener() {
-////            @Override
-////            public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                userInfo user = snapshot.getValue(userInfo.class);
-////                if(user.getUsername().equals("username1")) {
-////                    Toast.makeText(LoginActivity.this, user.toString(), Toast.LENGTH_SHORT).show();
-////                }
-////            }
-////
-////            @Override
-////            public void onCancelled(@NonNull DatabaseError error) {
-////
-////            }
-////        });
-//
-////        Toast.makeText(LoginActivity.this, myRef.child("username1").getKey(), Toast.LENGTH_SHORT).show();
-//    }
-
     private void ValidateToLogin(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("userInfo");
@@ -280,43 +208,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-//    private boolean check_infor_textfield(){
-//        username = username_til.getEditText().getText().toString().trim();
-//        password = password_til.getEditText().getText().toString().trim();
-//        return check_database(username, password);
-//    }
-//
-//    private boolean check_database(String username, String password){
-//        Log.e("Username", username);
-//        Log.e("Password", password);
-//
-//        //check database here
-//        if (username.equals("") || password.equals("")) {
-//            Toast.makeText(LoginActivity.this, "Please fill all field", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        else {
-////            testFirebaseP2();
-//            return isCheck;
-//        }
-//    }
-
     //Cai ham nay nen dem qua ben ForgetPasswordActivity.java
-    private void onClickForgotPassword(){
-        progressDialog.show();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String emailAddress = "user@example.com"; //Truyền email mà người dùng đã đăng kí trước đó
 
-        auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        progressDialog.cancel();
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "Email sent.");
-                        }
-                    }
-                });
-    }
 }
