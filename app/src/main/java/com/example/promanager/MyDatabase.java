@@ -243,8 +243,9 @@ public class MyDatabase {
     }
 
     //trả về số task mà người dùng còn trong deadline (CurrentTasks)
-    public static int getCurrentTasks(Query db, String myId){
+    public static int getCurrentTasks(String myId, getAllProjectsCallback callback){
         final int[] current_task = {0};
+        Log.e("userId in get current task", myId);
         MyDatabase.getAllProject(myId, new getAllProjectsCallback() {
             @Override
             public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
@@ -252,8 +253,10 @@ public class MyDatabase {
                     if (cur_project.getProjectOwner().equals(myId))
                         current_task[0] += 1;
                 }
+                Log.e("Total task", String.valueOf(current_task[0]));
             }
         });
+
         return current_task[0];
     }
 

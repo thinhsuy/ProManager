@@ -78,29 +78,47 @@ public class SetUp {
             @Override
             public void run() {
                 int width_loadbarout = load_bar_out.getMeasuredWidth();
-                int current_task = MyDatabase.getCurrentTasks(db, myId);
-                int finised_task = MyDatabase.getCurrentFinishedTasks(db, myId);
-                int int_percent = getPercentOfValue(current_task, finised_task);
+                final int[] current_task = {0};
+                MyDatabase.getAllProject(myId, new MyDatabase.getAllProjectsCallback() {
+                    @Override
+                    public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
+                        for (Project_Database cur_Project : all_projects) {
+                            if (myId.equals(cur_Project.getProjectOwner()))
+                                current_task[0] += 1;
+                        }
+                    }
+                });
 
-                RelativeLayout load_bar_in = new RelativeLayout(MainActivity.getAppContext());
-                int width_loadbarin = getValueOfPercent(width_loadbarout, int_percent);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width_loadbarin, 40);
-                params.setMargins(5,0,0,0);
-                load_bar_in.setLayoutParams(new LinearLayout.LayoutParams(params));
-                load_bar_in.setBackgroundResource(R.drawable.load_bar_in);
-                load_bar_out.addView(load_bar_in);
-
-                String numb_of_task_completed = String.valueOf(finised_task) + " of " + String.valueOf(current_task) + " completed";
-                String percent_of_task_completed = String.valueOf(int_percent) + "%";
-                ((TextView)rootView.findViewById(R.id.numb_of_task_completed)).setText(numb_of_task_completed);
-                ((TextView)rootView.findViewById(R.id.percent_of_task_completed)).setText(percent_of_task_completed);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        int finised_task = MyDatabase.getCurrentFinishedTasks(db, myId);
+                        int int_percent = getPercentOfValue(current_task[0], finised_task);
+                        RelativeLayout load_bar_in = new RelativeLayout(MainActivity.getAppContext());
+                        int width_loadbarin = getValueOfPercent(width_loadbarout, int_percent);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width_loadbarin, 40);
+                        params.setMargins(5,0,0,0);
+                        load_bar_in.setLayoutParams(new LinearLayout.LayoutParams(params));
+                        load_bar_in.setBackgroundResource(R.drawable.load_bar_in);
+                        load_bar_out.addView(load_bar_in);
+                        String numb_of_task_completed = String.valueOf(finised_task) + " of " + String.valueOf(current_task[0]) + " completed";
+                        String percent_of_task_completed = String.valueOf(int_percent) + "%";
+                        ((TextView)rootView.findViewById(R.id.numb_of_task_completed)).setText(numb_of_task_completed);
+                        ((TextView)rootView.findViewById(R.id.percent_of_task_completed)).setText(percent_of_task_completed);
+                    }
+                }, 500);
             }});
 
-        int total_task = MyDatabase.getTotalTasks(db, myId);
-        int total_hour = MyDatabase.getTotalHour(db, myId);
-        ((TextView)rootView.findViewById(R.id.total_task_textview)).setText(String.valueOf(total_task));
-        ((TextView)rootView.findViewById(R.id.total_hour_textview)).setText(String.valueOf(total_hour));
-        ((TextView)rootView.findViewById(R.id.overview_textview)).setText(MyDatabase.getUserOverview(db, myId));
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int total_task = MyDatabase.getTotalTasks(db, myId);
+                int total_hour = MyDatabase.getTotalHour(db, myId);
+                ((TextView)rootView.findViewById(R.id.total_task_textview)).setText(String.valueOf(total_task));
+                ((TextView)rootView.findViewById(R.id.total_hour_textview)).setText(String.valueOf(total_hour));
+                ((TextView)rootView.findViewById(R.id.overview_textview)).setText(MyDatabase.getUserOverview(db, myId));
+            }
+        }, 500);
         return rootView;
     }
 
