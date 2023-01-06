@@ -35,23 +35,22 @@ public class TaskRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_request);
         db = ((GlobalVar)this.getApplication()).getLocalQuery();
         userId = ((GlobalVar)this.getApplication()).getUserId();
+        getRequestSpan();
         ((TextView)findViewById(R.id.back_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TaskRequestActivity.this, NotificationActivity.class));
             }
         });
-        getRequestSpan();
     }
 
     public void getRequestSpan(){
         LinearLayout container = ((LinearLayout)findViewById(R.id.content_container));
-        ArrayList<String> activity_request_list_id = MyDatabase.getActivityRequestListId(db, userId);
 
         final ArrayList<String>[] manager = new ArrayList[]{new ArrayList<String>()};
         final ArrayList<String>[] project_name = new ArrayList[]{new ArrayList<String>()};
         final ArrayList<String>[] describe = new ArrayList[]{new ArrayList<String>()};
-        DatabaseReference inviteRef = (FirebaseDatabase.getInstance()).getReference("Invitaion");
+        DatabaseReference inviteRef = (FirebaseDatabase.getInstance()).getReference("Invitation");
         inviteRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -80,7 +79,7 @@ public class TaskRequestActivity extends AppCompatActivity {
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                for (int i=0; i<manager[0].size(); i++){\
+                for (int i=0; i<manager[0].size(); i++){
                     container.addView(SetUp.getRequestTaskSpan(userId, manager[0].get(i), project_name[0].get(i), describe[0].get(i), TaskRequestActivity.getAppContext()));
                 }
             }
