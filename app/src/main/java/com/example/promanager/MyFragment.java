@@ -26,8 +26,8 @@ public class MyFragment extends Fragment {
     public static MyFragment newInstance(int page, String userId, View viewChange) {
         MyFragment fragmentFirst = new MyFragment();
         Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("User Id", userId);
+        args.putInt("pageNumber", page);
+        args.putString("userId", userId);
         fragmentFirst.setArguments(args);
         BubbleView = viewChange;
         return fragmentFirst;
@@ -38,8 +38,8 @@ public class MyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = ((GlobalVar)getActivity().getApplication()).getLocalQuery();
-        page = getArguments().getInt("someInt", 0);
-        userId = getArguments().getString("User Id", "none");
+        page = getArguments().getInt("pageNumber", 0);
+        userId = getArguments().getString("userId", "none");
     }
 
 

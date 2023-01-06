@@ -55,14 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         sign_up_btn = (Button) findViewById(R.id.sign_up_btn);
         forget_password_tv = (TextView) findViewById(R.id.forget_password_textview);
         set_event_onclick();
-        ((GlobalVar)this.getApplication()).setLocalQuery(new Query(this, "ProManager1.sqlite", null, 1));
-        db = ((GlobalVar)this.getApplication()).getLocalQuery();
-        try {
-            MyDatabase.Creation(db);
-        }
-        catch (Exception ex) {
-            Log.e("SQLException", ex.toString());
-        }
 
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference myRef = database.getReference("Project").child("project1").child("activityIdList");
@@ -143,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("username", ((TextInputEditText)findViewById(R.id.username_textInput)).getText().toString());
-                                bundle.putString("password", ((TextInputEditText)findViewById(R.id.password_textInput)).getText().toString());
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }

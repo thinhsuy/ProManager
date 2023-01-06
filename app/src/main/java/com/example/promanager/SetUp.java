@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 public class SetUp {
-
+    public final Handler handler = new Handler();
     public static View getActivityFragment(Query db, View rootView, String myId){
         SearchView searchBar = (SearchView) rootView.findViewById(R.id.search_bar);
         searchBar.setActivated(true);
@@ -41,17 +41,26 @@ public class SetUp {
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-//        ArrayList<String> all_current_project_id = MyDatabase.getCurrentResponProject(myId);
-//        for (String proId: all_current_project_id)
-//            content_container.addView(getProjectSpan(db, proId, "Manage"));
-        
+        final ArrayList<Project_Database>[] all_my_project = new ArrayList[]{new ArrayList<Project_Database>()};
+        MyDatabase.getOwnProject(myId, new MyDatabase.getAllProjectsCallback() {
+            @Override
+            public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
+                all_my_project[0] = all_projects;
+                boolean isEmpty = true;
+                for (Project_Database cur_Project : all_projects) {
+                    if (!myId.equals(cur_Project.getProjectOwner())) continue;
+                    content_container.addView(getProjectSpan(db, cur_Project, "Manage"));
+                    isEmpty=!isEmpty;
+                } if (isEmpty)
+                    content_container.addView(getEmptyProjectSpan());
+            }
+        });
+
         ArrayList<String> connected_user_id = MyDatabase.getConnectedUserId(db, myId);
         for (String userId:connected_user_id) {
             ImageView avatar = MyDatabase.getAvatarById(db, MainActivity.getAppContext(), userId, "small");
             ((LinearLayout)rootView.findViewById(R.id.last_connection_container)).addView(avatar);
         }
-
-//        if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
         return rootView;
     }
 
@@ -101,7 +110,6 @@ public class SetUp {
         searchBar.setQueryHint("Search");
         searchBar.setIconified(false);
         searchBar.clearFocus();
-
         ((TextView) rootView.findViewById(R.id.generate_new_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,40 +119,22 @@ public class SetUp {
                 application.startActivity(intent);
             }
         });
-
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-        final ArrayList<Project_Database>[] all_own_project = new ArrayList[1];
-        all_own_project[0] = new ArrayList<Project_Database>();
-
-        MyDatabase.getOwnProject(myId, new MyDatabase.getAllOwnProjectsCallback() {
+        final ArrayList<Project_Database>[] all_my_project = new ArrayList[]{new ArrayList<Project_Database>()};
+        MyDatabase.getOwnProject(myId, new MyDatabase.getAllProjectsCallback() {
             @Override
-            public void onAllOwnProjectsReceived(ArrayList<Project_Database> all_projects) {
-                all_own_project[0] = all_projects;
-                for (Project_Database cur_Project : all_projects)
+            public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
+                all_my_project[0] = all_projects;
+                boolean isEmpty = true;
+                for (Project_Database cur_Project : all_projects) {
+                    if (!myId.equals(cur_Project.getProjectOwner())) continue;
                     content_container.addView(getProjectSpan(db, cur_Project, "Own"));
+                    isEmpty=!isEmpty;
+                } if (isEmpty)
+                    content_container.addView(getEmptyProjectSpan());
             }
         });
-        //Tạo 1 dialog xoay 1 ktgian cố định để test tgian chạy xong callback
-        //
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Do something after 1.5s = 1500ms
-                Log.e("Size all_own_project[0] out", String.valueOf(all_own_project[0].size()));
-                if (all_own_project[0].size()==0) {
-                    Log.e("Check if", "DONE");
-                    content_container.addView(getEmptyProjectSpan());
-                }
-            }
-        }, 500);
-
-//        Log.e("Size all_own_project[0] out", String.valueOf(all_own_project[0].size()));
-//        if (all_own_project[0].size()==0) {
-//            Log.e("Check if", "DONE");
-//            content_container.addView(getEmptyProjectSpan());
-//        }
         return rootView;
     }
 
@@ -164,7 +154,6 @@ public class SetUp {
             @Override
             public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
                 all_own_project[0] = all_projects;
-                Log.e("Size all_own_project[0] in", String.valueOf(all_own_project[0].size()));
                 for (Project_Database cur_Project : all_projects)
                     content_container.addView(getProjectSpan(db, cur_Project, "Seek"));
             }
@@ -174,10 +163,7 @@ public class SetUp {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Do something after 1.5s = 1500ms
-                Log.e("Size all_own_project[0] out", String.valueOf(all_own_project[0].size()));
                 if (all_own_project[0].size()==0) {
-                    Log.e("Check if", "DONE");
                     content_container.addView(getEmptyProjectSpan());
                 }
             }
@@ -237,7 +223,6 @@ public class SetUp {
 //                for (int i=0; i<project.getActivityIdList().size(); i++){
 //                    ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.getActivityIdList().get(i)));
 //                }
-                Log.e("Check time out in", "DONE");
                 header.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -258,7 +243,6 @@ public class SetUp {
             @Override
             public void run() {
                 // Do something after 5s = 5000ms
-                Log.e("Check time out out", "DONE");
             }
         }, 500);
         return projectView;

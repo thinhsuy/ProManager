@@ -10,7 +10,7 @@ public class GlobalVar extends Application {
     public void setLocalQuery(Query query) {this.db=query;}
     public Query getLocalQuery() {return this.db;}
 
-    public String userId;
+    public String userId = "none";
     public void setUserId(String id){this.userId=id;}
     public String getUserId(){return this.userId;}
 

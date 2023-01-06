@@ -36,11 +36,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MainActivity.context = getApplicationContext();
         db = ((GlobalVar)this.getApplication()).getLocalQuery();
-        userId = ((GlobalVar)this.getApplication()).getUserId();
-        tryToSetUserId();
+        userId = tryToSetUserId();
         tabLayout = (TabLayout) findViewById(R.id.pager_tablayout);
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
-        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager(), userId);
         vpPager.setAdapter(adapterViewPager);
         vpPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             // This method will be invoked when a new page becomes selected.
@@ -73,19 +72,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void tryToSetUserId(){
+    private String tryToSetUserId(){
         try {
             Bundle bundle = getIntent().getExtras();
-            String userId = MyDatabase.getCurrentUserId(bundle.getString("username"), bundle.getString("password"));
+            String userId = bundle.getString("username");
             ((GlobalVar)this.getApplication()).setUserId(userId);
-        } catch (Exception ex){return;}
+            Log.e("Set userId", userId);
+        } catch (Exception ex){Log.e("Set userId", "Failed!");}
+        return ((GlobalVar)this.getApplication()).getUserId();
     }
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
         private int NUM_ITEMS = 4;
+        private String userId = "none";
 
-        public MyPagerAdapter(FragmentManager fragmentManager) {
+        public MyPagerAdapter(FragmentManager fragmentManager, String userId) {
             super(fragmentManager);
+            this.userId = userId;
         }
 
         // Returns total number of pages
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             View view = findViewById(R.id.user_bubble_textview).getRootView();
-            return MyFragment.newInstance(position, userId, view);
+            return MyFragment.newInstance(position, this.userId, view);
         }
 
         // Returns the page title for the top indicator
