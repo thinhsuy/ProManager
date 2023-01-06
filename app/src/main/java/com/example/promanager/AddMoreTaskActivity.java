@@ -46,6 +46,32 @@ public class AddMoreTaskActivity extends AppCompatActivity {
                     @Override
                     public void onActivityIdReceived(String activityID) {
                         Activity_Database act = new Activity_Database();
+                        if(((TextInputEditText)findViewById(R.id.activity_name_textInput)).getText().toString().trim().isEmpty()){
+                            new AlertDialog.Builder(AddMoreTaskActivity.this)
+                                    .setTitle("Create Activity failed!")
+                                    .setMessage("Cannot create activity without name")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            ((TextInputEditText)findViewById(R.id.activity_name_textInput)).setText("");
+                                        }
+                                    })
+                                    .show();
+                            return;
+                        }
+                        if(((TextInputEditText)findViewById(R.id.manager_textInput)).getText().toString().trim().isEmpty()){
+                            new AlertDialog.Builder(AddMoreTaskActivity.this)
+                                    .setTitle("Create Activity failed!")
+                                    .setMessage("Cannot create activity without worker")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            ((TextInputEditText)findViewById(R.id.manager_textInput)).setText("");
+                                        }
+                                    })
+                                    .show();
+                            return;
+                        }
                         act.setActivityName(((TextInputEditText)findViewById(R.id.activity_name_textInput)).getText().toString().trim());
                         act.setActivityHost(((TextInputEditText)findViewById(R.id.manager_textInput)).getText().toString().trim());
                         act.setActivityDeadline(((TextInputEditText)findViewById(R.id.deadline_textInput)).getText().toString().trim());
@@ -111,7 +137,6 @@ public class AddMoreTaskActivity extends AppCompatActivity {
 
 
     private void backToPreviousPage(String proId){
-        Log.e("backToPreviousPage", "DONE");
         Intent intent = new Intent(AddMoreTaskActivity.this, ProjectInforActivity.class);
         Bundle bundleBack = new Bundle();
         bundleBack.putString("project_id", proId);

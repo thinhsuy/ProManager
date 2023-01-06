@@ -67,13 +67,29 @@ public class CreateActivity extends AppCompatActivity {
                 project_describe_edt.getText().toString().trim().isEmpty()){
             new AlertDialog.Builder(CreateActivity.this)
                     .setTitle("Create Project failed!")
-                    .setMessage("Vui lòng nhập đầy đủ thông tin")
+                    .setMessage("Please insert all information")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             project_name_edt.setText("");
                             project_deadline_edt.setText("");
                             project_describe_edt.setText("");
+                        }
+                    })
+                    .show();
+            return;
+        }
+
+        String deadline = project_deadline_edt.getText().toString().trim();
+        String[] separated_check =  deadline.split("/");
+        if (separated_check.length!=3){
+            new AlertDialog.Builder(CreateActivity.this)
+                    .setTitle("Create Project failed!")
+                    .setMessage("Wrong format for deadline, ex: 11/09/2002")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            project_deadline_edt.setText("");
                         }
                     })
                     .show();
