@@ -38,6 +38,32 @@ public class SetUp {
         searchBar.setQueryHint("Search");
         searchBar.setIconified(false);
         searchBar.clearFocus();
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {return false;}
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String text = searchBar.getQuery().toString();
+                MyDatabase.getOwnProject(myId, new MyDatabase.getAllProjectsCallback() {
+                    @Override
+                    public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
+                        for (Project_Database cur_Project : all_projects) {
+                            if (cur_Project.getProjectName().equals(query) || cur_Project.getProjectID().equals(query)){
+                                Application application = (Application) MainActivity.getAppContext().getApplicationContext();
+                                Intent intent = new Intent(application, ProjectInforActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("project_id", cur_Project.getProjectID());
+                                intent.putExtras(bundle);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                application.startActivity(intent);
+                            }
+                        }
+                    }
+                });
+                Toast.makeText(MainActivity.getAppContext(), "Value is not exist!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
@@ -168,6 +194,32 @@ public class SetUp {
         searchBar.setQueryHint("Search");
         searchBar.setIconified(false);
         searchBar.clearFocus();
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {return false;}
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String text = searchBar.getQuery().toString();
+                MyDatabase.getOwnProject(myId, new MyDatabase.getAllProjectsCallback() {
+                    @Override
+                    public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
+                        for (Project_Database cur_Project : all_projects) {
+                            if (cur_Project.getProjectName().equals(query) || cur_Project.getProjectID().equals(query)){
+                                Application application = (Application) MainActivity.getAppContext().getApplicationContext();
+                                Intent intent = new Intent(application, ProjectInforActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("project_id", cur_Project.getProjectID());
+                                intent.putExtras(bundle);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                application.startActivity(intent);
+                            }
+                        }
+                    }
+                });
+                Toast.makeText(MainActivity.getAppContext(), "Value is not exist!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
         ((TextView) rootView.findViewById(R.id.generate_new_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,6 +254,32 @@ public class SetUp {
         searchBar.setQueryHint("Search");
         searchBar.setIconified(false);
         searchBar.clearFocus();
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {return false;}
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String text = searchBar.getQuery().toString();
+                MyDatabase.getOwnProject(myId, new MyDatabase.getAllProjectsCallback() {
+                    @Override
+                    public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
+                        for (Project_Database cur_Project : all_projects) {
+                            if (cur_Project.getProjectName().equals(query) || cur_Project.getProjectID().equals(query)){
+                                Application application = (Application) MainActivity.getAppContext().getApplicationContext();
+                                Intent intent = new Intent(application, ProjectInforActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("project_id", cur_Project.getProjectID());
+                                intent.putExtras(bundle);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                application.startActivity(intent);
+                            }
+                        }
+                    }
+                });
+                Toast.makeText(MainActivity.getAppContext(), "Value is not exist!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
@@ -256,7 +334,6 @@ public class SetUp {
         MyDatabase.getProjectById(project.getProjectID(), new MyDatabase.getCurrentProjectCallback() {
             @Override
             public void onCurrentProjectReceived(Project_Database project) {
-                //chưa xử lí xong
                 TextView header = (TextView)projectView.findViewById(R.id.project_header_textview);
                 header.setText(project.getProjectName());
 

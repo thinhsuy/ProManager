@@ -3,7 +3,6 @@ package com.example.promanager;
 
 // NHỮNG GIÁ TRỊ TRONG TRANG NÀY HIỆN CHỈ LÀ GIẢ KHỞI TẠO! database sẽ có thể trả về những giá trị khác
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +12,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +40,6 @@ import java.util.concurrent.CountDownLatch;
 
 public class MyDatabase {
     static private List<userInfo_Database> mListUser = new ArrayList<>();
-    //cái này chưa cần làm!
     public static ImageView getAvatarById(Query db, Context context, String userId, String size){
         ImageView image = new ImageView(context);
         int image_size;
@@ -51,62 +50,24 @@ public class MyDatabase {
         params.setMargins(0,0,25,0);
         image.setLayoutParams(params);
 
-//        DatabaseReference userRef = (FirebaseDatabase.getInstance()).getReference("userInfo");
-//        userRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot snap : snapshot.getChildren()){
-//                    userInfo_Database user = snap.getValue(userInfo_Database.class);
-//                    if (user.getUsername().equals(myId)){
-//                        link[0] = user.getIma;
-//                        break;
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {}
-//        });
-//        (new Handler()).postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                ((TextView)rootView.findViewById(R.id.overview_textview)).setText(overview[0]);
-//            }
-//        }, 500);
-
-        String link = getLinkAvatarById(db, userId);
-        new MyInternet.DownloadImageTask(image).execute(link);
-
-        image.setBackgroundResource(R.drawable.avatar);
+        image.setBackgroundResource(R.drawable.user_image);
         image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
         return image;
-    }
-
-    //trả về image link của ng dùng
-    public static String getLinkAvatarById(Query db, String userId){
-        String link = "Empty";
-
-
-        if (link=="Empty") return "https://i.pinimg.com/564x/01/fc/6f/01fc6f6f0a921bf1529b4989b8973d9f.jpg";
-        return link;
-    }
-
-    //trả về số id user hiện respon cho activity
-    public static ArrayList<String>  getResponsibilityUserId(Query db, String actId){
-        ArrayList<String> user_of_respon_id = new ArrayList<String>();
-
-        String strGetResponsibilityUserId = "SELECT username FROM UserResponActivity WHERE activityID = '"+actId+"'";
-        Cursor getResponsibilityUserId = db.getData(strGetResponsibilityUserId);
-        while(getResponsibilityUserId.moveToNext()){
-            String username = getResponsibilityUserId.getString(0);
-            user_of_respon_id.add(username);
-        }
-        return user_of_respon_id;
     }
 
 
     //trả về id user khác connection với user
     public static ArrayList<String> getConnectedUserId(Query db, String myId){
         ArrayList<String> user_of_connection_id = new ArrayList<String>();
+        user_of_connection_id.add("20127333");
+        user_of_connection_id.add("20127306");
+        user_of_connection_id.add("20127473");
+        user_of_connection_id.add("20127582");
+        user_of_connection_id.add("20127333");
+        user_of_connection_id.add("20127306");
+        user_of_connection_id.add("20127473");
+        user_of_connection_id.add("20127582");
         return user_of_connection_id;
     }
 
@@ -181,25 +142,6 @@ public class MyDatabase {
 
     //-------------------------------------------------------
 
-    //trả về toàn bộ id của project mà người dùng hiện tham gia
-    public static ArrayList<String> getCurrentResponProject(String myId){
-        ArrayList<String> all_project_ids = new ArrayList<>();
-        return all_project_ids;
-    }
-
-    //trả về danh sách activityId của 1 project
-    public static ArrayList<String> getActivityIdListByProjectId(Query db, String proId){
-        ArrayList<String> listId= new ArrayList<String>();
-        String strGetOwnProject = "SELECT activityID FROM ActivityInProject WHERE projectID = '"+proId+"'";
-        Cursor ActivityIdListByProjectId = db.getData(strGetOwnProject);
-        while(ActivityIdListByProjectId.moveToNext()){
-            String activityItem = ActivityIdListByProjectId.getString(0);
-            listId.add(activityItem);
-        }
-
-        return listId;
-    }
-
     //---------------------------------------------------------
 
     public interface getActivityByIdCallback {
@@ -266,74 +208,7 @@ public class MyDatabase {
         });
     }
 
-    //trả về số task mà người dùng còn trong deadline (CurrentTasks)
-    public static int getCurrentTasks(String myId, getAllProjectsCallback callback){
-        final int[] current_task = {0};
-        Log.e("userId in get current task", myId);
-        MyDatabase.getAllProject(myId, new getAllProjectsCallback() {
-            @Override
-            public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
-                for (Project_Database cur_project: all_projects) {
-                    if (cur_project.getProjectOwner().equals(myId))
-                        current_task[0] += 1;
-                }
-                Log.e("Total task", String.valueOf(current_task[0]));
-            }
-        });
 
-        return current_task[0];
-    }
-
-    //trả về số task mà người dùng còn trong deadline nhưng hoàn thành rồi
-    public static int getCurrentFinishedTasks(Query db, String myId){
-        int finished_task;
-        try {
-            String strCountCurrentFinishedTasks = "SELECT COUNT(currentFinished) FROM UserInfo WHERE username = '"+myId+"'";
-
-            Cursor CurrentFinishedTasks = db.getData(strCountCurrentFinishedTasks);
-            String countCurrentFinishedTask = CurrentFinishedTasks.getString(0);
-            finished_task = Integer.parseInt(countCurrentFinishedTask);
-        } catch (Exception ex) {finished_task=0;}
-        return finished_task;
-    }
-
-    //trả về tổng số task mà người dùng hoàn thành từ trc tới giờ
-    public static int getTotalTasks(Query db, String myId){
-        int total_task = 16;
-        try{
-            String strTotalTasks = "SELECT COUNT(totalTasks) FROM UserInfo WHERE username = '"+myId+"'";
-
-            Cursor TotalTasks = db.getData(strTotalTasks);
-            String countTotalTask = TotalTasks.getString(0);
-            total_task = Integer.parseInt(countTotalTask);
-        } catch (Exception ex){total_task=0;}
-        return total_task;
-    }
-
-    //trả về số thời gian người dùng tham gia từ trc tới giờ
-    //trong activity sẽ có thời gian sẽ có thời gian deadline, cứ cộng thời gian lại là dc
-    //? -> Chẳng lẽ cứ tham gia 1 activity là thời gian tham gia của người đó phải cộng thêm khoảng thời
-    //     gian từ lúc bắt đầu cho đến khi deadline à, thời gian tgia này nên là tgian nhận cho đến khi làm xong
-    //     nên để update sau này, chứ ko cần thiết làm vậy
-    //! => Thời gian chỉ là thời gian project user trong deadline thôi, tức là tổng tg deadline user có dc
-    //      vd: userA có 1 deadline 2 ngày, 1 deadline 3 ngày. Vậy tổng tg là 5 ngày = 120h
-    public static int getTotalHour(Query db, String myId){
-        int total_hour;
-        try {
-            String strTotalHours = "SELECT COUNT(totalHour) FROM UserInfo WHERE username = '"+myId+"'";
-
-            Cursor TotalHours = db.getData(strTotalHours);
-            String countTotalHour = TotalHours.getString(0);
-            total_hour = Integer.parseInt(countTotalHour);
-        } catch (Exception ex){total_hour = 0;}
-        return total_hour;
-    }
-
-    //trả về những thông tin mà người dùng mún giới thiệu bản thân
-    public static String getUserOverview(Query db, String myId){
-        String overview = "Here is my overview, Here is my overview, Here is my overview, Here is my overview";
-        return overview;
-    }
 
     //trả về danh sách request activity của user hiện tại (cái này t nghĩ là phải tạo 1 bảng mới là Request trong db)
     public static ArrayList<String> getActivityRequestListId(Query db, String myId){
@@ -343,14 +218,6 @@ public class MyDatabase {
         return activity_request_id;
     }
 
-    //trả về các notification của user
-    public static ArrayList<String> getUserNotifications(Query db, String userId){
-        ArrayList<String> notifications = new ArrayList<String>();
-        notifications.add("Architecture Definition hạn là 14 tháng 12 năm 2022 lúc 20:00");
-        notifications.add("Architecture Definition hạn là 14 tháng 12 năm 2022 lúc 20:00");
-        notifications.add("Architecture Definition hạn là 14 tháng 12 năm 2022 lúc 20:00");
-        return notifications;
-    }
 
 
     //updata data to database, including status, agreement and filefolder of activity
