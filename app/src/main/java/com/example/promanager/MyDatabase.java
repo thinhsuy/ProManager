@@ -367,9 +367,7 @@ public class MyDatabase {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Project").child(proId).child("activityIds");
 
-//        String pathObject = String.valueOf(act.getActivityID());
-//        ArrayList<String> values = new ArrayList<>();
-//        values.add(act.getActivityID());
+
         String pathObject = String.valueOf(act.getActivityID());
 
         myRef.child(pathObject).setValue(act, new DatabaseReference.CompletionListener() {

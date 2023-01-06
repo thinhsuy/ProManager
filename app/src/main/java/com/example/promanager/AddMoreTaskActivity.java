@@ -8,15 +8,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -33,9 +38,6 @@ public class AddMoreTaskActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         loadInformation(bundle.getString("project_id"));
-
-        Log.e("CHECK ID ADD MORE", bundle.getString("project_id"));
-        Toast.makeText(AddMoreTaskActivity.this, bundle.getString("project_id"), Toast.LENGTH_SHORT).show();
 
         ((TextView)findViewById(R.id.confirm_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,28 +84,31 @@ public class AddMoreTaskActivity extends AppCompatActivity {
     }
 
     private void loadInformation(String proId) {
-        MyDatabase.getProjectById(proId, new MyDatabase.getCurrentProjectCallback() {
+        final String[] total_tasks_str = {""};
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Project").child(proId).child("activityIds");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onCurrentProjectReceived(Project_Database projectCurrent) {
-                Log.d("ProjectID", proId);
-                ((TextView) findViewById(R.id.name_textview)).setText(projectCurrent.getProjectName());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                total_tasks_str[0] = Long.toString(snapshot.getChildrenCount());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 try{
-                    ((TextView) findViewById(R.id.total_acts_textview)).setText("Total current activities: " + String.valueOf(projectCurrent.getActivityIdList().size()));
+                    ((TextView) findViewById(R.id.total_acts_textview)).setText("Total current activities: " + total_tasks_str[0]);
                 }
                 catch (Exception e){
                     ((TextView) findViewById(R.id.total_acts_textview)).setText("Total current activities: 0");
-
                 }
-                Toast.makeText(AddMoreTaskActivity.this, "getProjectById DONE!", Toast.LENGTH_SHORT).show();
             }
-        });
+        }, 500);
     }
 
-
-    private void createTask(){
-        Activity_Database activity_database = new Activity_Database();
-//        activity_database.setActivityID();
-    }
 
     private void backToPreviousPage(String proId){
         Log.e("backToPreviousPage", "DONE");

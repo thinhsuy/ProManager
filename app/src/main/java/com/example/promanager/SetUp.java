@@ -253,7 +253,6 @@ public class SetUp {
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View projectView = layoutInflater.inflate(R.layout.project_span, null, false);
 
-//        Project_Database project;
         MyDatabase.getProjectById(project.getProjectID(), new MyDatabase.getCurrentProjectCallback() {
             @Override
             public void onCurrentProjectReceived(Project_Database project) {
@@ -278,9 +277,7 @@ public class SetUp {
 
                     }
                 });
-//                for (int i=0; i<project.getActivityIdList().size(); i++){
-//                    ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, project.getActivityIdList().get(i)));
-//                }
+
                 header.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -309,15 +306,11 @@ public class SetUp {
     private static View getActivitySpan(String proId, Activity_Database act){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View activityView = layoutInflater.inflate(R.layout.activity_span, null, false);
-//        Activity_Database activity = MyDatabase.getActivityById(db, actId);
+
         ((TextView)activityView.findViewById(R.id.activity_header_textview)).setText(act.getActivityName());
         ((TextView)activityView.findViewById(R.id.hoster_textview)).setText(act.getActivityHost());
         ((TextView)activityView.findViewById(R.id.activity_deadline_textview)).setText(act.getActivityDeadline());
-//        ArrayList<String> user_respon_id = MyDatabase.getResponsibilityUserId(db, actId);
-//        for (String userId:user_respon_id) {
-//            ImageView avatar = MyDatabase.getAvatarById(db, MainActivity.getAppContext(), userId, "tiny");
-//            ((LinearLayout)activityView.findViewById(R.id.respon_container_layout)).addView(avatar);
-//        }
+
         ((FlexboxLayout)activityView.findViewById(R.id.activity_container)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
