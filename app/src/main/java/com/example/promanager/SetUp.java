@@ -412,15 +412,16 @@ public class SetUp {
         return notification_view;
     }
 
-    public static View getRequestTaskSpan(Query db, Activity_Database act, String userId, Context context){
+    public static View getRequestTaskSpan(String userId, String manager, String project_name, String desribe, Context context){
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View request_view = layoutInflater.inflate(R.layout.task_request_span, null, false);
-        ((TextView)request_view.findViewById(R.id.name_textview)).setText(act.getActivityName());
+        ((TextView)request_view.findViewById(R.id.manager_name_textview)).setText("Manager Name: " + manager);
+        ((TextView)request_view.findViewById(R.id.project_name_textview)).setText(project_name);
+        ((TextView)request_view.findViewById(R.id.description_textview)).setText(desribe);
         ((TextView)request_view.findViewById(R.id.accept_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(TaskRequestActivity.getAppContext(), "Accept this request", Toast.LENGTH_SHORT).show();
-                MyDatabase.acceptRequest(db, userId, act.getActivityID());
             }
         });
 
@@ -428,7 +429,6 @@ public class SetUp {
             @Override
             public void onClick(View view) {
                 Toast.makeText(TaskRequestActivity.getAppContext(), "Remove this request", Toast.LENGTH_SHORT).show();
-                MyDatabase.removeRequest(db, userId, act.getActivityID());
             }
         });
 

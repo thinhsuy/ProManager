@@ -15,16 +15,17 @@
         android:layout_marginTop="30px"
         tools:ignore="MissingConstraints">
         <TextView
+            android:id="@+id/manager_name_textview"
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Task Name:"
+            android:text="Manager Name:"
             android:layout_marginHorizontal="50px"
             android:layout_marginTop="60px"
             android:layout_marginBottom="20px"
             android:textSize="40px"/>
         <TextView
-            android:id="@+id/name_textview"
+            android:id="@+id/project_name_textview"
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
