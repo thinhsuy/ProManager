@@ -170,15 +170,8 @@ public class MyDatabase {
     //-------------------------------------------------------
 
     //trả về toàn bộ id của project mà người dùng hiện tham gia
-    public static ArrayList<String> getCurrentResponProject(Query db, String myId){
-        ArrayList<String> all_project_ids= new ArrayList<String>();
-        String strGetOwnProject = "SELECT projectID FROM UserResponProject WHERE username = '"+myId+"'";
-
-        Cursor CurrentResponProject = db.getData(strGetOwnProject);
-        while(CurrentResponProject.moveToNext()){
-            String projectID = CurrentResponProject.getString(0);
-            all_project_ids.add(projectID);
-        }
+    public static ArrayList<String> getCurrentResponProject(String myId){
+        ArrayList<String> all_project_ids = new ArrayList<>();
         return all_project_ids;
     }
 
@@ -195,20 +188,40 @@ public class MyDatabase {
         return listId;
     }
 
-    //trả về 1 số thông tin quan trọng của activity
-    public static Activity_Database getActivityById(Query db, String actId){
-        Activity_Database activity = new Activity_Database();
-        activity.setActivityID(actId);
-        activity.setActivityName("Architecture definition");
-        activity.setActivityDeadline("Deadline in 2 more days");
-        String hoster = "ThinhSuy";
-        activity.setActivityHost("Host by " + hoster);
-        activity.setActivityDescribe("This activity needs you to continue on moving on your life, try by heart in yourself and improve it, maybe quite hard for you but never give it up. Wanna cry? Just cry! After that please stand up and do everything with 200% power. Until the day that we will meet again, it could be not a good moment for both, but at least, you already tried whole your heart ... if destiny give us a chance or if not, we still be good memories of each other and that moment in future, you would be proud of other. Be strong my girl, my boy!");
-        activity.setActivityStatus("Not Finished");
-        activity.setActivityFile("Empty");
-        activity.setActivityAgreement("Rate: 0%");
-        return activity;
+    //---------------------------------------------------------
+
+    public interface getActivityByIdCallback {
+        void onActivityByIdReceived(Activity_Database cur_Activity);
     }
+
+    //trả về 1 số thông tin quan trọng của activity
+    public static void getActivityById(String actId, getActivityByIdCallback callback){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Activity");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Activity_Database act = dataSnapshot.getValue(Activity_Database.class);
+                    if(act.getActivityID().equals(actId)){
+                        callback.onActivityByIdReceived(act);
+                        return;
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    //----------------------------------------------------------
 
     //trả về 1 số thông tin quan trọng của project
     //proId truyền vào tam là "20127306"

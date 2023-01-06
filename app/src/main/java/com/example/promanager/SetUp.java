@@ -41,7 +41,7 @@ public class SetUp {
 
         LinearLayout content_container = (LinearLayout) rootView.findViewById(R.id.content_container_linearlayout);
 
-        ArrayList<String> all_current_project_id = MyDatabase.getCurrentResponProject(db, myId);
+//        ArrayList<String> all_current_project_id = MyDatabase.getCurrentResponProject(myId);
 //        for (String proId: all_current_project_id)
 //            content_container.addView(getProjectSpan(db, proId, "Manage"));
         
@@ -51,7 +51,7 @@ public class SetUp {
             ((LinearLayout)rootView.findViewById(R.id.last_connection_container)).addView(avatar);
         }
 
-        if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
+//        if (all_current_project_id.size()==0) content_container.addView(getEmptyProjectSpan());
         return rootView;
     }
 
@@ -225,7 +225,7 @@ public class SetUp {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                             Activity_Database act = dataSnapshot.getValue(Activity_Database.class);
-                            ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(db, act));
+                            ((LinearLayout)projectView.findViewById(R.id.activity_container)).addView(getActivitySpan(project.getProjectID(), act));
                         }
                     }
 
@@ -264,7 +264,7 @@ public class SetUp {
         return projectView;
     }
 
-    private static View getActivitySpan(Query db, Activity_Database act){
+    private static View getActivitySpan(String proId, Activity_Database act){
         LayoutInflater layoutInflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View activityView = layoutInflater.inflate(R.layout.activity_span, null, false);
 //        Activity_Database activity = MyDatabase.getActivityById(db, actId);
@@ -283,6 +283,7 @@ public class SetUp {
                 Intent intent = new Intent(application, TaskInforActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("activity_id", act.getActivityID());
+                bundle.putString("project_id", proId);
                 bundle.putString("source", "main");
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -38,9 +38,9 @@ public class TaskRequestActivity extends AppCompatActivity {
     public void getRequestSpan(){
         LinearLayout container = ((LinearLayout)findViewById(R.id.content_container));
         ArrayList<String> activity_request_list_id = MyDatabase.getActivityRequestListId(db, userId);
-        for (String actId:activity_request_list_id) {
-            Activity_Database act = MyDatabase.getActivityById(db, actId);
-            container.addView(SetUp.getRequestTaskSpan(db, act, userId, this.getApplicationContext()));
-        }
+//        for (String actId:activity_request_list_id) {
+//            Activity_Database act = MyDatabase.getActivityById(db, actId);
+//            container.addView(SetUp.getRequestTaskSpan(db, act, userId, this.getApplicationContext()));
+//        }
     }
 }

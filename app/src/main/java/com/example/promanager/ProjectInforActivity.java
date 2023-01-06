@@ -72,21 +72,28 @@ public class ProjectInforActivity extends AppCompatActivity {
                         for (DataSnapshot post : snapshot.getChildren()){
                             Activity_Database acti = post.getValue(Activity_Database.class);
                             Log.e("Test activityIdList", "DONE!");
-                            View activity_tag = SetUp.getActivityTag(MyDatabase.getActivityById(db, acti.getActivityID()), mContext);
-                            activity_tag.setOnClickListener(new View.OnClickListener() {
+//                            View activity_tag = SetUp.getActivityTag(MyDatabase.getActivityById(acti.getActivityID()), mContext);
+                            MyDatabase.getActivityById(acti.getActivityID(), new MyDatabase.getActivityByIdCallback() {
                                 @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(ProjectInforActivity.this, TaskInforActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("activity_id", acti.getActivityID());
-                                    bundle.putString("source", "tag");
-                                    bundle.putString("project_id", proId);
-                                    intent.putExtras(bundle);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
+                                public void onActivityByIdReceived(Activity_Database cur_Activity) {
+                                    View activity_tag = SetUp.getActivityTag(cur_Activity, mContext);
+                                    activity_tag.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(ProjectInforActivity.this, TaskInforActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("activity_id", acti.getActivityID());
+                                            bundle.putString("source", "tag");
+                                            bundle.putString("project_id", proId);
+                                            intent.putExtras(bundle);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    ((FlexboxLayout)findViewById(R.id.activity_tag_container)).addView(activity_tag);
                                 }
                             });
-                            ((FlexboxLayout)findViewById(R.id.activity_tag_container)).addView(activity_tag);
+
                         }
                     }
 

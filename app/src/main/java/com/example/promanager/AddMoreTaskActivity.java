@@ -48,7 +48,8 @@ public class AddMoreTaskActivity extends AppCompatActivity {
                         act.setActivityHost(((TextInputEditText)findViewById(R.id.manager_textInput)).getText().toString().trim());
                         act.setActivityDeadline(((TextInputEditText)findViewById(R.id.deadline_textInput)).getText().toString().trim());
                         act.setActivityDescribe(((TextInputEditText)findViewById(R.id.description_textInput)).getText().toString().trim());
-
+                        act.setActivityStatus("Not Finished");
+                        act.setActivityAgreement("0%");
                         act.setActivityID(activityID);
 
                         FirebaseDatabase database = FirebaseDatabase.getInstance();

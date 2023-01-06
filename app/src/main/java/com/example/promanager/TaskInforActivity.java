@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -14,11 +15,15 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class TaskInforActivity extends AppCompatActivity {
     public Query db;
     public Bundle bundle;
+    public String actId;
+    public String proId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,9 @@ public class TaskInforActivity extends AppCompatActivity {
             }
         });
 
-        String actId = bundle.getString("activity_id");
+        actId = bundle.getString("activity_id");
+        proId = bundle.getString("project_id");
+
         loadInformation(actId);
         setUpOnClickListener(actId);
     }
@@ -46,7 +53,7 @@ public class TaskInforActivity extends AppCompatActivity {
         else {
             Intent intent = new Intent(TaskInforActivity.this, ProjectInforActivity.class);
             Bundle bundleBack = new Bundle();
-            bundleBack.putString("projectId", bundle.getString("project_id"));
+            bundleBack.putString("projectId", proId);
             intent.putExtras(bundleBack);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -55,13 +62,17 @@ public class TaskInforActivity extends AppCompatActivity {
 
     public void loadInformation(String actId){
         if (actId==null) return;
-        Activity_Database act = MyDatabase.getActivityById(db, actId);
-        ((TextView)findViewById(R.id.header_textview)).setText(act.getActivityName());
-        ((TextView)findViewById(R.id.hoster_textview)).setText(act.getActivityHost());
-        ((TextView)findViewById(R.id.deadline_textview)).setText(act.getActivityDeadline());
-        ((TextView)findViewById(R.id.description_textview)).setText(act.getActivityDescribe());
-        ((TextView)findViewById(R.id.status_textview)).setText(act.getActivityStatus());
-        ((TextView)findViewById(R.id.rate_textview)).setText(act.getActivityAgreement());
+        MyDatabase.getActivityById(actId, new MyDatabase.getActivityByIdCallback() {
+            @Override
+            public void onActivityByIdReceived(Activity_Database act) {
+                ((TextView)findViewById(R.id.header_textview)).setText(act.getActivityName());
+                ((TextView)findViewById(R.id.hoster_textview)).setText(act.getActivityHost());
+                ((TextView)findViewById(R.id.deadline_textview)).setText(act.getActivityDeadline());
+                ((TextView)findViewById(R.id.description_textview)).setText(act.getActivityDescribe());
+                ((TextView)findViewById(R.id.status_textview)).setText(act.getActivityStatus());
+                ((TextView)findViewById(R.id.rate_textview)).setText(act.getActivityAgreement());
+            }
+        });
     }
 
     public void setUpOnClickListener(String actId){
@@ -82,9 +93,23 @@ public class TaskInforActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.submit_btn_textview)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyDatabase.setStatusActivity(actId, ((TextView)findViewById(R.id.status_textview)).getText().toString());
-                MyDatabase.setAgreementActivity(actId, ((TextView)findViewById(R.id.rate_textview)).getText().toString());
-                MyDatabase.setFileFolderActivity(actId, ((TextInputEditText)findViewById(R.id.folder_text)).getText().toString());
+//                MyDatabase.setStatusActivity(actId, ((TextView)findViewById(R.id.status_textview)).getText().toString());
+//                MyDatabase.setAgreementActivity(actId, ((TextView)findViewById(R.id.rate_textview)).getText().toString());
+//                MyDatabase.setFileFolderActivity(actId, ((TextInputEditText)findViewById(R.id.folder_text)).getText().toString());
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Activity").child(actId);
+
+                myRef.child("activityAgreement").setValue(((TextView)findViewById(R.id.rate_textview)).getText().toString());
+                myRef.child("activityStatus").setValue(((TextView)findViewById(R.id.status_textview)).getText().toString());
+                myRef.child("activityFile").setValue(((TextInputEditText)findViewById(R.id.folder_text)).getText().toString());
+
+                FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+                Log.e("proId", proId);
+                DatabaseReference myRef1 = database1.getReference("Project").child(proId).child("activityIds").child(actId);
+                myRef1.child("activityAgreement").setValue(((TextView)findViewById(R.id.rate_textview)).getText().toString());
+                myRef1.child("activityStatus").setValue(((TextView)findViewById(R.id.status_textview)).getText().toString());
+                myRef1.child("activityFile").setValue(((TextInputEditText)findViewById(R.id.folder_text)).getText().toString());
+
                 Toast.makeText(TaskInforActivity.this, "Updating data ...", Toast.LENGTH_SHORT).show();
                 backToPreviousPage();
             }
