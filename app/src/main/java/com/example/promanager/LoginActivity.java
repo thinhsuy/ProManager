@@ -74,12 +74,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("Project");
+//        DatabaseReference myRef = database.getReference("userInfo");
 //
-//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//        myRef.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Toast.makeText(LoginActivity.this, Long.toString(snapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
+//
 //            }
 //
 //            @Override

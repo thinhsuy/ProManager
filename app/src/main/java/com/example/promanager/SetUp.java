@@ -74,17 +74,38 @@ public class SetUp {
 
     public static View getInformationFragment(Query db, View rootView, String myId){
         RelativeLayout load_bar_out = (RelativeLayout) rootView.findViewById(R.id.load_bar_out);
+        final int[] total_task = {0};
+        final int[] total_hour = {0};
         load_bar_out.post(new Runnable() {
             @Override
             public void run() {
                 int width_loadbarout = load_bar_out.getMeasuredWidth();
                 final int[] current_task = {0};
+                final int[] finised_task = {0};
+
                 MyDatabase.getAllProject(myId, new MyDatabase.getAllProjectsCallback() {
                     @Override
                     public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
                         for (Project_Database cur_Project : all_projects) {
-                            if (myId.equals(cur_Project.getProjectOwner()))
-                                current_task[0] += 1;
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("Project").child(cur_Project.getProjectID()).child("activityIds");
+                            myRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for(DataSnapshot snap : snapshot.getChildren()){
+                                        Activity_Database act = snap.getValue(Activity_Database.class);
+                                        if (myId.equals(act.getActivityHost()) && act.getActivityStatus().equals("Not Finished"))
+                                            current_task[0] += 1;
+                                        if (myId.equals(act.getActivityHost()) && act.getActivityStatus().equals("Finished"))
+                                            finised_task[0] += 1;
+                                        if (myId.equals(act.getActivityHost()))
+                                            total_task[0] += 1;
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {}
+                            });
+
                         }
                     }
                 });
@@ -92,8 +113,7 @@ public class SetUp {
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        int finised_task = MyDatabase.getCurrentFinishedTasks(db, myId);
-                        int int_percent = getPercentOfValue(current_task[0], finised_task);
+                        int int_percent = getPercentOfValue(current_task[0], finised_task[0]);
                         RelativeLayout load_bar_in = new RelativeLayout(MainActivity.getAppContext());
                         int width_loadbarin = getValueOfPercent(width_loadbarout, int_percent);
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width_loadbarin, 40);
@@ -101,7 +121,7 @@ public class SetUp {
                         load_bar_in.setLayoutParams(new LinearLayout.LayoutParams(params));
                         load_bar_in.setBackgroundResource(R.drawable.load_bar_in);
                         load_bar_out.addView(load_bar_in);
-                        String numb_of_task_completed = String.valueOf(finised_task) + " of " + String.valueOf(current_task[0]) + " completed";
+                        String numb_of_task_completed = String.valueOf(finised_task[0]) + " of " + String.valueOf(current_task[0]) + " completed";
                         String percent_of_task_completed = String.valueOf(int_percent) + "%";
                         ((TextView)rootView.findViewById(R.id.numb_of_task_completed)).setText(numb_of_task_completed);
                         ((TextView)rootView.findViewById(R.id.percent_of_task_completed)).setText(percent_of_task_completed);
@@ -112,11 +132,31 @@ public class SetUp {
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                int total_task = MyDatabase.getTotalTasks(db, myId);
-                int total_hour = MyDatabase.getTotalHour(db, myId);
-                ((TextView)rootView.findViewById(R.id.total_task_textview)).setText(String.valueOf(total_task));
-                ((TextView)rootView.findViewById(R.id.total_hour_textview)).setText(String.valueOf(total_hour));
-                ((TextView)rootView.findViewById(R.id.overview_textview)).setText(MyDatabase.getUserOverview(db, myId));
+                ((TextView)rootView.findViewById(R.id.total_task_textview)).setText(String.valueOf(total_task[0]));
+                ((TextView)rootView.findViewById(R.id.total_hour_textview)).setText(String.valueOf(total_task[0]*60));
+            }
+        }, 500);
+
+        final String[] overview = {""};
+        DatabaseReference userRef = (FirebaseDatabase.getInstance()).getReference("userInfo");
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap : snapshot.getChildren()){
+                    userInfo_Database user = snap.getValue(userInfo_Database.class);
+                    if (user.getUsername().equals(myId)){
+                        overview[0] = user.getOverview();
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((TextView)rootView.findViewById(R.id.overview_textview)).setText(overview[0]);
             }
         }, 500);
         return rootView;

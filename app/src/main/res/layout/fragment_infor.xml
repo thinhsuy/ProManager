@@ -105,14 +105,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white_gray"
-                    android:textSize="50px"
+                    android:textSize="70px"
                     android:text="Overview"/>
                 <TextView
                     android:id="@+id/overview_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white_gray"
-                    android:textSize="35px"/>
+                    android:textSize="50px"/>
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"

@@ -63,7 +63,6 @@ public class ProjectInforActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.deadline_textview)).setText(project.getProjectDeadline());
                 ((TextView)findViewById(R.id.description_textview)).setText(project.getProjectDescribe());
 
-//                getListActivity();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Project").child(proId).child("activityIds");
                 myRef.addValueEventListener(new ValueEventListener() {
@@ -71,8 +70,6 @@ public class ProjectInforActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot post : snapshot.getChildren()){
                             Activity_Database acti = post.getValue(Activity_Database.class);
-                            Log.e("Test activityIdList", "DONE!");
-//                            View activity_tag = SetUp.getActivityTag(MyDatabase.getActivityById(acti.getActivityID()), mContext);
                             MyDatabase.getActivityById(acti.getActivityID(), new MyDatabase.getActivityByIdCallback() {
                                 @Override
                                 public void onActivityByIdReceived(Activity_Database cur_Activity) {

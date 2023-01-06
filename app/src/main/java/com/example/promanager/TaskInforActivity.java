@@ -48,12 +48,12 @@ public class TaskInforActivity extends AppCompatActivity {
     }
 
     private void backToPreviousPage(){
-        if (bundle.getString("source").toString().equals("main"))
+        if (bundle.getString("source").equals("main"))
             startActivity(new Intent(TaskInforActivity.this, MainActivity.class));
         else {
             Intent intent = new Intent(TaskInforActivity.this, ProjectInforActivity.class);
             Bundle bundleBack = new Bundle();
-            bundleBack.putString("projectId", proId);
+            bundleBack.putString("project_id", proId);
             intent.putExtras(bundleBack);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

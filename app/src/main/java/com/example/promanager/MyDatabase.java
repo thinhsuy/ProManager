@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -50,6 +51,28 @@ public class MyDatabase {
         params.setMargins(0,0,25,0);
         image.setLayoutParams(params);
 
+//        DatabaseReference userRef = (FirebaseDatabase.getInstance()).getReference("userInfo");
+//        userRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot snap : snapshot.getChildren()){
+//                    userInfo_Database user = snap.getValue(userInfo_Database.class);
+//                    if (user.getUsername().equals(myId)){
+//                        link[0] = user.getIma;
+//                        break;
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {}
+//        });
+//        (new Handler()).postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                ((TextView)rootView.findViewById(R.id.overview_textview)).setText(overview[0]);
+//            }
+//        }, 500);
+
         String link = getLinkAvatarById(db, userId);
         new MyInternet.DownloadImageTask(image).execute(link);
 
@@ -61,6 +84,7 @@ public class MyDatabase {
     //trả về image link của ng dùng
     public static String getLinkAvatarById(Query db, String userId){
         String link = "Empty";
+
 
         if (link=="Empty") return "https://i.pinimg.com/564x/01/fc/6f/01fc6f6f0a921bf1529b4989b8973d9f.jpg";
         return link;
@@ -388,7 +412,6 @@ public class MyDatabase {
     }
 
     public static void createNewProject(Project_Database project, ProjectIdCallback callback){
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Project");
 
@@ -406,7 +429,6 @@ public class MyDatabase {
             }
         });
     }
-
 
 
     //send email reset password cho ng dung
