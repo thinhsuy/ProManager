@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 public class AddMoreTaskActivity extends AppCompatActivity {
     public Query db;
+    public String userId;
 
     ArrayList<String> activityList = new ArrayList<>();
 
@@ -35,6 +37,7 @@ public class AddMoreTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_more_task);
         db = ((GlobalVar)this.getApplication()).getLocalQuery();
+        userId = ((GlobalVar)this.getApplication()).getUserId();
         Bundle bundle = getIntent().getExtras();
 
         loadInformation(bundle.getString("project_id"));
@@ -72,6 +75,23 @@ public class AddMoreTaskActivity extends AppCompatActivity {
                                     .show();
                             return;
                         }
+
+                        String deadline = ((TextInputEditText)findViewById(R.id.deadline_textInput)).getText().toString().trim();
+                        String[] separated_check =  deadline.split("/");
+                        if (separated_check.length!=3){
+                            new AlertDialog.Builder(AddMoreTaskActivity.this)
+                                    .setTitle("Create Activity failed!")
+                                    .setMessage("Wrong format for deadline, ex: 11/09/2002")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            ((TextInputEditText)findViewById(R.id.deadline_textInput)).setText("");
+                                        }
+                                    })
+                                    .show();
+                            return;
+                        }
+
                         act.setActivityName(((TextInputEditText)findViewById(R.id.activity_name_textInput)).getText().toString().trim());
                         act.setActivityHost(((TextInputEditText)findViewById(R.id.manager_textInput)).getText().toString().trim());
                         act.setActivityDeadline(((TextInputEditText)findViewById(R.id.deadline_textInput)).getText().toString().trim());
@@ -90,7 +110,42 @@ public class AddMoreTaskActivity extends AppCompatActivity {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 Toast.makeText(AddMoreTaskActivity.this, "Create Activity complete!", Toast.LENGTH_SHORT).show();
                                 MyDatabase.addNewTaskToProject(AddMoreTaskActivity.this, ProjectInforActivity.class, act, bundle.getString("project_id"));
-//                                backToPreviousPage(bundle.getString("project_id"));
+                                if (!((TextInputEditText)findViewById(R.id.manager_textInput)).getText().toString().trim().equals(userId)){
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference myRef = database.getReference("Invitation");
+                                    
+                                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            Invitation invite = new Invitation();
+                                            invite.setFromUser(userId);
+                                            invite.setToUser(((TextInputEditText)findViewById(R.id.manager_textInput)).getText().toString().trim());
+                                            invite.setProjectId(bundle.getString("project_id"));
+                                            invite.setInviteId("invite"+Long.toString(snapshot.getChildrenCount()+1));
+
+                                            String pathObject = String.valueOf(invite.getInviteId());
+
+                                            FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+                                            DatabaseReference myRef1 = database1.getReference("Invitation");
+
+                                            myRef1.child(pathObject).setValue(invite, new DatabaseReference.CompletionListener() {
+                                                @Override
+                                                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+        
+                                }
+                                else {
+                                    backToPreviousPage(bundle.getString("project_id"));
+                                }
                             }
                         });
 //                        Toast.makeText(AddMoreTaskActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
@@ -131,6 +186,25 @@ public class AddMoreTaskActivity extends AppCompatActivity {
                 catch (Exception e){
                     ((TextView) findViewById(R.id.total_acts_textview)).setText("Total current activities: 0");
                 }
+            }
+        }, 500);
+
+        final String[] name = {""};
+        MyDatabase.getOwnProject("none", new MyDatabase.getAllProjectsCallback() {
+            @Override
+            public void onAllProjectsReceived(ArrayList<Project_Database> all_projects) {
+                for (Project_Database cur_Project : all_projects) {
+                    if (cur_Project.getProjectID().equals(proId)) {
+                        name[0] = cur_Project.getProjectName();
+
+                    }
+                }
+            }
+        });
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((TextView) findViewById(R.id.name_textview)).setText(name[0]);
             }
         }, 500);
     }

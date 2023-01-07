@@ -56,6 +56,22 @@ public class LoginActivity extends AppCompatActivity {
         forget_password_tv = (TextView) findViewById(R.id.forget_password_textview);
         set_event_onclick();
 
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("Invitation");
+//
+//
+//
+//        Invitation invite = new Invitation();
+//        invite.setFromUser("username1");
+//        invite.setToUser("username2");
+//        invite.setProjectId("project1");
+//
+//        myRef.setValue(invite, new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//
+//            }
+//        });
     }
     private void ValidateToLogin(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
