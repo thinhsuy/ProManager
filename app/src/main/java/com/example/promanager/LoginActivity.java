@@ -56,38 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         forget_password_tv = (TextView) findViewById(R.id.forget_password_textview);
         set_event_onclick();
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("Project").child("project1").child("activityIdList");
-//
-//        Activity_Database act = new Activity_Database();
-//        act.setActivityID("activity1");
-//        act.setActivityName("");
-//
-//        String pathObject = String.valueOf(act.getActivityID());
-//
-//        myRef.child(pathObject).setValue(act, new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//                Toast.makeText(LoginActivity.this, "Add activity to Project complete!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("userInfo");
-//
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
     }
     private void ValidateToLogin(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -101,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
             if (username_til != null && password_til != null) {
                 if(username_til.getText().toString().trim().isEmpty() || password_til.getText().toString().trim().isEmpty())
                 {
-
                     new AlertDialog.Builder(LoginActivity.this)
                             .setTitle("Login failed!")
                             .setMessage("Vui lòng nhập đầy đủ thông tin")

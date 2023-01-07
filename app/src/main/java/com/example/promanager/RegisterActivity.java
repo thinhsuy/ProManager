@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,12 +61,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!check_infor_textinput()) {
-                    Toast.makeText(RegisterActivity.this, "Sign Up Failed!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else{
-                    Toast.makeText(RegisterActivity.this, "Sign Up Successfully!", Toast.LENGTH_SHORT).show();
-                    //onClickSignUp();
+                    onClickSignUp();
                 }
             }
         });
@@ -86,11 +85,19 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean set_database(String username, String password, String email, String phone, String confirm, String about, String image){
 //        check database here
         if (username.equals("") || password.equals("") || email.equals("") || phone.equals("") || confirm.equals("") || about.equals("")){
-            Toast.makeText(RegisterActivity.this, "Please fill all information!", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(RegisterActivity.this)
+                    .setTitle("Login failed!")
+                    .setMessage("Vui lòng nhập đầy đủ thông tin")
+                    .setPositiveButton("OK", null)
+                    .show();
             return false;
         }
         else if (!password.equals(confirm)){
-            Toast.makeText(RegisterActivity.this, "Confirm password is different from password!", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(RegisterActivity.this)
+                    .setTitle("Login failed!")
+                    .setMessage("Mật khẩu confirm không khớp")
+                    .setPositiveButton("OK", null)
+                    .show();
             return false;
         }
         else {
@@ -114,15 +121,23 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else{
                     userInfo_Database user = new userInfo_Database(username, password, phone, email, about, image);
-
                     String pathObject = String.valueOf(user.getUsername());
                     FirebaseDatabase database1 = FirebaseDatabase.getInstance();
                     DatabaseReference myRef1 = database1.getReference("userInfo");
                     myRef1.child(pathObject).setValue(user, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                            Toast.makeText(RegisterActivity.this, "Add complete!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, Verify_Phone_Number_Firebase.class));
+
+                            new AlertDialog.Builder(RegisterActivity.this)
+                                    .setTitle("Sign up")
+                                    .setMessage("Sign up completed!")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                        }
+                                    })
+                                    .show();
                         }
                     });
                 }
@@ -132,34 +147,5 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    //Hàm này để khi bấm đăng kí sẽ gửi thông tin lên firebase
-    private void onClickSignUp1(String strEmail, String strPassword) {
-        progressDialog.setTitle("Sign up. Please wait...");
-        progressDialog.show();
-
-        mAuth.createUserWithEmailAndPassword(strEmail, strPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.cancel();
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finishAffinity(); //Dong tat ca activity truoc do
-                        } else {
-                            try {
-                                throw task.getException();
-                            } catch(Exception e) {
-                                Log.e(TAG, e.getMessage());
-                            }
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(RegisterActivity.this, "Authentication failed, try again.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 }

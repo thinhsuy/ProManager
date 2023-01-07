@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,9 +57,36 @@ public class CreateActivity extends AppCompatActivity {
 
         Project_Database project = new Project_Database();
         project.setProjectOwner(((GlobalVar)this.getApplication()).getUserId());
-        project.setProjectName(((TextInputEditText)findViewById(R.id.project_name_textInput)).getText().toString().trim());
-        project.setProjectDeadline(((TextInputEditText)findViewById(R.id.project_deadline_textInput)).getText().toString().trim());
-        project.setProjectDescribe(((TextInputEditText)findViewById(R.id.project_describe_textInput)).getText().toString().trim());
+
+        TextInputEditText project_name_edt = (TextInputEditText) findViewById(R.id.project_name_textInput);
+        TextInputEditText project_deadline_edt = (TextInputEditText) findViewById(R.id.project_deadline_textInput);
+        TextInputEditText project_describe_edt = (TextInputEditText) findViewById(R.id.project_describe_textInput);
+
+        if(project_name_edt.getText().toString().trim().isEmpty() ||
+                project_deadline_edt.getText().toString().trim().isEmpty() ||
+                project_describe_edt.getText().toString().trim().isEmpty()){
+            new AlertDialog.Builder(CreateActivity.this)
+                    .setTitle("Create Project failed!")
+                    .setMessage("Vui lòng nhập đầy đủ thông tin")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            project_name_edt.setText("");
+                            project_deadline_edt.setText("");
+                            project_describe_edt.setText("");
+                        }
+                    })
+                    .show();
+            return;
+        }
+
+        String project_name = project_name_edt.getText().toString().trim();
+        String project_deadline = project_deadline_edt.getText().toString().trim();
+        String project_describe = project_describe_edt.getText().toString().trim();
+
+        project.setProjectName(project_name);
+        project.setProjectDeadline(project_deadline);
+        project.setProjectDescribe(project_describe);
 
         MyDatabase.createNewProject(project, new MyDatabase.ProjectIdCallback() {
             @Override
